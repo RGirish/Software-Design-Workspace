@@ -91,7 +91,7 @@ public class FoodMenuResource {
             return builder.toString();
         } catch (Exception ex) {
             Logger.getLogger(FoodMenuResource.class.getName()).log(Level.SEVERE, null, ex);
-            return "<InvalidMessage xmlns=”http://cse564.asu.edu/PoxAssignment”/>" + ex.getMessage() + ex.toString();
+            return "Exception in addFoodItem " + ex.getMessage() + ex.toString();
         }
     }
 
@@ -100,42 +100,39 @@ public class FoodMenuResource {
     @Produces(MediaType.APPLICATION_XML)
     public String getFoodItem(@FormParam("xmlRequestString") String xmlRequestString) {
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(NewFoodItems.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(SelectedFoodItems.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            NewFoodItems newFoodItems = (NewFoodItems) jaxbUnmarshaller.unmarshal(new StreamSource(new StringReader(xmlRequestString)));
+            SelectedFoodItems selectedFoodItems = (SelectedFoodItems) jaxbUnmarshaller.unmarshal(new StreamSource(new StringReader(xmlRequestString)));
 
-            List<FoodItem> foodItems = newFoodItems.getFoodItems();
-            StringBuilder builder = new StringBuilder();
-            for (FoodItem fi : foodItems) {
-                int position = -1;
-                for (int i = 0; i < foodItemList.size(); ++i) {
-                    if (position != -1) {
-                        continue;
-                    }
-                    FoodItem foodItem = foodItemList.get(i);
-                    if (foodItem.getName().equals(fi.getName()) && foodItem.getCountry().equals(fi.getCountry()) && foodItem.getCategory().equals(fi.getCategory())) {
-                        position = i;
-                    }
-                }
-                if (position != -1) {
-                    builder.append("<FoodItemExists xmlns=”http://cse564.asu.edu/PoxAssignment”>\n")
-                            .append("   <FoodItemId>")
-                            .append(position)
-                            .append("</FoodItemId>\n")
-                            .append("</FoodItemExists>");
+            List<Integer> foodItemIds = selectedFoodItems.getFoodItemIds();
+            StringBuilder builder = new StringBuilder("<RetrievedFoodItems xmlns=”http://cse564.asu.edu/PoxAssignment”>");
+            for (int foodItemId : foodItemIds) {
+                if (foodItemId >= foodItemList.size()) {
+                    builder.append("<InvalidFoodItem>\n        <FoodItemId>")
+                            .append(foodItemId)
+                            .append("</FoodItemId>\n    </InvalidFoodItem>");
                 } else {
-                    foodItemList.add(fi);
-                    builder.append("<FoodItemAdded xmlns=”http://cse564.asu.edu/PoxAssignment”>\n")
-                            .append("   <FoodItemId>")
-                            .append(foodItemList.size() - 1)
-                            .append("</FoodItemId>\n")
-                            .append("</FoodItemAdded>");
+                    FoodItem foodItem = foodItemList.get(foodItemId);
+                    builder.append("<FoodItem country=\"")
+                            .append(foodItem.getCountry())
+                            .append("\">\n        <id>")
+                            .append(foodItemId)
+                            .append("</id>\n        <name>")
+                            .append(foodItem.getName())
+                            .append("</name>\n        <description>")
+                            .append(foodItem.getDescription())
+                            .append("</description>\n        <category>")
+                            .append(foodItem.getCategory())
+                            .append("</category>\n        <price>")
+                            .append(foodItem.getPrice())
+                            .append("</price>\n    </FoodItem>");
                 }
             }
+            builder.append("</RetrievedFoodItems>");
             return builder.toString();
         } catch (Exception ex) {
             Logger.getLogger(FoodMenuResource.class.getName()).log(Level.SEVERE, null, ex);
-            return "<InvalidMessage xmlns=”http://cse564.asu.edu/PoxAssignment”/>" + ex.getMessage() + ex.toString();
+            return "Exception in getFoodItem " + ex.getMessage() + ex.toString();
         }
     }
 

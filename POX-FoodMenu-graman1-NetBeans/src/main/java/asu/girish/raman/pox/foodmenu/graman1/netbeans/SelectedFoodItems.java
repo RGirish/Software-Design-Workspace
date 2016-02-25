@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package asu.girish.raman.pox.foodmenu.graman1.netbeans;
 
 import java.util.List;
@@ -22,7 +17,7 @@ public class SelectedFoodItems {
         return foodItemIds;
     }
 
-    @XmlElement(name = "FoodItemId", required = true, type = Integer.class)
+    @XmlElement(name = "FoodItemId", required = true)
     public void setfoodItemId(List<Integer> foodItemIds) {
         this.foodItemIds = foodItemIds;
     }

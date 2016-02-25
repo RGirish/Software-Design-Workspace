@@ -5,14 +5,21 @@
  */
 package asu.girish.raman.pox.foodmenu.graman1.netbeans;
 
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
-import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
 
 /**
  * REST Web Service
@@ -22,6 +29,8 @@ import javax.ws.rs.core.MediaType;
 @Path("FoodMenu")
 public class FoodMenuResource {
 
+    static List<FoodItem> foodItemList = new ArrayList<>();
+    
     @Context
     private UriInfo context;
 
@@ -32,22 +41,34 @@ public class FoodMenuResource {
     }
 
     /**
-     * Retrieves representation of an instance of asu.girish.raman.pox.foodmenu.graman1.netbeans.FoodMenuResource
+     * Retrieves representation of an instance of
+     * asu.girish.raman.pox.foodmenu.graman1.netbeans.FoodMenuResource
+     *
+     * @param xmlRequestString
      * @return an instance of java.lang.String
      */
-    @GET
+    @Path("addFoodItem")
+    @POST
     @Produces(MediaType.APPLICATION_XML)
-    public String getXml() {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
+    public String getXml(@FormParam("xmlRequestString") String xmlRequestString) {
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(NewFoodItems.class);
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            NewFoodItems newFoodItems = (NewFoodItems) jaxbUnmarshaller.unmarshal(new StreamSource(new StringReader(xmlRequestString)));
+
+            List<FoodItem> foodItems = newFoodItems.getFoodItems();
+            for(FoodItem fi : foodItems){
+                foodItemList.add(fi);
+            }
+            
+            String s = "<FoodItemAdded xmlns=”http://cse564.asu.edu/PoxAssignment”>\n" +
+                        "   <FoodItemId>" + (foodItemList.size() - 1) + "</FoodItemId>\n" +
+                        "</FoodItemAdded>";
+            return s;
+        } catch (Exception ex) {
+            Logger.getLogger(FoodMenuResource.class.getName()).log(Level.SEVERE, null, ex);
+            return (ex.getMessage());
+        }
     }
 
-    /**
-     * PUT method for updating or creating an instance of FoodMenuResource
-     * @param content representation for the resource
-     */
-    @PUT
-    @Consumes(MediaType.APPLICATION_XML)
-    public void putXml(String content) {
-    }
 }

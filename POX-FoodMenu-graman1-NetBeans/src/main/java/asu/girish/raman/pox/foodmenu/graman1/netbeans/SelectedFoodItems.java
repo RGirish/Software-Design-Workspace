@@ -1,6 +1,8 @@
 package asu.girish.raman.pox.foodmenu.graman1.netbeans;
 
 import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -8,17 +10,17 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Girish
  */
-@XmlRootElement(name = "SelectedFoodItems")
+@XmlRootElement(name = "SelectedFoodItems", namespace = "http://cse564.asu.edu/PoxAssignment")
 public class SelectedFoodItems {
 
-    List<Integer> foodItemIds;
+    int[] foodItemIds;
 
-    public List<Integer> getFoodItemIds() {
+    public int[] getFoodItemIds() {
         return foodItemIds;
     }
 
     @XmlElement(name = "FoodItemId", required = true)
-    public void setfoodItemId(List<Integer> foodItemIds) {
+    public void setfoodItemId(int[] foodItemIds) {
         this.foodItemIds = foodItemIds;
     }
 }

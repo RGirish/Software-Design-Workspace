@@ -104,8 +104,8 @@ public class FoodMenuResource {
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             SelectedFoodItems selectedFoodItems = (SelectedFoodItems) jaxbUnmarshaller.unmarshal(new StreamSource(new StringReader(xmlRequestString)));
 
-            List<Integer> foodItemIds = selectedFoodItems.getFoodItemIds();
-            StringBuilder builder = new StringBuilder("<RetrievedFoodItems xmlns=”http://cse564.asu.edu/PoxAssignment”>");
+            int[] foodItemIds = selectedFoodItems.getFoodItemIds();
+            StringBuilder builder = new StringBuilder("<RetrievedFoodItems xmlns=\"http://cse564.asu.edu/PoxAssignment\">");
             for (int foodItemId : foodItemIds) {
                 if (foodItemId >= foodItemList.size()) {
                     builder.append("<InvalidFoodItem>\n        <FoodItemId>")

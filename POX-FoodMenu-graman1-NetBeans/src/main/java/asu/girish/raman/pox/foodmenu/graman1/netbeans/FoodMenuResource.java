@@ -30,7 +30,7 @@ import javax.xml.transform.stream.StreamSource;
 public class FoodMenuResource {
 
     static List<FoodItem> foodItemList = new ArrayList<>();
-    
+
     @Context
     private UriInfo context;
 
@@ -50,24 +50,92 @@ public class FoodMenuResource {
     @Path("addFoodItem")
     @POST
     @Produces(MediaType.APPLICATION_XML)
-    public String getXml(@FormParam("xmlRequestString") String xmlRequestString) {
+    public String addFoodItem(@FormParam("xmlRequestString") String xmlRequestString) {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(NewFoodItems.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             NewFoodItems newFoodItems = (NewFoodItems) jaxbUnmarshaller.unmarshal(new StreamSource(new StringReader(xmlRequestString)));
 
             List<FoodItem> foodItems = newFoodItems.getFoodItems();
-            for(FoodItem fi : foodItems){
-                foodItemList.add(fi);
+            StringBuilder builder = new StringBuilder();
+            for (FoodItem fi : foodItems) {
+                if (fi.getCountry() == null || fi.getCategory() == null || fi.getDescription() == null || fi.getName() == null || fi.getPrice() == null) {
+                    builder.append("<InvalidMessage xmlns=”http://cse564.asu.edu/PoxAssignment”/>");
+                    continue;
+                }
+                int position = -1;
+                for (int i = 0; i < foodItemList.size(); ++i) {
+                    if (position != -1) {
+                        continue;
+                    }
+                    FoodItem foodItem = foodItemList.get(i);
+                    if (foodItem.getName().equals(fi.getName()) && foodItem.getCountry().equals(fi.getCountry()) && foodItem.getCategory().equals(fi.getCategory())) {
+                        position = i;
+                    }
+                }
+                if (position != -1) {
+                    builder.append("<FoodItemExists xmlns=”http://cse564.asu.edu/PoxAssignment”>\n")
+                            .append("   <FoodItemId>")
+                            .append(position)
+                            .append("</FoodItemId>\n")
+                            .append("</FoodItemExists>");
+                } else {
+                    foodItemList.add(fi);
+                    builder.append("<FoodItemAdded xmlns=”http://cse564.asu.edu/PoxAssignment”>\n")
+                            .append("   <FoodItemId>")
+                            .append(foodItemList.size() - 1)
+                            .append("</FoodItemId>\n")
+                            .append("</FoodItemAdded>");
+                }
             }
-            
-            String s = "<FoodItemAdded xmlns=”http://cse564.asu.edu/PoxAssignment”>\n" +
-                        "   <FoodItemId>" + (foodItemList.size() - 1) + "</FoodItemId>\n" +
-                        "</FoodItemAdded>";
-            return s;
+            return builder.toString();
         } catch (Exception ex) {
             Logger.getLogger(FoodMenuResource.class.getName()).log(Level.SEVERE, null, ex);
-            return (ex.getMessage());
+            return "<InvalidMessage xmlns=”http://cse564.asu.edu/PoxAssignment”/>" + ex.getMessage() + ex.toString();
+        }
+    }
+
+    @Path("getFoodItem")
+    @POST
+    @Produces(MediaType.APPLICATION_XML)
+    public String getFoodItem(@FormParam("xmlRequestString") String xmlRequestString) {
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(NewFoodItems.class);
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            NewFoodItems newFoodItems = (NewFoodItems) jaxbUnmarshaller.unmarshal(new StreamSource(new StringReader(xmlRequestString)));
+
+            List<FoodItem> foodItems = newFoodItems.getFoodItems();
+            StringBuilder builder = new StringBuilder();
+            for (FoodItem fi : foodItems) {
+                int position = -1;
+                for (int i = 0; i < foodItemList.size(); ++i) {
+                    if (position != -1) {
+                        continue;
+                    }
+                    FoodItem foodItem = foodItemList.get(i);
+                    if (foodItem.getName().equals(fi.getName()) && foodItem.getCountry().equals(fi.getCountry()) && foodItem.getCategory().equals(fi.getCategory())) {
+                        position = i;
+                    }
+                }
+                if (position != -1) {
+                    builder.append("<FoodItemExists xmlns=”http://cse564.asu.edu/PoxAssignment”>\n")
+                            .append("   <FoodItemId>")
+                            .append(position)
+                            .append("</FoodItemId>\n")
+                            .append("</FoodItemExists>");
+                } else {
+                    foodItemList.add(fi);
+                    builder.append("<FoodItemAdded xmlns=”http://cse564.asu.edu/PoxAssignment”>\n")
+                            .append("   <FoodItemId>")
+                            .append(foodItemList.size() - 1)
+                            .append("</FoodItemId>\n")
+                            .append("</FoodItemAdded>");
+                }
+            }
+            return builder.toString();
+        } catch (Exception ex) {
+            Logger.getLogger(FoodMenuResource.class.getName()).log(Level.SEVERE, null, ex);
+            return "<InvalidMessage xmlns=”http://cse564.asu.edu/PoxAssignment”/>" + ex.getMessage() + ex.toString();
         }
     }
 

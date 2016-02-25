@@ -4,16 +4,16 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="FoodItem")
+@XmlRootElement(name = "FoodItem")
 public class FoodItem {
-    
+
     String country, name, description, category, price;
 
     public String getCountry() {
         return country;
     }
 
-    @XmlAttribute
+    @XmlAttribute(name = "country", required = true)
     public void setCountry(String country) {
         this.country = country;
     }
@@ -21,8 +21,8 @@ public class FoodItem {
     public String getName() {
         return name;
     }
-    
-    @XmlElement
+
+    @XmlElement(name = "name", required = true)
     public void setName(String name) {
         this.name = name;
     }
@@ -30,8 +30,8 @@ public class FoodItem {
     public String getDescription() {
         return description;
     }
-    
-    @XmlElement
+
+    @XmlElement(name = "description", required = true)
     public void setDescription(String description) {
         this.description = description;
     }
@@ -40,7 +40,7 @@ public class FoodItem {
         return category;
     }
 
-    @XmlElement
+    @XmlElement(name = "category", required = true)
     public void setCategory(String category) {
         this.category = category;
     }
@@ -49,7 +49,7 @@ public class FoodItem {
         return price;
     }
 
-    @XmlElement
+    @XmlElement(name = "price", required = true)
     public void setPrice(String price) {
         this.price = price;
     }

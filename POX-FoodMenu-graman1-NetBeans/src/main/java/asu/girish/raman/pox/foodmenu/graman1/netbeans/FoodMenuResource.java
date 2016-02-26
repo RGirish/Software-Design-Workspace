@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package asu.girish.raman.pox.foodmenu.graman1.netbeans;
 
 import java.io.StringReader;
@@ -39,6 +34,15 @@ public class FoodMenuResource {
     public FoodMenuResource() {
     }
 
+    /**
+     * This is the dispatcher function that receives a POST request from a
+     * client, interprets the kind of request, and then dispatches it
+     * accordingly to either addFoodItem() or getFoodItem().
+     *
+     * @param xmlRequestString The XML request message.
+     * @return An XML response message returned from either addFoodItem() or
+     * getFoodItem().
+     */
     @POST
     @Produces(MediaType.APPLICATION_XML)
     public String processRequest(@FormParam("xmlRequestString") String xmlRequestString) {
@@ -50,14 +54,16 @@ public class FoodMenuResource {
         } catch (UnmarshalException ex) {
             return getFoodItem(xmlRequestString);
         } catch (JAXBException ex) {
-            return "Some error occurred! Probably because of t=an invalid request message. Pleae try again with a valid request message!";
+            return "Some error occurred! Probably because of an invalid request message. Pleae try again with a valid request message!";
         }
     }
 
     /**
+     * This function takes in a addFoodItem request message in XML format,
+     * parses it and does necessary actions.
      *
-     * @param xmlRequestString
-     * @return
+     * @param xmlRequestString The XML request message.
+     * @return An XML response message.
      */
     public String addFoodItem(String xmlRequestString) {
         try {
@@ -105,9 +111,11 @@ public class FoodMenuResource {
     }
 
     /**
+     * This function takes in a getFoodItem request message in XML format,
+     * parses it and does necessary actions.
      *
-     * @param xmlRequestString
-     * @return
+     * @param xmlRequestString The XML request message.
+     * @return An XML response message.
      */
     public String getFoodItem(String xmlRequestString) {
         try {

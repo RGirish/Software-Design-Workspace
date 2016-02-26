@@ -18,6 +18,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.UnmarshalException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 
@@ -26,7 +28,7 @@ import javax.xml.transform.stream.StreamSource;
  *
  * @author Girish
  */
-@Path("FoodMenu")
+@Path("FoodItem")
 public class FoodMenuResource {
 
     static List<FoodItem> foodItemList = new ArrayList<>();
@@ -34,23 +36,30 @@ public class FoodMenuResource {
     @Context
     private UriInfo context;
 
-    /**
-     * Creates a new instance of FoodMenuResource
-     */
     public FoodMenuResource() {
     }
 
-    /**
-     * Retrieves representation of an instance of
-     * asu.girish.raman.pox.foodmenu.graman1.netbeans.FoodMenuResource
-     *
-     * @param xmlRequestString
-     * @return an instance of java.lang.String
-     */
-    @Path("addFoodItem")
     @POST
     @Produces(MediaType.APPLICATION_XML)
-    public String addFoodItem(@FormParam("xmlRequestString") String xmlRequestString) {
+    public String processRequest(@FormParam("xmlRequestString") String xmlRequestString) {
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(NewFoodItems.class);
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            jaxbUnmarshaller.unmarshal(new StreamSource(new StringReader(xmlRequestString)));
+            return addFoodItem(xmlRequestString);
+        } catch (UnmarshalException ex) {
+            return getFoodItem(xmlRequestString);
+        } catch (JAXBException ex) {
+            return "Some error occurred! Probably because of t=an invalid request message. Pleae try again with a valid request message!";
+        }
+    }
+
+    /**
+     *
+     * @param xmlRequestString
+     * @return
+     */
+    public String addFoodItem(String xmlRequestString) {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(NewFoodItems.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
@@ -60,7 +69,7 @@ public class FoodMenuResource {
             StringBuilder builder = new StringBuilder();
             for (FoodItem fi : foodItems) {
                 if (fi.getCountry() == null || fi.getCategory() == null || fi.getDescription() == null || fi.getName() == null || fi.getPrice() == null) {
-                    builder.append("<InvalidMessage xmlns=”http://cse564.asu.edu/PoxAssignment”/>");
+                    builder.append("<InvalidMessage xmlns=\"http://cse564.asu.edu/PoxAssignment\"/>");
                     continue;
                 }
                 int position = -1;
@@ -74,14 +83,14 @@ public class FoodMenuResource {
                     }
                 }
                 if (position != -1) {
-                    builder.append("<FoodItemExists xmlns=”http://cse564.asu.edu/PoxAssignment”>\n")
+                    builder.append("<FoodItemExists xmlns=\"http://cse564.asu.edu/PoxAssignment\">\n")
                             .append("   <FoodItemId>")
                             .append(position)
                             .append("</FoodItemId>\n")
                             .append("</FoodItemExists>");
                 } else {
                     foodItemList.add(fi);
-                    builder.append("<FoodItemAdded xmlns=”http://cse564.asu.edu/PoxAssignment”>\n")
+                    builder.append("<FoodItemAdded xmlns=\"http://cse564.asu.edu/PoxAssignment\">\n")
                             .append("   <FoodItemId>")
                             .append(foodItemList.size() - 1)
                             .append("</FoodItemId>\n")
@@ -95,10 +104,12 @@ public class FoodMenuResource {
         }
     }
 
-    @Path("getFoodItem")
-    @POST
-    @Produces(MediaType.APPLICATION_XML)
-    public String getFoodItem(@FormParam("xmlRequestString") String xmlRequestString) {
+    /**
+     *
+     * @param xmlRequestString
+     * @return
+     */
+    public String getFoodItem(String xmlRequestString) {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(SelectedFoodItems.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();

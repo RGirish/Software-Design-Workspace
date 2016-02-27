@@ -1,8 +1,9 @@
 package asu.girish.raman.pox.foodmenu.graman1.netbeans;
 
 import java.io.StringReader;
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.FormParam;
@@ -26,7 +27,8 @@ import javax.xml.transform.stream.StreamSource;
 @Path("FoodItem")
 public class FoodMenuResource {
 
-    static List<FoodItem> foodItemList = new ArrayList<>();
+    static Map<Integer, FoodItem> foodItemsList = new LinkedHashMap<>();
+    static int lastID = 0;
 
     @Context
     private UriInfo context;
@@ -65,6 +67,7 @@ public class FoodMenuResource {
      * @param xmlRequestString The XML request message.
      * @return An XML response message.
      */
+    @SuppressWarnings("empty-statement")
     public String addFoodItem(String xmlRequestString) {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(NewFoodItems.class);
@@ -78,27 +81,30 @@ public class FoodMenuResource {
                     builder.append("<InvalidMessage xmlns=\"http://cse564.asu.edu/PoxAssignment\"/>");
                     continue;
                 }
-                int position = -1;
-                for (int i = 0; i < foodItemList.size(); ++i) {
-                    if (position != -1) {
-                        continue;
-                    }
-                    FoodItem foodItem = foodItemList.get(i);
+                int foodItemId = -1;
+                for (Map.Entry pair : foodItemsList.entrySet()) {
+                    FoodItem foodItem = (FoodItem) pair.getValue();
                     if (foodItem.getName().equals(fi.getName()) && foodItem.getCountry().equals(fi.getCountry()) && foodItem.getCategory().equals(fi.getCategory())) {
-                        position = i;
+                        foodItemId = (int) pair.getKey();
                     }
                 }
-                if (position != -1) {
+                if (foodItemId != -1) {
                     builder.append("<FoodItemExists xmlns=\"http://cse564.asu.edu/PoxAssignment\">\n")
                             .append("   <FoodItemId>")
-                            .append(position)
+                            .append(foodItemId)
                             .append("</FoodItemId>\n")
                             .append("</FoodItemExists>");
                 } else {
-                    foodItemList.add(fi);
+                    int ID = lastID + 1;
+                    while (foodItemsList.containsKey(ID)) {
+                        ID++;
+                    }
+                    lastID = ID;
+                    fi.setId(ID);
+                    foodItemsList.put(ID, fi);
                     builder.append("<FoodItemAdded xmlns=\"http://cse564.asu.edu/PoxAssignment\">\n")
                             .append("   <FoodItemId>")
-                            .append(foodItemList.size() - 1)
+                            .append(ID)
                             .append("</FoodItemId>\n")
                             .append("</FoodItemAdded>");
                 }
@@ -126,12 +132,12 @@ public class FoodMenuResource {
             int[] foodItemIds = selectedFoodItems.getFoodItemIds();
             StringBuilder builder = new StringBuilder("<RetrievedFoodItems xmlns=\"http://cse564.asu.edu/PoxAssignment\">");
             for (int foodItemId : foodItemIds) {
-                if (foodItemId >= foodItemList.size()) {
+                if (!foodItemsList.containsKey(foodItemId)) {
                     builder.append("<InvalidFoodItem>\n        <FoodItemId>")
                             .append(foodItemId)
                             .append("</FoodItemId>\n    </InvalidFoodItem>");
                 } else {
-                    FoodItem foodItem = foodItemList.get(foodItemId);
+                    FoodItem foodItem = foodItemsList.get(foodItemId);
                     builder.append("<FoodItem country=\"")
                             .append(foodItem.getCountry())
                             .append("\">\n        <id>")

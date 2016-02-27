@@ -8,6 +8,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class FoodItem {
 
     String country, name, description, category, price;
+    int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getCountry() {
         return country;

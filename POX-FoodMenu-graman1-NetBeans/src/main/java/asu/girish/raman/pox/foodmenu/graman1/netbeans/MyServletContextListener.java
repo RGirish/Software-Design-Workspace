@@ -33,9 +33,7 @@ public class MyServletContextListener implements ServletContextListener {
                 temp.setPrice(foodItem.getPrice());
                 temp.setId(foodItem.getId());
                 foodItemsList.put(foodItem.getId(), temp);
-                System.out.println(foodItem.getId() + "_" + foodItem.getName());
             }
-            System.out.println("HAshmap length " + foodItemsList.size());
         } catch (Exception ex) {
         }
     }

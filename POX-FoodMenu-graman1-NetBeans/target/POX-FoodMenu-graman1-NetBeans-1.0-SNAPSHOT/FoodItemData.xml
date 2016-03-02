@@ -1,13 +1,13 @@
 <FoodItemData xmlns="http://www.w3.org/2001/XMLSchema-instance">
     <FoodItem country="GB">
-        <id>100</id>
+        <id>4</id>
         <name>Steak and Kidney Pie</name>
         <description>Tender cubes of steak, with tender lamb kidney is succulent rich gravy.  Served with a side of mashed potatoes and peas.</description>
         <category>Dinner</category>
         <price>15.95</price>
     </FoodItem>
     <FoodItem country="GB">
-        <id>101</id>
+        <id>6</id>
         <name>Toad in the Hole</name>
         <description>Plump British Pork sausages backed in a light batter.  Served with mixed vegetables and a brown onion gravy.</description>
         <category>Dinner</category>

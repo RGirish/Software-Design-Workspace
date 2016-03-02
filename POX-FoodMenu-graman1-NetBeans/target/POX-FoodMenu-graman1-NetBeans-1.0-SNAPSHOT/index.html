@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Plain Old XML via HTTP - Assignment 1</title>
+        <title>Plain Old XML via HTTP - Assignment 1 - Girish Raman</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <style>
             @font-face {
@@ -13,21 +13,44 @@
             }
             .title{
                 font-size: 4em;
-                color: white;
+                color: #fff;
             }
         </style>
     </head>
-    <body bgcolor="#963019">
-        <!--
-        #667467 gray
-        #963019 orange
-        #16174f blue
-        #f6f1ed off-white
-        -->
+    <body bgcolor="#667467" alink="white" vlink="white" link="white">
         <div style="text-align: center; color: #f6f1ed">
 
             <div class ="title"><br>Read Me</div>
+            <div style="text-align: center">
+                <br><br><h3 style="color: black"><u>Prerequisites</u></h3>
 
+                This project does not have a UI to it – I used the REST Client Postman to access the web services. <br><br>
+                You can download postman from this link - <a target="_blank" href="https://www.getpostman.com/">https://www.getpostman.com/</a>. <br><br>
+                Java v7, Netbeans 8.1 and Glassfish 4.1.1 (hasn’t been tested in other versions- project definitely works with these versions)<br>
+
+                <br><br><h3 style="color: black"><u>Instructions to run the project</u></h3>
+
+                Inside the zip file, is the project folder from my workspace - POX-FoodMenu-graman1-NetBeans. <br><br>
+                File -> Open Project -> Navigate_to_this_folder_and_select_it_to_open<br><br>
+                Once it has loaded, click on the Run Project icon to run it in the browser of your choice. <br><br>
+                Once you’re able to see the index.html page, open up Postman. <br><br>
+                You will have to sign-up with them which will take about 10 seconds. <br><br><br><br>
+                Once postman opens up, follow this image for what to do next:<br><br>
+
+                <img width="1000" height="600" src="postman.jpg" alt="Instructions"/><br><br><br>
+
+                1)	First, copy-paste the URI in the address bar.<br><br>
+                2)	Select the POST method from the drop-down list.<br><br>
+                3)	Select the Body tab to enter the request message.<br><br>
+                4)	Select x-www-form-urlencoded.<br><br>
+                5)	Type xmlRequestString in the field for key. <br><br>
+                6)	Type the XML request message in the field for value.<br><br>
+                7)	Click on the Send button to send the request to the server. <br><br>
+                8)	The corresponding response message will show up in the response body as shown. <br><br><br><br>
+
+            </div>
+            A request message in XML will return &LT;InvalidMessage/&GT; as response only if it does not contain the attributes and elements that it is supposed to have. When extra elements/attributes are given, it will just capture the required attributes and elements and disregard the others. <br><br><br>
+            Here is the <a href="FoodItemData.xml" target="_blank">FoodItemData.xml file</a>.<br><br><br>
         </div>
     </body>
 </html>

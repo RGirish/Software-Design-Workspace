@@ -4,15 +4,14 @@ import java.io.StringReader;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.ws.rs.FormParam;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.UnmarshalException;
@@ -46,18 +45,23 @@ public class FoodMenuResource {
      * getFoodItem().
      */
     @POST
+    @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_XML)
-    public String processRequest(@FormParam("xmlRequestString") String xmlRequestString) {
+    public Response processRequest(String xmlRequestString) {
+        System.out.println("Server: A request has reached the dispatcher.");
+
+        String responseString;
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(NewFoodItems.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             jaxbUnmarshaller.unmarshal(new StreamSource(new StringReader(xmlRequestString)));
-            return addFoodItem(xmlRequestString);
+            responseString = addFoodItem(xmlRequestString);
         } catch (UnmarshalException ex) {
-            return getFoodItem(xmlRequestString);
+            responseString = getFoodItem(xmlRequestString);
         } catch (JAXBException ex) {
-            return "Some error occurred! Probably because of an invalid request message. Pleae try again with a valid request message!";
+            responseString = "<InvalidMessage xmlns=\"http://cse564.asu.edu/PoxAssignment\"/>";
         }
+        return Response.status(Response.Status.OK).entity(responseString).build();
     }
 
     /**
@@ -69,6 +73,7 @@ public class FoodMenuResource {
      */
     @SuppressWarnings("empty-statement")
     public String addFoodItem(String xmlRequestString) {
+        System.out.println("Server: Reached addFoodItem()");
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(NewFoodItems.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
@@ -93,7 +98,7 @@ public class FoodMenuResource {
                             .append("   <FoodItemId>")
                             .append(foodItemId)
                             .append("</FoodItemId>\n")
-                            .append("</FoodItemExists>");
+                            .append("</FoodItemExists>\n");
                 } else {
                     int ID = lastID + 1;
                     while (foodItemsList.containsKey(ID)) {
@@ -106,13 +111,13 @@ public class FoodMenuResource {
                             .append("   <FoodItemId>")
                             .append(ID)
                             .append("</FoodItemId>\n")
-                            .append("</FoodItemAdded>");
+                            .append("</FoodItemAdded>\n");
                 }
             }
+            builder.append("\n");
             return builder.toString();
         } catch (Exception ex) {
-            Logger.getLogger(FoodMenuResource.class.getName()).log(Level.SEVERE, null, ex);
-            return "Exception in addFoodItem " + ex.getMessage() + ex.toString();
+            return "<InvalidMessage xmlns=\"http://cse564.asu.edu/PoxAssignment\"/>\n";
         }
     }
 
@@ -124,18 +129,19 @@ public class FoodMenuResource {
      * @return An XML response message.
      */
     public String getFoodItem(String xmlRequestString) {
+        System.out.println("Server: Reached getFoodItem()");
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(SelectedFoodItems.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             SelectedFoodItems selectedFoodItems = (SelectedFoodItems) jaxbUnmarshaller.unmarshal(new StreamSource(new StringReader(xmlRequestString)));
 
             int[] foodItemIds = selectedFoodItems.getFoodItemIds();
-            StringBuilder builder = new StringBuilder("<RetrievedFoodItems xmlns=\"http://cse564.asu.edu/PoxAssignment\">");
+            StringBuilder builder = new StringBuilder("<RetrievedFoodItems xmlns=\"http://cse564.asu.edu/PoxAssignment\">\n");
             for (int foodItemId : foodItemIds) {
                 if (!foodItemsList.containsKey(foodItemId)) {
                     builder.append("<InvalidFoodItem>\n        <FoodItemId>")
                             .append(foodItemId)
-                            .append("</FoodItemId>\n    </InvalidFoodItem>");
+                            .append("</FoodItemId>\n    </InvalidFoodItem>\n");
                 } else {
                     FoodItem foodItem = foodItemsList.get(foodItemId);
                     builder.append("<FoodItem country=\"")
@@ -150,14 +156,14 @@ public class FoodMenuResource {
                             .append(foodItem.getCategory())
                             .append("</category>\n        <price>")
                             .append(foodItem.getPrice())
-                            .append("</price>\n    </FoodItem>");
+                            .append("</price>\n    </FoodItem>\n");
                 }
             }
             builder.append("</RetrievedFoodItems>");
+            builder.append("\n");
             return builder.toString();
         } catch (Exception ex) {
-            Logger.getLogger(FoodMenuResource.class.getName()).log(Level.SEVERE, null, ex);
-            return "Exception in getFoodItem " + ex.getMessage() + ex.toString();
+            return "<InvalidMessage xmlns=\"http://cse564.asu.edu/PoxAssignment\"/>";
         }
     }
 

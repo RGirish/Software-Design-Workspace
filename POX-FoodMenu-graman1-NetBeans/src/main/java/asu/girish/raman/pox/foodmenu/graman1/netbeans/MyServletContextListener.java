@@ -15,6 +15,12 @@ import javax.xml.bind.Unmarshaller;
  */
 public class MyServletContextListener implements ServletContextListener {
 
+    /**
+     * The foodItemsList object is populated with an initial set of FoodItems
+     * data from the XML file FoodItemData.xml
+     *
+     * @param sce The current context of the Servlet.
+     */
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         try {

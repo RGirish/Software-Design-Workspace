@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package asu.girish.raman.pox.foodmenu.graman1.netbeans.client;
 
 /**
@@ -14,17 +9,25 @@ public class App {
     public static void main(String[] args) {
         FoodMenuClient foodMenuClient = new FoodMenuClient();
 
-        String responseMessage = foodMenuClient.postXMLRequest(
-                "<NewFoodItems xmlns=\"http://cse564.asu.edu/PoxAssignment\">\n"
-                + "    <FoodItem country=\"GB2\">\n"
-                + "        <name>Cornish Pasty</name>\n"
-                + "        <description>Tender cubes of steak, potatoes and swede wrapped in flakey short crust pastry.  Seasoned with lots of pepper.  Served with mashed potatoes, peas and a side of gravy</description>\n"
-                + "        <category>Dinner</category>\n"
-                + "        <price>15.95</price>\n"
-                + "    </FoodItem>\n"
-                + "</NewFoodItems>");
+        /*
+            Change the value of requestMessage with a request message of your own!
+         */
+        String requestMessage
+                = "<SelectedFoodItems xmlns=\"http://cse564.asu.edu/PoxAssignment\">\n"
+                + "   <FoodItemId>302</FoodItemId>\n"
+                + "   <FoodItemId>214</FoodItemId>\n"
+                + "</SelectedFoodItems>";
 
-        System.out.println("Client: The response is ");
-        System.out.println(responseMessage);
+        String responseMessage = foodMenuClient.postXMLRequest(requestMessage);
+
+        System.out.println("\n\n\n\n");
+        if (responseMessage.startsWith("error")) {
+            System.out.println("Client: The server responded with a HTTP " + responseMessage.split("_")[1]);
+        } else {
+            System.out.println("Client: The server responded with a HTTP 200 and the response message -");
+            System.out.println(responseMessage);
+        }
+        System.out.println("\n\n\n\n");
+        foodMenuClient.close();
     }
 }

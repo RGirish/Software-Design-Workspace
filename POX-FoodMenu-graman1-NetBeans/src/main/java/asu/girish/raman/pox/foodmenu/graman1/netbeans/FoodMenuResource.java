@@ -31,6 +31,7 @@ public class FoodMenuResource {
 
     @Context
     private UriInfo context;
+    private final String INVALID_MESSAGE = "<InvalidMessage xmlns=\"http://cse564.asu.edu/PoxAssignment\"/>\n";
 
     public FoodMenuResource() {
     }
@@ -45,8 +46,8 @@ public class FoodMenuResource {
      * getFoodItem().
      */
     @POST
-    @Consumes(MediaType.APPLICATION_XML)
-    @Produces(MediaType.APPLICATION_XML)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_FORM_URLENCODED)
     public Response processRequest(String xmlRequestString) {
         System.out.println("Server: A request has reached the dispatcher.");
 
@@ -59,13 +60,13 @@ public class FoodMenuResource {
         } catch (UnmarshalException ex) {
             responseString = getFoodItem(xmlRequestString);
         } catch (JAXBException ex) {
-            responseString = "<InvalidMessage xmlns=\"http://cse564.asu.edu/PoxAssignment\"/>";
+            responseString = INVALID_MESSAGE;
         }
-        return Response.status(Response.Status.OK).entity(responseString).build();
+        return Response.status(200).entity(responseString).build();
     }
 
     /**
-     * This function takes in a addFoodItem request message in XML format,
+     * This function takes in an addFoodItem request message in XML format,
      * parses it and does necessary actions.
      *
      * @param xmlRequestString The XML request message.
@@ -83,7 +84,7 @@ public class FoodMenuResource {
             StringBuilder builder = new StringBuilder();
             for (FoodItem fi : foodItems) {
                 if (fi.getCountry() == null || fi.getCategory() == null || fi.getDescription() == null || fi.getName() == null || fi.getPrice() == null) {
-                    builder.append("<InvalidMessage xmlns=\"http://cse564.asu.edu/PoxAssignment\"/>");
+                    builder.append(INVALID_MESSAGE);
                     continue;
                 }
                 int foodItemId = -1;
@@ -117,7 +118,7 @@ public class FoodMenuResource {
             builder.append("\n");
             return builder.toString();
         } catch (Exception ex) {
-            return "<InvalidMessage xmlns=\"http://cse564.asu.edu/PoxAssignment\"/>\n";
+            return INVALID_MESSAGE;
         }
     }
 
@@ -141,7 +142,7 @@ public class FoodMenuResource {
                 if (!foodItemsList.containsKey(foodItemId)) {
                     builder.append("<InvalidFoodItem>\n        <FoodItemId>")
                             .append(foodItemId)
-                            .append("</FoodItemId>\n    </InvalidFoodItem>\n");
+                            .append("</FoodItemId>\n</InvalidFoodItem>\n");
                 } else {
                     FoodItem foodItem = foodItemsList.get(foodItemId);
                     builder.append("<FoodItem country=\"")
@@ -156,14 +157,14 @@ public class FoodMenuResource {
                             .append(foodItem.getCategory())
                             .append("</category>\n        <price>")
                             .append(foodItem.getPrice())
-                            .append("</price>\n    </FoodItem>\n");
+                            .append("</price>\n</FoodItem>\n");
                 }
             }
             builder.append("</RetrievedFoodItems>");
             builder.append("\n");
             return builder.toString();
         } catch (Exception ex) {
-            return "<InvalidMessage xmlns=\"http://cse564.asu.edu/PoxAssignment\"/>";
+            return INVALID_MESSAGE;
         }
     }
 

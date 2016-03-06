@@ -1,8 +1,5 @@
 package asu.girish.raman.pox.foodmenu.graman1.netbeans;
 
-import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 

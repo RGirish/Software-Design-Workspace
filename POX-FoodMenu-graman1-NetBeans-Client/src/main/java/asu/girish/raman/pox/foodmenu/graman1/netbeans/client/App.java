@@ -14,7 +14,7 @@ public class App {
          */
         String requestMessage
                 = "<SelectedFoodItems xmlns=\"http://cse564.asu.edu/PoxAssignment\">\n"
-                + "   <FoodItemId>302</FoodItemId>\n"
+                + "   <FoodItemId>118</FoodItemId>\n"
                 + "   <FoodItemId>214</FoodItemId>\n"
                 + "</SelectedFoodItems>";
 

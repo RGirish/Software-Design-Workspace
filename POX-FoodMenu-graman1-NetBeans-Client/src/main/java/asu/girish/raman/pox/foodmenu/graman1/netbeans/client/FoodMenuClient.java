@@ -40,7 +40,7 @@ public class FoodMenuClient {
      * @throws UniformInterfaceException
      */
     public String postXMLRequest(String xmlRequestMessage) throws UniformInterfaceException {
-        ClientResponse response = webResource.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE).post(ClientResponse.class, xmlRequestMessage);
+        ClientResponse response = webResource.type(MediaType.APPLICATION_XML).accept(MediaType.APPLICATION_XML).post(ClientResponse.class, xmlRequestMessage);
         if (response.getStatus() != 200) {
             return "error_" + response.getStatus();
         }

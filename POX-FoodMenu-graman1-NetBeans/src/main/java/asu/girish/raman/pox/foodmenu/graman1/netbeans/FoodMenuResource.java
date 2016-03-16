@@ -46,8 +46,8 @@ public class FoodMenuResource {
      * getFoodItem().
      */
     @POST
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces(MediaType.APPLICATION_FORM_URLENCODED)
+    @Consumes(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_XML)
     public Response processRequest(String xmlRequestString) {
         System.out.println("Server: A request has reached the dispatcher.");
 

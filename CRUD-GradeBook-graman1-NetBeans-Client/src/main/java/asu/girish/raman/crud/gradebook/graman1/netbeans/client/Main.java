@@ -5,16 +5,43 @@ import com.sun.jersey.api.client.ClientResponse;
 public class Main {
 
     public static void main(String[] args) {
-        GradeBookClient gradeBookClient = new GradeBookClient();
+        //gradingItemsClient();
+        studentProfilesClient();
+    }
 
+    private static void studentProfilesClient() {
+        StudentProfilesClient studentProfilesClient = new StudentProfilesClient();
 //        String requestMessage = "{\n"
-//                + "\"requestType\" : \"createGradingItem\",\n"
-//                + "\"type\" : \"quiz\",\n"
-//                + "\"name\" : \"Quiz 1\",\n"
-//                + "\"percentage\" : 10\n"
+//                + "\"requestType\" : \"createStudentProfile\",\n"
+//                + "\"name\" : \"Girish\"\n"
 //                + "}";
-//        ClientResponse response = gradeBookClient.createGradingItem(requestMessage);
-//        ClientResponse response = gradeBookClient.readGradingItem(2);
+//        ClientResponse response = studentProfilesClient.createStudentProfile(requestMessage);
+//      ClientResponse response = studentProfilesClient.readStudentProfile(2);
+//        String requestMessage = "{\n"
+//                + "\"requestType\" : \"updateStudentProfile\",\n"
+//                + "\"id\" : 2,\n"
+//                + "\"name\" : \"Giribhai\"\n"
+//                + "}";
+//        ClientResponse response = studentProfilesClient.updateStudentProfile(requestMessage);
+        ClientResponse response = studentProfilesClient.deleteStudentProfile(2);
+        if (response.getStatus() != 204) {
+            System.out.println(response.getStatus() + " - " + response.getEntity(String.class) + "\n\n");
+        } else {
+            System.out.println(response.getStatus() + " - No response body\n\n");
+        }
+        studentProfilesClient.close();
+    }
+
+    private static void gradingItemsClient() {
+        GradingItemsClient gradingItemsClient = new GradingItemsClient();
+        String requestMessage = "{\n"
+                + "\"requestType\" : \"createGradingItem\",\n"
+                + "\"type\" : \"quiz\",\n"
+                + "\"name\" : \"Quiz 1\",\n"
+                + "\"percentage\" : 10\n"
+                + "}";
+        ClientResponse response = gradingItemsClient.createGradingItem(requestMessage);
+//        ClientResponse response = gradingItemsClient.readGradingItem(2);
 //        String requestMessage = "{\n"
 //                + "\t\"requestType\" : \"updateGradingItem\",\n"
 //                + "\t\"id\" : 2,\n"
@@ -22,13 +49,13 @@ public class Main {
 //                + "\t\"name\" : \"Quiz 2\",\n"
 //                + "\t\"percentage\" : 90\n"
 //                + "}";
-//        ClientResponse response = gradeBookClient.updateGradingItem(requestMessage);
-        ClientResponse response = gradeBookClient.deleteGradingItem(6);
+//        ClientResponse response = gradingItemsClient.updateGradingItem(requestMessage);
+//        ClientResponse response = gradingItemsClient.deleteGradingItem(6);
         if (response.getStatus() != 204) {
             System.out.println(response.getStatus() + " - " + response.getEntity(String.class) + "\n\n");
         } else {
             System.out.println(response.getStatus() + " - No response body\n\n");
         }
-        gradeBookClient.close();
+        gradingItemsClient.close();
     }
 }

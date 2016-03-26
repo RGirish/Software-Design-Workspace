@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package asu.girish.raman.crud.gradebook.graman1.netbeans.client;
 
 import com.sun.jersey.api.client.Client;
@@ -13,15 +8,15 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import javax.ws.rs.core.MediaType;
 
-public class GradeBookClient {
+public class GradingItemsClient {
 
     private final WebResource webResource;
     private final Client client;
 
-    public GradeBookClient() {
+    public GradingItemsClient() {
         ClientConfig clientConfig = new DefaultClientConfig();
         client = Client.create(clientConfig);
-        webResource = client.resource("http://localhost:8080/CRUD-GradeBook-graman1-NetBeans/webresources").path("GradeBook");
+        webResource = client.resource("http://localhost:8080/CRUD-GradeBook-graman1-NetBeans/webresources").path("GradingItem");
     }
 
     public ClientResponse createGradingItem(String jsonRequestMessage) throws UniformInterfaceException {

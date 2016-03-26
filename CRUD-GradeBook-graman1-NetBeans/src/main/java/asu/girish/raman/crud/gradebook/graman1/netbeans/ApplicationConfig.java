@@ -29,7 +29,8 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(asu.girish.raman.crud.gradebook.graman1.netbeans.GradeBookResource.class);
+        resources.add(asu.girish.raman.crud.gradebook.graman1.netbeans.GradingItemResource.class);
+        resources.add(asu.girish.raman.crud.gradebook.graman1.netbeans.StudentResource.class);
     }
     
 }

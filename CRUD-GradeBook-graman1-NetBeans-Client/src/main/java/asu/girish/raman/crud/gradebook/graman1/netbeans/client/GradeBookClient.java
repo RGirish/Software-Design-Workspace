@@ -28,16 +28,16 @@ public class GradeBookClient {
         return webResource.path("createGradingItem").type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(ClientResponse.class, jsonRequestMessage);
     }
 
-    public ClientResponse readGradingItem(String jsonRequestMessage) throws UniformInterfaceException {
-        return webResource.path("readGradingItem").type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(ClientResponse.class, jsonRequestMessage);
+    public ClientResponse readGradingItem(int id) throws UniformInterfaceException {
+        return webResource.path("readGradingItem/" + String.valueOf(id)).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
     }
 
     public ClientResponse updateGradingItem(String jsonRequestMessage) throws UniformInterfaceException {
-        return webResource.path("updateGradingItem").type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(ClientResponse.class, jsonRequestMessage);
+        return webResource.path("updateGradingItem").type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).put(ClientResponse.class, jsonRequestMessage);
     }
 
-    public ClientResponse deleteGradingItem(String jsonRequestMessage) throws UniformInterfaceException {
-        return webResource.path("deleteGradingItem").type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(ClientResponse.class, jsonRequestMessage);
+    public ClientResponse deleteGradingItem(int id) throws UniformInterfaceException {
+        return webResource.path("deleteGradingItem/" + String.valueOf(id)).delete(ClientResponse.class);
     }
 
     public void close() {

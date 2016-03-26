@@ -54,22 +54,15 @@ public class GradeBookResource {
     }
 
     @GET
-    @Path("readGradingItem")
+    @Path("readGradingItem/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response readGradingItem(String jsonRequest) {
+    public Response readGradingItem(@PathParam("id") int id) {
         String jsonResponse;
         try {
-            JSONObject root = new JSONObject(jsonRequest);
-            if (!root.getString("requestType").equals("readGradingItem")) {
-                throw new JSONException("Bad Request");
-            }
-            int id = root.getInt("id");
-
             if (gradingItems == null) {
                 jsonResponse = "{\n"
                         + "\"responseType\" : \"failure\",\n"
-                        + "\"request\" : \"" + jsonRequest + "\"\n"
+                        + "\"request-id\" : \"" + id + "\"\n"
                         + "}";
                 return Response.status(HTTP_GONE).entity(jsonResponse).build();
             }
@@ -87,19 +80,19 @@ public class GradeBookResource {
             }
             jsonResponse = "{\n"
                     + "\"responseType\" : \"failure\",\n"
-                    + "\"request\" : \"" + jsonRequest + "\"\n"
+                    + "\"request-id\" : \"" + id + "\"\n"
                     + "}";
             return Response.status(HTTP_NOT_FOUND).entity(jsonResponse).build();
         } catch (JSONException e) {
             jsonResponse = "{\n"
                     + "\"responseType\" : \"failure\",\n"
-                    + "\"request\" : \"" + jsonRequest + "\"\n"
+                    + "\"request-id\" : \"" + id + "\"\n"
                     + "}";
             return Response.status(HTTP_BAD_REQUEST).entity(jsonResponse).build();
         } catch (Exception e) {
             jsonResponse = "{\n"
                     + "\"responseType\" : \"failure\",\n"
-                    + "\"request\" : \"" + jsonRequest + "\"\n"
+                    + "\"request-id\" : \"" + id + "\"\n"
                     + "}";
             return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse).build();
         }
@@ -129,12 +122,14 @@ public class GradeBookResource {
             for (GradingItem gradingItem : gradingItems) {
                 if (gradingItem.getId() == id) {
                     gradingItems.remove(gradingItem);
+                    gradingItem.setType(root.getString("type"));
                     gradingItem.setName(root.getString("name"));
                     gradingItem.setPercentage(root.getDouble("percentage"));
                     gradingItems.add(gradingItem);
 
                     jsonResponse = "{\n"
                             + "\"responseType\" : \"success\",\n"
+                            + "\"id\" : " + gradingItem.getId() + ",\n"
                             + "\"type\" : \"" + gradingItem.getType() + "\",\n"
                             + "\"name\" : \"" + gradingItem.getName() + "\",\n"
                             + "\"percentage\" : " + gradingItem.getPercentage() + "\n"
@@ -162,11 +157,44 @@ public class GradeBookResource {
         }
     }
 
-    @POST
-    @Path("deleteGradingItem")
+    @DELETE
+    @Path("deleteGradingItem/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response deleteGradingItem(String jsonRequest) {
-        return Response.status(HTTP_OK).entity(jsonRequest).build();
+    public Response deleteGradingItem(@PathParam("id") int id) {
+        String jsonResponse;
+        try {
+            if (gradingItems == null) {
+                jsonResponse = "{\n"
+                        + "\"responseType\" : \"failure\",\n"
+                        + "\"request-id\" : \"" + id + "\"\n"
+                        + "}";
+                return Response.status(HTTP_GONE).entity(jsonResponse).build();
+            }
+
+            for (GradingItem gradingItem : gradingItems) {
+                if (gradingItem.getId() == id) {
+                    gradingItems.remove(gradingItem);
+                    return Response.status(HTTP_NO_CONTENT).build();
+                }
+            }
+            jsonResponse = "{\n"
+                    + "\"responseType\" : \"failure\",\n"
+                    + "\"request-id\" : \"" + id + "\"\n"
+                    + "}";
+            return Response.status(HTTP_NOT_FOUND).entity(jsonResponse).build();
+        } catch (JSONException e) {
+            jsonResponse = "{\n"
+                    + "\"responseType\" : \"failure\",\n"
+                    + "\"request-id\" : \"" + id + "\"\n"
+                    + "}";
+            return Response.status(HTTP_BAD_REQUEST).entity(jsonResponse).build();
+        } catch (Exception e) {
+            jsonResponse = "{\n"
+                    + "\"responseType\" : \"failure\",\n"
+                    + "\"request-id\" : \"" + id + "\"\n"
+                    + "}";
+            return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse).build();
+        }
     }
 }

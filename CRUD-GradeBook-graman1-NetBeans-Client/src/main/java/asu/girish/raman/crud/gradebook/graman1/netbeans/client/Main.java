@@ -7,7 +7,8 @@ public class Main {
     public static void main(String[] args) {
         //gradingItemsClient();
         //studentProfilesClient();
-        gradesClient();
+        //gradesClient();
+        appealsClient();
     }
 
     private static void studentProfilesClient() {
@@ -73,5 +74,19 @@ public class Main {
 //        ClientResponse response = gradesClient.updateGrade(requestMessage);
         System.out.println(response.getStatus() + " - " + response.getEntity(String.class) + "\n\n");
         gradesClient.close();
+    }
+
+    private static void appealsClient() {
+        AppealsClient appealsClient = new AppealsClient();
+        ClientResponse response = appealsClient.viewAllAppeals();
+//        String requestMessage = "{\n"
+//                + "\t\"requestType\" : \"fileAnAppeal\",\n"
+//                + "\t\"studentId\" : 1,\n"
+//                + "\t\"gradingItemId\" : 1,\n"
+//                + "\t\"appealMessage\" : \"Hey, I deserve more!\"\n"
+//                + "}";
+//        ClientResponse response = appealsClient.fileAnAppeal(requestMessage);
+        System.out.println(response.getStatus() + " - " + response.getEntity(String.class) + "\n\n");
+        appealsClient.close();
     }
 }

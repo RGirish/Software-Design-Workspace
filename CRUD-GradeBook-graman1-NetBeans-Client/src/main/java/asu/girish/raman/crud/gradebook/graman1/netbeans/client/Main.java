@@ -6,24 +6,25 @@ public class Main {
 
     public static void main(String[] args) {
         //gradingItemsClient();
-        studentProfilesClient();
+        //studentProfilesClient();
+        gradesClient();
     }
 
     private static void studentProfilesClient() {
         StudentProfilesClient studentProfilesClient = new StudentProfilesClient();
-//        String requestMessage = "{\n"
-//                + "\"requestType\" : \"createStudentProfile\",\n"
-//                + "\"name\" : \"Girish\"\n"
-//                + "}";
-//        ClientResponse response = studentProfilesClient.createStudentProfile(requestMessage);
-//      ClientResponse response = studentProfilesClient.readStudentProfile(2);
+        String requestMessage = "{\n"
+                + "\"requestType\" : \"createStudentProfile\",\n"
+                + "\"name\" : \"Girish\"\n"
+                + "}";
+        ClientResponse response = studentProfilesClient.createStudentProfile(requestMessage);
+//        ClientResponse response = studentProfilesClient.readStudentProfile(2);
 //        String requestMessage = "{\n"
 //                + "\"requestType\" : \"updateStudentProfile\",\n"
 //                + "\"id\" : 2,\n"
 //                + "\"name\" : \"Giribhai\"\n"
 //                + "}";
 //        ClientResponse response = studentProfilesClient.updateStudentProfile(requestMessage);
-        ClientResponse response = studentProfilesClient.deleteStudentProfile(2);
+//        ClientResponse response = studentProfilesClient.deleteStudentProfile(2);
         if (response.getStatus() != 204) {
             System.out.println(response.getStatus() + " - " + response.getEntity(String.class) + "\n\n");
         } else {
@@ -57,5 +58,20 @@ public class Main {
             System.out.println(response.getStatus() + " - No response body\n\n");
         }
         gradingItemsClient.close();
+    }
+
+    private static void gradesClient() {
+        GradesClient gradesClient = new GradesClient();
+        ClientResponse response = gradesClient.readGrades(2, 2);
+//        String requestMessage = "{\n"
+//                + "\t\"requestType\" : \"updateGrades\",\n"
+//                + "\t\"studentId\" : 2,\n"
+//                + "\t\"gradingItemId\" : 2,\n"
+//                + "\t\"points\" : 20.0,\n"
+//                + "\t\"feedback\" : \"Good job!\"\n"
+//                + "}";
+//        ClientResponse response = gradesClient.updateGrade(requestMessage);
+        System.out.println(response.getStatus() + " - " + response.getEntity(String.class) + "\n\n");
+        gradesClient.close();
     }
 }

@@ -1,42 +1,43 @@
 package asu.girish.raman.crud.gradebook.graman1.netbeans;
 
-import asu.girish.raman.crud.gradebook.models.GradingItem;
+import asu.girish.raman.crud.gradebook.models.Student;
 import static java.net.HttpURLConnection.*;
 import java.util.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import org.json.*;
 
-@Path("GradingItem")
-public class GradingItemResource {
+@Path("StudentProfiles")
+public class StudentProfilesResource {
 
-    static List<GradingItem> gradingItems = null;
-    static int GRADING_ITEM_ID = 1;
+    static List<Student> students = null;
+    static int STUDENT_ID = 1;
 
     @POST
-    @Path("createGradingItem")
+    @Path("createStudentProfile")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createGradingItem(String jsonRequest) {
+    public Response createStudentProfile(String jsonRequest) {
         String jsonResponse;
         try {
             JSONObject root = new JSONObject(jsonRequest);
-            if (!root.getString("requestType").equals("createGradingItem")) {
+            if (!root.getString("requestType").equals("createStudentProfile")) {
                 throw new JSONException("Bad Request");
             }
-            String type = root.getString("type");
             String name = root.getString("name");
-            double percentage = root.getDouble("percentage");
-            GradingItem gradingItem = new GradingItem(GRADING_ITEM_ID, type, name, percentage);
-            if (gradingItems == null) {
-                gradingItems = new ArrayList<>();
+            Student student = new Student(name);
+            student.setId(STUDENT_ID);
+            student.setPoints(new LinkedHashMap<Integer, Double>());
+            student.setFeedbacks(new LinkedHashMap<Integer, String>());
+            if (students == null) {
+                students = new ArrayList<>();
             }
-            gradingItems.add(gradingItem);
+            students.add(student);
             jsonResponse = "{\n"
                     + "\"responseType\":\"success\",\n"
-                    + "\"id\":" + GRADING_ITEM_ID + "\n"
+                    + "\"id\":" + STUDENT_ID + "\n"
                     + "}";
-            GRADING_ITEM_ID++;
+            STUDENT_ID++;
             return Response.status(HTTP_CREATED).entity(jsonResponse).build();
         } catch (JSONException e) {
             jsonResponse = "{\n"
@@ -54,12 +55,12 @@ public class GradingItemResource {
     }
 
     @GET
-    @Path("readGradingItem/{id}")
+    @Path("readStudentProfile/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response readGradingItem(@PathParam("id") int id) {
+    public Response readStudentProfile(@PathParam("id") int id) {
         String jsonResponse;
         try {
-            if (gradingItems == null) {
+            if (students == null) {
                 jsonResponse = "{\n"
                         + "\"responseType\" : \"failure\",\n"
                         + "\"request-id\" : \"" + id + "\"\n"
@@ -67,14 +68,12 @@ public class GradingItemResource {
                 return Response.status(HTTP_GONE).entity(jsonResponse).build();
             }
 
-            for (GradingItem gradingItem : gradingItems) {
-                if (gradingItem.getId() == id) {
+            for (Student student : students) {
+                if (student.getId() == id) {
                     jsonResponse = "{\n"
                             + "\"responseType\" : \"success\",\n"
-                            + "\"id\" : \"" + gradingItem.getId()+ "\",\n"
-                            + "\"type\" : \"" + gradingItem.getType() + "\",\n"
-                            + "\"name\" : \"" + gradingItem.getName() + "\",\n"
-                            + "\"percentage\" : " + gradingItem.getPercentage() + "\n"
+                            + "\"id\" : \"" + student.getId() + "\",\n"
+                            + "\"name\" : \"" + student.getName() + "\"\n"
                             + "}";
                     return Response.status(HTTP_OK).entity(jsonResponse).build();
                 }
@@ -100,19 +99,19 @@ public class GradingItemResource {
     }
 
     @PUT
-    @Path("updateGradingItem")
+    @Path("updateStudentProfile")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateGradingItem(String jsonRequest) {
+    public Response updateStudentProfile(String jsonRequest) {
         String jsonResponse;
         try {
             JSONObject root = new JSONObject(jsonRequest);
-            if (!root.getString("requestType").equals("updateGradingItem")) {
+            if (!root.getString("requestType").equals("updateStudentProfile")) {
                 throw new JSONException("Bad Request");
             }
             int id = root.getInt("id");
 
-            if (gradingItems == null) {
+            if (students == null) {
                 jsonResponse = "{\n"
                         + "\"responseType\" : \"failure\",\n"
                         + "\"request\" : \"" + jsonRequest + "\"\n"
@@ -120,20 +119,16 @@ public class GradingItemResource {
                 return Response.status(HTTP_CONFLICT).entity(jsonResponse).build();
             }
 
-            for (GradingItem gradingItem : gradingItems) {
-                if (gradingItem.getId() == id) {
-                    gradingItems.remove(gradingItem);
-                    gradingItem.setType(root.getString("type"));
-                    gradingItem.setName(root.getString("name"));
-                    gradingItem.setPercentage(root.getDouble("percentage"));
-                    gradingItems.add(gradingItem);
+            for (Student student : students) {
+                if (student.getId() == id) {
+                    students.remove(student);
+                    student.setName(root.getString("name"));
+                    students.add(student);
 
                     jsonResponse = "{\n"
                             + "\"responseType\" : \"success\",\n"
-                            + "\"id\" : " + gradingItem.getId() + ",\n"
-                            + "\"type\" : \"" + gradingItem.getType() + "\",\n"
-                            + "\"name\" : \"" + gradingItem.getName() + "\",\n"
-                            + "\"percentage\" : " + gradingItem.getPercentage() + "\n"
+                            + "\"id\" : " + student.getId() + ",\n"
+                            + "\"name\" : \"" + student.getName() + "\"\n"
                             + "}";
                     return Response.status(HTTP_OK).entity(jsonResponse).build();
                 }
@@ -159,12 +154,12 @@ public class GradingItemResource {
     }
 
     @DELETE
-    @Path("deleteGradingItem/{id}")
+    @Path("deleteStudentProfile/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteGradingItem(@PathParam("id") int id) {
+    public Response deleteStudentProfile(@PathParam("id") int id) {
         String jsonResponse;
         try {
-            if (gradingItems == null) {
+            if (students == null) {
                 jsonResponse = "{\n"
                         + "\"responseType\" : \"failure\",\n"
                         + "\"request-id\" : \"" + id + "\"\n"
@@ -172,9 +167,9 @@ public class GradingItemResource {
                 return Response.status(HTTP_GONE).entity(jsonResponse).build();
             }
 
-            for (GradingItem gradingItem : gradingItems) {
-                if (gradingItem.getId() == id) {
-                    gradingItems.remove(gradingItem);
+            for (Student student : students) {
+                if (student.getId() == id) {
+                    students.remove(student);
                     return Response.status(HTTP_NO_CONTENT).build();
                 }
             }

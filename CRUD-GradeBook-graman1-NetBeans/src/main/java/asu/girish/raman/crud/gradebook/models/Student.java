@@ -7,6 +7,15 @@ public class Student {
     String name;
     int id;
     Map<Integer, Double> points;
+    Map<Integer, String> feedbacks;
+
+    public Map<Integer, String> getFeedbacks() {
+        return feedbacks;
+    }
+
+    public void setFeedbacks(Map<Integer, String> feedbacks) {
+        this.feedbacks = feedbacks;
+    }
 
     public Student(String name) {
         this.name = name;

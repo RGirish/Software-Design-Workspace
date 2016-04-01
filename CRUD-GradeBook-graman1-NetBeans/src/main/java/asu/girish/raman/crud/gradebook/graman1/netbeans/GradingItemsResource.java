@@ -7,7 +7,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import org.json.*;
 
-@Path("GradingItem")
+@Path("Gradebook/GradingItem")
 public class GradingItemsResource {
 
     static List<GradingItem> gradingItems = null;

@@ -9,7 +9,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import org.json.*;
 
-@Path("StudentProfiles")
+@Path("Gradebook/StudentProfiles")
 public class StudentProfilesResource {
 
     static List<Student> students = null;

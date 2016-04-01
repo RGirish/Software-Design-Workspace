@@ -16,7 +16,7 @@ public class StudentProfilesClient {
     public StudentProfilesClient() {
         ClientConfig clientConfig = new DefaultClientConfig();
         client = Client.create(clientConfig);
-        webResource = client.resource("http://localhost:8080/CRUD-GradeBook-graman1-NetBeans/webresources").path("StudentProfiles");
+        webResource = client.resource("http://localhost:8080/CRUD-GradeBook-graman1-NetBeans/webresources").path("Gradebook/StudentProfiles");
     }
 
     public ClientResponse createStudentProfile(String jsonRequestMessage) throws UniformInterfaceException {

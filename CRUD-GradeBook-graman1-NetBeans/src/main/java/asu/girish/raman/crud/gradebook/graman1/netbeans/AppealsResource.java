@@ -7,7 +7,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import org.json.*;
 
-@Path("Appeals")
+@Path("Gradebook/Appeals")
 public class AppealsResource {
 
     static List<Appeal> appeals = new ArrayList<>();

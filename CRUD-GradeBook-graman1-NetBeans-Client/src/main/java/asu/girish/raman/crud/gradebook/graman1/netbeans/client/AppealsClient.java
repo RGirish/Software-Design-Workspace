@@ -16,7 +16,7 @@ public class AppealsClient {
     public AppealsClient() {
         ClientConfig clientConfig = new DefaultClientConfig();
         client = Client.create(clientConfig);
-        webResource = client.resource("http://localhost:8080/CRUD-GradeBook-graman1-NetBeans/webresources").path("Appeals");
+        webResource = client.resource("http://localhost:8080/CRUD-GradeBook-graman1-NetBeans/webresources").path("Gradebook/Appeals");
     }
 
     public ClientResponse viewAllAppeals() throws UniformInterfaceException {

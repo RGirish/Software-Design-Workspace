@@ -16,7 +16,7 @@ public class GradingItemsClient {
     public GradingItemsClient() {
         ClientConfig clientConfig = new DefaultClientConfig();
         client = Client.create(clientConfig);
-        webResource = client.resource("http://localhost:8080/CRUD-GradeBook-graman1-NetBeans/webresources").path("GradingItem");
+        webResource = client.resource("http://localhost:8080/CRUD-GradeBook-graman1-NetBeans/webresources").path("Gradebook/GradingItem");
     }
 
     public ClientResponse createGradingItem(String jsonRequestMessage) throws UniformInterfaceException {

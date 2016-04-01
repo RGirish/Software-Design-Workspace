@@ -5,20 +5,35 @@ import com.sun.jersey.api.client.ClientResponse;
 public class Main {
 
     public static void main(String[] args) {
-        //gradingItemsClient();
-        //studentProfilesClient();
-        //gradesClient();
-        appealsClient();
+//        gradingItemsClient();
+//        gradingItemsClient();
+        studentProfilesClient(1, 1);
+//        studentProfilesClient(1, 1);
+//        studentProfilesClient(1, 1);
+//        studentProfilesClient(1, 2);
+//        studentProfilesClient(2, 1);
+//        studentProfilesClient(2, 2);
+//        appealsClient();
     }
 
-    private static void studentProfilesClient() {
+    private static void studentProfilesClient(int studentId, int gradingItemId) {
         StudentProfilesClient studentProfilesClient = new StudentProfilesClient();
-        String requestMessage = "{\n"
-                + "\"requestType\" : \"createStudentProfile\",\n"
-                + "\"name\" : \"Girish\"\n"
-                + "}";
-        ClientResponse response = studentProfilesClient.createStudentProfile(requestMessage);
+//        String requestMessage = "{\n"
+//                + "\"requestType\" : \"createStudentProfile\",\n"
+//                + "\"name\" : \"Girish\"\n"
+//                + "}";
+//        ClientResponse response = studentProfilesClient.createStudentProfile(requestMessage);
 //        ClientResponse response = studentProfilesClient.readStudentProfile(2);
+//        ClientResponse response = studentProfilesClient.getAllGradesForAStudent(2);
+        ClientResponse response = studentProfilesClient.getGradeForAStudent(1, 2);
+//        String requestMessage = "{\n"
+//                + "\t\"requestType\" : \"updateGrades\",\n"
+//                + "\t\"studentId\" : " + studentId + ",\n"
+//                + "\t\"gradingItemId\" : " + gradingItemId + ",\n"
+//                + "\t\"points\" : 20.0,\n"
+//                + "\t\"feedback\" : \"Good job!\"\n"
+//                + "}";
+//        ClientResponse response = studentProfilesClient.updateGrade(requestMessage);
 //        String requestMessage = "{\n"
 //                + "\"requestType\" : \"updateStudentProfile\",\n"
 //                + "\"id\" : 2,\n"
@@ -59,21 +74,6 @@ public class Main {
             System.out.println(response.getStatus() + " - No response body\n\n");
         }
         gradingItemsClient.close();
-    }
-
-    private static void gradesClient() {
-        GradesClient gradesClient = new GradesClient();
-        ClientResponse response = gradesClient.readGrades(2, 2);
-//        String requestMessage = "{\n"
-//                + "\t\"requestType\" : \"updateGrades\",\n"
-//                + "\t\"studentId\" : 2,\n"
-//                + "\t\"gradingItemId\" : 2,\n"
-//                + "\t\"points\" : 20.0,\n"
-//                + "\t\"feedback\" : \"Good job!\"\n"
-//                + "}";
-//        ClientResponse response = gradesClient.updateGrade(requestMessage);
-        System.out.println(response.getStatus() + " - " + response.getEntity(String.class) + "\n\n");
-        gradesClient.close();
     }
 
     private static void appealsClient() {

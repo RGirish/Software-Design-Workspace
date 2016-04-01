@@ -35,6 +35,18 @@ public class StudentProfilesClient {
         return webResource.path("deleteStudentProfile/" + String.valueOf(id)).delete(ClientResponse.class);
     }
 
+    public ClientResponse getAllGradesForAStudent(int studentId) throws UniformInterfaceException {
+        return webResource.path("/Grades/" + studentId).get(ClientResponse.class);
+    }
+
+    public ClientResponse getGradeForAStudent(int studentId, int gradingItemId) throws UniformInterfaceException {
+        return webResource.path("/Grades/" + studentId + "/" + gradingItemId).get(ClientResponse.class);
+    }
+
+    public ClientResponse updateGrade(String requestMessage) {
+        return webResource.path("/Grades/update").type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).put(ClientResponse.class, requestMessage);
+    }
+
     public void close() {
         client.destroy();
     }

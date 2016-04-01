@@ -30,7 +30,6 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(asu.girish.raman.crud.gradebook.graman1.netbeans.AppealsResource.class);
-        resources.add(asu.girish.raman.crud.gradebook.graman1.netbeans.GradesResource.class);
         resources.add(asu.girish.raman.crud.gradebook.graman1.netbeans.GradingItemsResource.class);
         resources.add(asu.girish.raman.crud.gradebook.graman1.netbeans.StudentProfilesResource.class);
     }

@@ -87,7 +87,7 @@ public class StudentUI extends javax.swing.JFrame {
                     .addComponent(VAGStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(VAGViewGrades))
-                .addContainerGap(343, Short.MAX_VALUE))
+                .addContainerGap(347, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,7 +98,7 @@ public class StudentUI extends javax.swing.JFrame {
                 .addComponent(VAGStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(VAGViewGrades)
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("View All Grades", jPanel3);
@@ -127,7 +127,7 @@ public class StudentUI extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(VAPGStudentID, 0, 150, Short.MAX_VALUE)
                         .addComponent(VAPGGIID, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(336, Short.MAX_VALUE))
+                .addContainerGap(340, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,7 +142,7 @@ public class StudentUI extends javax.swing.JFrame {
                 .addComponent(VAPGGIID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(VAPGViewGrade)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("View A Particular Grade", jPanel4);
@@ -210,23 +210,32 @@ public class StudentUI extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 52, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addGap(154, 154, 154)
+                        .addComponent(jLabel5)
+                        .addGap(138, 138, 138))))
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
+                        .addGap(59, 59, 59)
+                        .addComponent(jLabel6))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(FASubmitAppeal)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel4)
-                                .addComponent(FAStudentID, 0, 149, Short.MAX_VALUE)
-                                .addComponent(FAGIID, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(FAStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(99, 99, 99)
+                                .addComponent(FAGIID, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(103, 103, 103)
+                        .addComponent(FASubmitAppeal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel7)))
                 .addContainerGap())
         );
@@ -234,25 +243,26 @@ public class StudentUI extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
-                .addComponent(jLabel4)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(FAStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(FAGIID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
-                .addComponent(jLabel6)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(FAStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FAGIID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
-                .addComponent(FASubmitAppeal)
-                .addContainerGap(57, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel7)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel7))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(FASubmitAppeal)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -279,41 +289,53 @@ public class StudentUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void FASubmitAppealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FASubmitAppealActionPerformed
-        int studentID = Integer.parseInt(FAStudentID.getSelectedItem().toString());
-        int gradingItemID = Integer.parseInt(FAGIID.getSelectedItem().toString());
-        String appealMessage = FAAppealMessage.getText();
-        String requestMessage = "{\n"
-                + "\t\"requestType\" : \"fileAnAppeal\",\n"
-                + "\t\"studentId\" : " + studentID + ",\n"
-                + "\t\"gradingItemId\" : " + gradingItemID + ",\n"
-                + "\t\"appealMessage\" : \"" + appealMessage + "\"\n"
-                + "}";
-        ClientResponse response = appealsClient.fileAnAppeal(requestMessage);
-        if (response.getStatus() != 204) {
-            FAResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+        if (FAStudentID.getSelectedItem() != null && FAGIID.getSelectedItem() != null && !FAAppealMessage.getText().trim().equals("")) {
+            int studentID = Integer.parseInt(FAStudentID.getSelectedItem().toString());
+            int gradingItemID = Integer.parseInt(FAGIID.getSelectedItem().toString());
+            String appealMessage = FAAppealMessage.getText();
+            String requestMessage = "{\n"
+                    + "\t\"requestType\" : \"fileAnAppeal\",\n"
+                    + "\t\"studentId\" : " + studentID + ",\n"
+                    + "\t\"gradingItemId\" : " + gradingItemID + ",\n"
+                    + "\t\"appealMessage\" : \"" + appealMessage + "\"\n"
+                    + "}";
+            ClientResponse response = appealsClient.fileAnAppeal(requestMessage);
+            if (response.getStatus() != 204) {
+                FAResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+            } else {
+                FAResponse.setText("Response Code: " + response.getStatus() + "\nNo response body!");
+            }
         } else {
-            FAResponse.setText("Response Code: " + response.getStatus() + "\nNo response body!");
+            FAResponse.setText("Enter all values!");
         }
     }//GEN-LAST:event_FASubmitAppealActionPerformed
 
     private void VAGViewGradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VAGViewGradesActionPerformed
-        int studentID = Integer.parseInt(VAGStudentID.getSelectedItem().toString());
-        ClientResponse response = studentProfilesClient.getAllGradesForAStudent(studentID);
-        if (response.getStatus() != 204) {
-            VGResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+        if (VAGStudentID.getSelectedItem() != null) {
+            int studentID = Integer.parseInt(VAGStudentID.getSelectedItem().toString());
+            ClientResponse response = studentProfilesClient.getAllGradesForAStudent(studentID);
+            if (response.getStatus() != 204) {
+                VGResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+            } else {
+                VGResponse.setText("Response Code: " + response.getStatus() + "\nNo response body!");
+            }
         } else {
-            VGResponse.setText("Response Code: " + response.getStatus() + "\nNo response body!");
+            VGResponse.setText("Enter all values!");
         }
     }//GEN-LAST:event_VAGViewGradesActionPerformed
 
     private void VAPGViewGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VAPGViewGradeActionPerformed
-        int studentID = Integer.parseInt(VAPGStudentID.getSelectedItem().toString());
-        int gradingItemID = Integer.parseInt(VAPGGIID.getSelectedItem().toString());
-        ClientResponse response = studentProfilesClient.getGradeForAStudent(studentID, gradingItemID);
-        if (response.getStatus() != 204) {
-            VGResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+        if (VAPGStudentID.getSelectedItem() != null && VAPGGIID.getSelectedItem() != null) {
+            int studentID = Integer.parseInt(VAPGStudentID.getSelectedItem().toString());
+            int gradingItemID = Integer.parseInt(VAPGGIID.getSelectedItem().toString());
+            ClientResponse response = studentProfilesClient.getGradeForAStudent(studentID, gradingItemID);
+            if (response.getStatus() != 204) {
+                VGResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+            } else {
+                VGResponse.setText("Response Code: " + response.getStatus() + "\nNo response body!");
+            }
         } else {
-            VGResponse.setText("Response Code: " + response.getStatus() + "\nNo response body!");
+            VGResponse.setText("Enter all values!");
         }
     }//GEN-LAST:event_VAPGViewGradeActionPerformed
 

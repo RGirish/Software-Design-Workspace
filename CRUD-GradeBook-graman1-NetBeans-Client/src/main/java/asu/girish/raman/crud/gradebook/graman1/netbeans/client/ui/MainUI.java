@@ -56,12 +56,10 @@ public class MainUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void imTheInstructorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imTheInstructorActionPerformed
-        //this.setVisible(false);
         new InstructorUI().setVisible(true);
     }//GEN-LAST:event_imTheInstructorActionPerformed
 
     private void imAStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imAStudentActionPerformed
-        //this.setVisible(false);
         new StudentUI().setVisible(true);
     }//GEN-LAST:event_imAStudentActionPerformed
 

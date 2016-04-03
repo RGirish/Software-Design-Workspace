@@ -9,10 +9,13 @@ import asu.girish.raman.crud.gradebook.graman1.netbeans.client.AppealsClient;
 import asu.girish.raman.crud.gradebook.graman1.netbeans.client.GradingItemsClient;
 import asu.girish.raman.crud.gradebook.graman1.netbeans.client.StudentProfilesClient;
 import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.json.impl.provider.entity.JSONObjectProvider;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -193,12 +196,6 @@ public class InstructorUI extends javax.swing.JFrame {
         USUpdateStudent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 USUpdateStudentActionPerformed(evt);
-            }
-        });
-
-        UPStudentName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UPStudentNameActionPerformed(evt);
             }
         });
 
@@ -721,68 +718,158 @@ public class InstructorUI extends javax.swing.JFrame {
 
     private void VAViewAllAppealsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VAViewAllAppealsActionPerformed
         ClientResponse response = appealsClient.viewAllAppeals();
-        VAResponse.setText("Response Code - " + response.getStatus() + "\n" + response.getEntity(String.class) + "\n\n");
+        String responseString = response.getEntity(String.class);
+        StringBuilder responseOutput;
+        if (!responseString.contains("studentId")) {
+            responseOutput = new StringBuilder("There are no appeals to view!");
+        } else {
+            responseOutput = new StringBuilder("List of all appeals that have been filed:\n\n");
+            JSONObject root = new JSONObject(responseString);
+            JSONArray appeals = root.getJSONArray("appeals");
+            for (int i = 0; i < appeals.length(); ++i) {
+                JSONObject appeal = (JSONObject) appeals.get(i);
+                responseOutput.append("Student ID : ")
+                        .append(appeal.getInt("studentId"))
+                        .append("\nGrading Item ID : ")
+                        .append(appeal.getInt("gradingItemId"))
+                        .append("\nAppeal Message : ")
+                        .append(appeal.getString("appealMessage"))
+                        .append("\n\n");
+            }
+        }
+        VAResponse.setText("Response Code - " + response.getStatus() + "\n\n" + responseOutput + "\n\n");
     }//GEN-LAST:event_VAViewAllAppealsActionPerformed
 
     private void CGICreateGradingItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CGICreateGradingItemActionPerformed
-        String type = CGIType.getSelectedItem().toString();
-        String name = CGIName.getText();
-        String weightage = CGIWeightage.getText();
-        String requestMessage = "{\n"
-                + "\"requestType\" : \"createGradingItem\",\n"
-                + "\"type\" : \"" + type + "\",\n"
-                + "\"name\" : \"" + name + "\",\n"
-                + "\"percentage\" : " + weightage + "\n"
-                + "}";
-        ClientResponse response = gradingItemsClient.createGradingItem(requestMessage);
-        MGIResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
-        setGradingItemIDs();
-    }//GEN-LAST:event_CGICreateGradingItemActionPerformed
+        if (CGIType.getSelectedItem() != null && !CGIName.getText().trim().equals("")) {
+            try {
+                Double.parseDouble(CGIWeightage.getText());
+            } catch (NumberFormatException e) {
+                MGIResponse.setText("Enter a number for weightage!");
+                return;
+            }
+            String type = CGIType.getSelectedItem().toString();
+            String name = CGIName.getText();
+            double weightage = Double.parseDouble(CGIWeightage.getText());
+            String requestMessage = "{\n"
+                    + "\"requestType\" : \"createGradingItem\",\n"
+                    + "\"type\" : \"" + type + "\",\n"
+                    + "\"name\" : \"" + name + "\",\n"
+                    + "\"percentage\" : " + weightage + "\n"
+                    + "}";
+            ClientResponse response = gradingItemsClient.createGradingItem(requestMessage);
 
-    private void UPStudentNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UPStudentNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_UPStudentNameActionPerformed
+            String responseString = response.getEntity(String.class);
+            StringBuilder responseOutput = new StringBuilder();
+            JSONObject root = new JSONObject(responseString);
+            String responseType = root.getString("responseType");
+            if (responseType.equals("success")) {
+                int id = root.getInt("id");
+                responseOutput.append("Message from Server: ").append("ID for new Grading Item : ").append(String.valueOf(id));
+            } else {
+                responseOutput.append(responseString);
+            }
+            MGIResponse.setText("Response Code - " + response.getStatus() + "\n\n" + responseOutput + "\n\n");
+            setGradingItemIDs();
+        } else {
+            MGIResponse.setText("Enter all the values!");
+        }
+    }//GEN-LAST:event_CGICreateGradingItemActionPerformed
 
     private void DGIDeleteItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DGIDeleteItemActionPerformed
         if (DGIGIID.getSelectedItem() != null) {
             int gradingItemID = Integer.parseInt(DGIGIID.getSelectedItem().toString());
             ClientResponse response = gradingItemsClient.deleteGradingItem(gradingItemID);
             if (response.getStatus() != 204) {
-                MGIResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
-                System.out.println(response.getStatus() + " - " + response.getEntity(String.class) + "\n\n");
+                String responseString = response.getEntity(String.class);
+                MGIResponse.setText("Response Code - " + response.getStatus() + "\n\n" + responseString + "\n\n");
             } else {
-                MGIResponse.setText("Response Code: " + response.getStatus() + "\nNo Response Body!");
+                MGIResponse.setText("Response Code: " + response.getStatus() + "\nGrading Item Deleted!");
             }
             setGradingItemIDs();
+        } else {
+            MGIResponse.setText("Enter all the values!");
         }
     }//GEN-LAST:event_DGIDeleteItemActionPerformed
 
     private void CSCreateStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CSCreateStudentActionPerformed
-        String studentName = CSStudentsName.getText();
-        String requestMessage = "{\n"
-                + "\"requestType\" : \"createStudentProfile\",\n"
-                + "\"name\" : \"" + studentName + "\"\n"
-                + "}";
-        ClientResponse response = studentProfilesClient.createStudentProfile(requestMessage);
-        MSPResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
-        setStudentIDs();
+        if (!CSStudentsName.getText().trim().equals("")) {
+            String studentName = CSStudentsName.getText();
+            String requestMessage = "{\n"
+                    + "\"requestType\" : \"createStudentProfile\",\n"
+                    + "\"name\" : \"" + studentName + "\"\n"
+                    + "}";
+            ClientResponse response = studentProfilesClient.createStudentProfile(requestMessage);
+
+            String responseString = response.getEntity(String.class);
+            StringBuilder responseOutput = new StringBuilder();
+            JSONObject root = new JSONObject(responseString);
+            String responseType = root.getString("responseType");
+            if (responseType.equals("success")) {
+                int id = root.getInt("id");
+                responseOutput.append("Message from Server: ").append("ID for new Student Profile : ").append(String.valueOf(id));
+            } else {
+                responseOutput.append(responseString);
+            }
+            MSPResponse.setText("Response Code - " + response.getStatus() + "\n\n" + responseOutput + "\n\n");
+            setStudentIDs();
+        } else {
+            MSPResponse.setText("Enter all the values!");
+        }
     }//GEN-LAST:event_CSCreateStudentActionPerformed
 
     private void RSViewStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RSViewStudentActionPerformed
-        ClientResponse response = studentProfilesClient.readStudentProfile(Integer.parseInt(VPStudentID.getSelectedItem().toString()));
-        MSPResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+
+        if (VPStudentID.getSelectedItem() != null) {
+            ClientResponse response = studentProfilesClient.readStudentProfile(Integer.parseInt(VPStudentID.getSelectedItem().toString()));
+
+            String responseString = response.getEntity(String.class);
+            StringBuilder responseOutput = new StringBuilder();
+            JSONObject root = new JSONObject(responseString);
+            String responseType = root.getString("responseType");
+            if (responseType.equals("success")) {
+                int id = root.getInt("id");
+                String name = root.getString("name");
+                responseOutput.append("Message from Server: \n")
+                        .append("ID : ").append(String.valueOf(id))
+                        .append("\nName : ").append(name);
+            } else {
+                responseOutput.append(responseString);
+            }
+            MSPResponse.setText("Response Code - " + response.getStatus() + "\n\n" + responseOutput + "\n\n");
+        } else {
+            MSPResponse.setText("Enter all the values!");
+        }
     }//GEN-LAST:event_RSViewStudentActionPerformed
 
     private void USUpdateStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_USUpdateStudentActionPerformed
-        int studentID = Integer.parseInt(UPStudentID.getSelectedItem().toString());
-        String newName = UPStudentName.getText();
-        String requestMessage = "{\n"
-                + "\"requestType\" : \"updateStudentProfile\",\n"
-                + "\"id\" : " + studentID + ",\n"
-                + "\"name\" : \"" + newName + "\"\n"
-                + "}";
-        ClientResponse response = studentProfilesClient.updateStudentProfile(requestMessage);
-        MSPResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+        if (UPStudentID.getSelectedItem() != null && !UPStudentName.getText().trim().equals("")) {
+            int studentID = Integer.parseInt(UPStudentID.getSelectedItem().toString());
+            String newName = UPStudentName.getText();
+            String requestMessage = "{\n"
+                    + "\"requestType\" : \"updateStudentProfile\",\n"
+                    + "\"id\" : " + studentID + ",\n"
+                    + "\"name\" : \"" + newName + "\"\n"
+                    + "}";
+            ClientResponse response = studentProfilesClient.updateStudentProfile(requestMessage);
+
+            String responseString = response.getEntity(String.class);
+            StringBuilder responseOutput = new StringBuilder();
+            JSONObject root = new JSONObject(responseString);
+            String responseType = root.getString("responseType");
+            if (responseType.equals("success")) {
+                int id = root.getInt("id");
+                String name = root.getString("name");
+                responseOutput.append("Message from Server: Updated!\n")
+                        .append("ID : ").append(String.valueOf(id))
+                        .append("\nName : ").append(name);
+            } else {
+                responseOutput.append(responseString);
+            }
+            MSPResponse.setText("Response Code - " + response.getStatus() + "\n\n" + responseOutput + "\n\n");
+        } else {
+            MSPResponse.setText("Enter all the values!");
+        }
     }//GEN-LAST:event_USUpdateStudentActionPerformed
 
     private void DSDeleteStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DSDeleteStudentActionPerformed
@@ -790,50 +877,128 @@ public class InstructorUI extends javax.swing.JFrame {
             int studentID = Integer.parseInt(DPStudentID.getSelectedItem().toString());
             ClientResponse response = studentProfilesClient.deleteStudentProfile(studentID);
             if (response.getStatus() != 204) {
-                MSPResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
-                System.out.println(response.getStatus() + " - " + response.getEntity(String.class) + "\n\n");
+                String responseString = response.getEntity(String.class);
+                MSPResponse.setText("Response Code - " + response.getStatus() + "\n\n" + responseString + "\n\n");
             } else {
-                MSPResponse.setText("Response Code: " + response.getStatus() + "\nNo Response Body!");
+                MSPResponse.setText("Response Code: " + response.getStatus() + "\nStudent Profile Deleted!");
             }
             setStudentIDs();
+        } else {
+            MSPResponse.setText("Enter all the values!");
         }
     }//GEN-LAST:event_DSDeleteStudentActionPerformed
 
     private void VGIViewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VGIViewDetailsActionPerformed
-        ClientResponse response = gradingItemsClient.readGradingItem(Integer.parseInt(VGIGIID.getSelectedItem().toString()));
-        MGIResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+        if (VGIGIID.getSelectedItem() != null) {
+            ClientResponse response = gradingItemsClient.readGradingItem(Integer.parseInt(VGIGIID.getSelectedItem().toString()));
+            String responseString = response.getEntity(String.class);
+            StringBuilder responseOutput = new StringBuilder();
+            JSONObject root = new JSONObject(responseString);
+            String responseType = root.getString("responseType");
+            if (responseType.equals("success")) {
+                int id = root.getInt("id");
+                double percentage = root.getDouble("percentage");
+                String name = root.getString("name");
+                String type = root.getString("type");
+                responseOutput.append("Message from Server: \n")
+                        .append("ID : ").append(String.valueOf(id))
+                        .append("\nName : ").append(name)
+                        .append("\nType : ").append(type)
+                        .append("\nWeightage : ").append(percentage);
+            } else {
+                responseOutput.append(responseString);
+            }
+            MGIResponse.setText("Response Code - " + response.getStatus() + "\n\n" + responseOutput + "\n\n");
+        } else {
+            MGIResponse.setText("Enter all the values!");
+        }
     }//GEN-LAST:event_VGIViewDetailsActionPerformed
 
     private void UGIUpdateItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UGIUpdateItemActionPerformed
-        int gradingItemID = Integer.parseInt(UGIGIID.getSelectedItem().toString());
-        String gradingItemType = UGIType.getSelectedItem().toString();
-        String gradingItemName = UGIName.getText();
-        double gradingItemWeightage = Double.parseDouble(UGIWeightage.getText());
-        String requestMessage = "{\n"
-                + "\t\"requestType\" : \"updateGradingItem\",\n"
-                + "\t\"id\" : " + gradingItemID + ",\n"
-                + "\t\"type\" : \"" + gradingItemType + "\",\n"
-                + "\t\"name\" : \"" + gradingItemName + "\",\n"
-                + "\t\"percentage\" : " + gradingItemWeightage + "\n"
-                + "}";
-        ClientResponse response = gradingItemsClient.updateGradingItem(requestMessage);
-        MGIResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+
+        if (UGIGIID.getSelectedItem() != null && UGIType.getSelectedItem() != null && !UGIName.getText().trim().equals("")) {
+            try {
+                Double.parseDouble(UGIWeightage.getText());
+            } catch (NumberFormatException e) {
+                MGIResponse.setText("Enter a number for weightage!");
+                return;
+            }
+            int gradingItemID = Integer.parseInt(UGIGIID.getSelectedItem().toString());
+            String gradingItemType = UGIType.getSelectedItem().toString();
+            String gradingItemName = UGIName.getText();
+            double gradingItemWeightage = Double.parseDouble(UGIWeightage.getText());
+            String requestMessage = "{\n"
+                    + "\t\"requestType\" : \"updateGradingItem\",\n"
+                    + "\t\"id\" : " + gradingItemID + ",\n"
+                    + "\t\"type\" : \"" + gradingItemType + "\",\n"
+                    + "\t\"name\" : \"" + gradingItemName + "\",\n"
+                    + "\t\"percentage\" : " + gradingItemWeightage + "\n"
+                    + "}";
+            ClientResponse response = gradingItemsClient.updateGradingItem(requestMessage);
+
+            String responseString = response.getEntity(String.class);
+            StringBuilder responseOutput = new StringBuilder();
+            JSONObject root = new JSONObject(responseString);
+            String responseType = root.getString("responseType");
+            if (responseType.equals("success")) {
+                int id = root.getInt("id");
+                double percentage = root.getDouble("percentage");
+                String name = root.getString("name");
+                String type = root.getString("type");
+                responseOutput.append("Message from Server: Updated!\n")
+                        .append("ID : ").append(String.valueOf(id))
+                        .append("\nName : ").append(name)
+                        .append("\nType : ").append(type)
+                        .append("\nWeightage : ").append(percentage);
+            } else {
+                responseOutput.append(responseString);
+            }
+            MGIResponse.setText("Response Code - " + response.getStatus() + "\n\n" + responseOutput + "\n\n");
+        } else {
+            MGIResponse.setText("Enter all the values!");
+        }
     }//GEN-LAST:event_UGIUpdateItemActionPerformed
 
     private void GSSubmitGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GSSubmitGradeActionPerformed
-        int studentID = Integer.parseInt(GSStudentID.getSelectedItem().toString());
-        int gradingItemID = Integer.parseInt(GSGIID.getSelectedItem().toString());
-        double points = Double.parseDouble(GSPoints.getText());
-        String feedback = GSFeedback.getText();
-        String requestMessage = "{\n"
-                + "\t\"requestType\" : \"updateGrades\",\n"
-                + "\t\"studentId\" : " + studentID + ",\n"
-                + "\t\"gradingItemId\" : " + gradingItemID + ",\n"
-                + "\t\"points\" : " + points + ",\n"
-                + "\t\"feedback\" : \"" + feedback + "\"\n"
-                + "}";
-        ClientResponse response = studentProfilesClient.updateGrade(requestMessage);
-        GSResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+        GSResponse.setText("");
+        if (GSStudentID.getSelectedItem() != null && GSGIID.getSelectedItem() != null && !GSPoints.getText().trim().equals("")) {
+            try {
+                double p = Double.parseDouble(GSPoints.getText());
+                if (p > 100 || p < 0) {
+                    GSResponse.setText("Enter a number between 0 and 100 for points!");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                GSResponse.setText("Enter a number for points!");
+                return;
+            }
+
+            int studentID = Integer.parseInt(GSStudentID.getSelectedItem().toString());
+            int gradingItemID = Integer.parseInt(GSGIID.getSelectedItem().toString());
+            double points = Double.parseDouble(GSPoints.getText());
+            String feedback = GSFeedback.getText().trim();
+            String requestMessage = "{\n"
+                    + "\t\"requestType\" : \"updateGrades\",\n"
+                    + "\t\"studentId\" : " + studentID + ",\n"
+                    + "\t\"gradingItemId\" : " + gradingItemID + ",\n"
+                    + "\t\"points\" : " + points + ",\n"
+                    + "\t\"feedback\" : \"" + feedback + "\"\n"
+                    + "}";
+            ClientResponse response = studentProfilesClient.updateGrade(requestMessage);
+
+            String responseString = response.getEntity(String.class);
+            StringBuilder responseOutput = new StringBuilder();
+            JSONObject root = new JSONObject(responseString);
+            String responseType = root.getString("responseType");
+            if (responseType.equals("success")) {
+                responseOutput.append("Message from Server: ").append(root.getString("message"));
+            } else {
+                responseOutput.append(responseString);
+            }
+            GSResponse.setText("Response Code - " + response.getStatus() + "\n\n" + responseOutput + "\n\n");
+        } else {
+            GSResponse.setText("Enter all the values!");
+        }
     }//GEN-LAST:event_GSSubmitGradeActionPerformed
 
     /**

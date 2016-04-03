@@ -24,8 +24,8 @@ public class Main {
 //                + "}";
 //        ClientResponse response = studentProfilesClient.createStudentProfile(requestMessage);
 //        ClientResponse response = studentProfilesClient.readStudentProfile(2);
-//        ClientResponse response = studentProfilesClient.getAllGradesForAStudent(2);
-        ClientResponse response = studentProfilesClient.getGradeForAStudent(1, 2);
+        ClientResponse response = studentProfilesClient.getAllGradesForAStudent(2);
+//        ClientResponse response = studentProfilesClient.getGradeForAStudent(1, 2);
 //        String requestMessage = "{\n"
 //                + "\t\"requestType\" : \"updateGrades\",\n"
 //                + "\t\"studentId\" : " + studentId + ",\n"

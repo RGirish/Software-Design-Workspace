@@ -39,4 +39,8 @@ public class GradingItemsClient {
         client.destroy();
     }
 
+    public String getAllGradingItemIDs() {
+        return webResource.path("/getAllIDs").get(String.class);
+    }
+
 }

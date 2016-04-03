@@ -15,6 +15,19 @@ public class StudentProfilesResource {
     static List<Student> students = null;
     static int STUDENT_ID = 1;
 
+    @GET
+    @Path("getAllIDs")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getAllStudentIDs() {
+        List<Integer> allIDs = new ArrayList<>();
+        if (students != null) {
+            for (Student student : students) {
+                allIDs.add(student.getId());
+            }
+        }
+        return allIDs.toString();
+    }
+
     @POST
     @Path("createStudentProfile")
     @Produces(MediaType.APPLICATION_JSON)
@@ -282,18 +295,18 @@ public class StudentProfilesResource {
                     HashMap<Integer, String> allFeedbacks = (HashMap<Integer, String>) student.getFeedbacks();
 
                     if (allPoints.containsKey(gradingItemId)) {
-                        if (allFeedbacks.containsKey(gradingItemId)) {
+                        if (allFeedbacks.get(gradingItemId).trim().equals("")) {
                             jsonResponse = "{\n"
                                     + "\"responseType\" : \"success\",\n"
                                     + "\"points\" : " + allPoints.get(gradingItemId) + ",\n"
-                                    + "\"feedback\" : \"" + allFeedbacks.get(gradingItemId) + "\"\n"
+                                    + "\"feedback\" : \"No feedback given!\"\n"
                                     + "}";
                             return Response.status(HTTP_OK).entity(jsonResponse).build();
                         } else {
                             jsonResponse = "{\n"
                                     + "\"responseType\" : \"success\",\n"
                                     + "\"points\" : " + allPoints.get(gradingItemId) + ",\n"
-                                    + "\"feedback\" : \"No feedback given!\"\n"
+                                    + "\"feedback\" : \"" + allFeedbacks.get(gradingItemId) + "\"\n"
                                     + "}";
                             return Response.status(HTTP_OK).entity(jsonResponse).build();
                         }
@@ -368,10 +381,10 @@ public class StudentProfilesResource {
                     for (Map.Entry pair : allPoints.entrySet()) {
                         builder.append("\n\t{\n\t\"gradinItemId\" : ").append(pair.getKey()).append(",\n");
                         builder.append("\t\"points\" : ").append(pair.getValue()).append(",\n");
-                        if (allFeedbacks.containsKey((int) pair.getKey())) {
-                            builder.append("\t\"feedback\" : \"").append(allFeedbacks.get((int) pair.getKey())).append("\"\n\t},");
-                        } else {
+                        if (allFeedbacks.get((int) pair.getKey()).trim().equals("")) {
                             builder.append("\t\"feedback\" : \"No feedback given!\"\n\t},");
+                        } else {
+                            builder.append("\t\"feedback\" : \"").append(allFeedbacks.get((int) pair.getKey())).append("\"\n\t},");
                         }
                     }
                     String temp = builder.substring(0, builder.length() - 1);

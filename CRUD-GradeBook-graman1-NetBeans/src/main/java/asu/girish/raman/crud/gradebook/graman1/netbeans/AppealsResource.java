@@ -24,7 +24,12 @@ public class AppealsResource {
             builder.append("\t\t\"appealMessage\" : \"").append(appeal.getAppealMessage()).append("\"\n");
             builder.append("\t},\n");
         }
-        String jsonSoFar = builder.substring(0, builder.length() - 1);
+        String jsonSoFar;
+        if (builder.toString().endsWith("[")) {
+            jsonSoFar = builder.toString();
+        } else {
+            jsonSoFar = builder.substring(0, builder.length() - 2);
+        }
         builder = new StringBuilder(jsonSoFar);
         builder.append("\n\t]\n}");
         return Response.status(HTTP_OK).entity(builder.toString()).build();

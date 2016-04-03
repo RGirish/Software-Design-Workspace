@@ -5,6 +5,15 @@
  */
 package asu.girish.raman.crud.gradebook.graman1.netbeans.client.ui;
 
+import asu.girish.raman.crud.gradebook.graman1.netbeans.client.AppealsClient;
+import asu.girish.raman.crud.gradebook.graman1.netbeans.client.GradingItemsClient;
+import asu.girish.raman.crud.gradebook.graman1.netbeans.client.StudentProfilesClient;
+import com.sun.jersey.api.client.ClientResponse;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+
 /**
  *
  * @author Girish
@@ -16,6 +25,7 @@ public class StudentUI extends javax.swing.JFrame {
      */
     public StudentUI() {
         initComponents();
+        customInitComponents();
     }
 
     /**
@@ -31,38 +41,41 @@ public class StudentUI extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        VAGStudentID = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        VAGViewGrades = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        VAPGStudentID = new javax.swing.JComboBox<>();
+        VAPGViewGrade = new javax.swing.JButton();
+        VAPGGIID = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        VGResponse = new javax.swing.JTextArea();
         jLabel8 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        FAStudentID = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox5 = new javax.swing.JComboBox<>();
+        FAGIID = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
+        FAAppealMessage = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        FASubmitAppeal = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea4 = new javax.swing.JTextArea();
+        FAResponse = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel3.setText("Select Student ID");
 
-        jButton2.setText("View All Grades");
+        VAGViewGrades.setText("View All Grades");
+        VAGViewGrades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VAGViewGradesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -71,9 +84,9 @@ public class StudentUI extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(60, 60, 60)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(VAGStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jButton2))
+                    .addComponent(VAGViewGrades))
                 .addContainerGap(343, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -82,19 +95,20 @@ public class StudentUI extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(VAGStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(VAGViewGrades)
                 .addContainerGap(95, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("View All Grades", jPanel3);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jButton1.setText("View Grade");
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        VAPGViewGrade.setText("View Grade");
+        VAPGViewGrade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VAPGViewGradeActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Select Student ID");
 
@@ -109,10 +123,10 @@ public class StudentUI extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1)
-                    .addComponent(jButton1)
+                    .addComponent(VAPGViewGrade)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jComboBox1, 0, 150, Short.MAX_VALUE)
-                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(VAPGStudentID, 0, 150, Short.MAX_VALUE)
+                        .addComponent(VAPGGIID, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(336, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -121,21 +135,21 @@ public class StudentUI extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(VAPGStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addGap(9, 9, 9)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(VAPGGIID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(VAPGViewGrade)
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("View A Particular Grade", jPanel4);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        VGResponse.setColumns(20);
+        VGResponse.setRows(5);
+        jScrollPane1.setViewportView(VGResponse);
 
         jLabel8.setText("Response");
 
@@ -148,7 +162,7 @@ public class StudentUI extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 542, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jLabel8))))
@@ -158,7 +172,7 @@ public class StudentUI extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+                .addComponent(jTabbedPane2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -168,25 +182,26 @@ public class StudentUI extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("View Grades", jPanel1);
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel4.setText("Select Student ID");
-
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel5.setText("Select Grading Item");
 
-        jTextArea3.setColumns(20);
-        jTextArea3.setRows(5);
-        jScrollPane3.setViewportView(jTextArea3);
+        FAAppealMessage.setColumns(20);
+        FAAppealMessage.setRows(5);
+        jScrollPane3.setViewportView(FAAppealMessage);
 
         jLabel6.setText("Write a Message for Appeal");
 
-        jButton3.setText("Submit Appeal");
+        FASubmitAppeal.setText("Submit Appeal");
+        FASubmitAppeal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FASubmitAppealActionPerformed(evt);
+            }
+        });
 
-        jTextArea4.setColumns(20);
-        jTextArea4.setRows(5);
-        jScrollPane4.setViewportView(jTextArea4);
+        FAResponse.setColumns(20);
+        FAResponse.setRows(5);
+        jScrollPane4.setViewportView(FAResponse);
 
         jLabel7.setText("Response");
 
@@ -200,7 +215,7 @@ public class StudentUI extends javax.swing.JFrame {
                         .addGap(55, 55, 55)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jButton3)
+                                .addComponent(FASubmitAppeal)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
                                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -208,8 +223,8 @@ public class StudentUI extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel4)
-                                .addComponent(jComboBox4, 0, 149, Short.MAX_VALUE)
-                                .addComponent(jComboBox5, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(FAStudentID, 0, 149, Short.MAX_VALUE)
+                                .addComponent(FAGIID, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel7)))
@@ -221,17 +236,17 @@ public class StudentUI extends javax.swing.JFrame {
                 .addGap(38, 38, 38)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(FAStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(FAGIID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
-                .addComponent(jButton3)
+                .addComponent(FASubmitAppeal)
                 .addContainerGap(57, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -262,6 +277,45 @@ public class StudentUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void FASubmitAppealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FASubmitAppealActionPerformed
+        int studentID = Integer.parseInt(FAStudentID.getSelectedItem().toString());
+        int gradingItemID = Integer.parseInt(FAGIID.getSelectedItem().toString());
+        String appealMessage = FAAppealMessage.getText();
+        String requestMessage = "{\n"
+                + "\t\"requestType\" : \"fileAnAppeal\",\n"
+                + "\t\"studentId\" : " + studentID + ",\n"
+                + "\t\"gradingItemId\" : " + gradingItemID + ",\n"
+                + "\t\"appealMessage\" : \"" + appealMessage + "\"\n"
+                + "}";
+        ClientResponse response = appealsClient.fileAnAppeal(requestMessage);
+        if (response.getStatus() != 204) {
+            FAResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+        } else {
+            FAResponse.setText("Response Code: " + response.getStatus() + "\nNo response body!");
+        }
+    }//GEN-LAST:event_FASubmitAppealActionPerformed
+
+    private void VAGViewGradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VAGViewGradesActionPerformed
+        int studentID = Integer.parseInt(VAGStudentID.getSelectedItem().toString());
+        ClientResponse response = studentProfilesClient.getAllGradesForAStudent(studentID);
+        if (response.getStatus() != 204) {
+            VGResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+        } else {
+            VGResponse.setText("Response Code: " + response.getStatus() + "\nNo response body!");
+        }
+    }//GEN-LAST:event_VAGViewGradesActionPerformed
+
+    private void VAPGViewGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VAPGViewGradeActionPerformed
+        int studentID = Integer.parseInt(VAPGStudentID.getSelectedItem().toString());
+        int gradingItemID = Integer.parseInt(VAPGGIID.getSelectedItem().toString());
+        ClientResponse response = studentProfilesClient.getGradeForAStudent(studentID, gradingItemID);
+        if (response.getStatus() != 204) {
+            VGResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+        } else {
+            VGResponse.setText("Response Code: " + response.getStatus() + "\nNo response body!");
+        }
+    }//GEN-LAST:event_VAPGViewGradeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -299,14 +353,17 @@ public class StudentUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboBox5;
+    private javax.swing.JTextArea FAAppealMessage;
+    private javax.swing.JComboBox<String> FAGIID;
+    private javax.swing.JTextArea FAResponse;
+    private javax.swing.JComboBox<String> FAStudentID;
+    private javax.swing.JButton FASubmitAppeal;
+    private javax.swing.JComboBox<String> VAGStudentID;
+    private javax.swing.JButton VAGViewGrades;
+    private javax.swing.JComboBox<String> VAPGGIID;
+    private javax.swing.JComboBox<String> VAPGStudentID;
+    private javax.swing.JButton VAPGViewGrade;
+    private javax.swing.JTextArea VGResponse;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -324,8 +381,49 @@ public class StudentUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea3;
-    private javax.swing.JTextArea jTextArea4;
     // End of variables declaration//GEN-END:variables
+    StudentProfilesClient studentProfilesClient;
+    GradingItemsClient gradingItemsClient;
+    AppealsClient appealsClient;
+
+    private void customInitComponents() {
+        studentProfilesClient = new StudentProfilesClient();
+        appealsClient = new AppealsClient();
+        gradingItemsClient = new GradingItemsClient();
+        setStudentIDs();
+        setGradingItemIDs();
+    }
+
+    private void setStudentIDs() {
+        String studentIDs = studentProfilesClient.getAllStudentIDs();
+        Integer[] allStudentIDs = convertStringToArray(studentIDs);
+        FAStudentID.setModel(new DefaultComboBoxModel((Object[]) allStudentIDs));
+        VAGStudentID.setModel(new DefaultComboBoxModel((Object[]) allStudentIDs));
+        VAPGStudentID.setModel(new DefaultComboBoxModel((Object[]) allStudentIDs));
+    }
+
+    private void setGradingItemIDs() {
+        String gradingItemIDs = gradingItemsClient.getAllGradingItemIDs();
+        Integer[] allGradingItemIDs = convertStringToArray(gradingItemIDs);
+        VAPGGIID.setModel(new DefaultComboBoxModel((Object[]) allGradingItemIDs));
+        FAGIID.setModel(new DefaultComboBoxModel((Object[]) allGradingItemIDs));
+    }
+
+    private Integer[] convertStringToArray(String input) {
+        input = input.substring(1, input.length() - 1);
+        if (input.equals("")) {
+            return new Integer[]{};
+        } else if (!input.contains(",")) {
+            return new Integer[]{Integer.parseInt(input)};
+        } else {
+            String[] parts = input.split(",");
+            List<Integer> list = new ArrayList<>();
+            for (String s : parts) {
+                list.add(Integer.parseInt(s.trim()));
+            }
+            Object[] objectArray = list.toArray();
+            Integer[] integerArray = Arrays.copyOf(objectArray, objectArray.length, Integer[].class);
+            return integerArray;
+        }
+    }
 }

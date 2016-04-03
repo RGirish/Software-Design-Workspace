@@ -5,6 +5,15 @@
  */
 package asu.girish.raman.crud.gradebook.graman1.netbeans.client.ui;
 
+import asu.girish.raman.crud.gradebook.graman1.netbeans.client.AppealsClient;
+import asu.girish.raman.crud.gradebook.graman1.netbeans.client.GradingItemsClient;
+import asu.girish.raman.crud.gradebook.graman1.netbeans.client.StudentProfilesClient;
+import com.sun.jersey.api.client.ClientResponse;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+
 /**
  *
  * @author Girish
@@ -16,6 +25,7 @@ public class InstructorUI extends javax.swing.JFrame {
      */
     public InstructorUI() {
         initComponents();
+        customInitComponents();
     }
 
     /**
@@ -29,81 +39,88 @@ public class InstructorUI extends javax.swing.JFrame {
 
         gradeStuffPanel = new javax.swing.JTabbedPane();
         manageStudentsProfilePanel = new javax.swing.JPanel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        RSStudentID = new javax.swing.JTabbedPane();
         profileC = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
+        CSStudentsName = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        CSCreateStudent = new javax.swing.JButton();
         profileR = new javax.swing.JPanel();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        RSViewStudent = new javax.swing.JButton();
+        jLabel26 = new javax.swing.JLabel();
+        VPStudentID = new javax.swing.JComboBox<>();
         profileU = new javax.swing.JPanel();
-        jTextField7 = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
-        jTextField8 = new javax.swing.JTextField();
+        USUpdateStudent = new javax.swing.JButton();
+        UPStudentName = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        UPStudentID = new javax.swing.JComboBox<>();
         profileD = new javax.swing.JPanel();
-        jButton9 = new javax.swing.JButton();
-        jTextField13 = new javax.swing.JTextField();
-        jLabel21 = new javax.swing.JLabel();
+        DSDeleteStudent = new javax.swing.JButton();
+        jLabel24 = new javax.swing.JLabel();
+        DPStudentID = new javax.swing.JComboBox<>();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea4 = new javax.swing.JTextArea();
+        MSPResponse = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
         manageGradingItemsPanel = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jTextField4 = new javax.swing.JTextField();
+        CGICreateGradingItem = new javax.swing.JButton();
+        CGIName = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        CGIWeightage = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        CGIType = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
-        jTextField6 = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
+        VGIViewDetails = new javax.swing.JButton();
+        jLabel22 = new javax.swing.JLabel();
+        VGIGIID = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
-        jTextField9 = new javax.swing.JTextField();
+        UGIUpdateItem = new javax.swing.JButton();
+        UGIName = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
+        UGIWeightage = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        UGIType = new javax.swing.JComboBox<>();
         jLabel19 = new javax.swing.JLabel();
+        UGIGIID = new javax.swing.JComboBox<>();
         jPanel5 = new javax.swing.JPanel();
-        jTextField12 = new javax.swing.JTextField();
-        jLabel20 = new javax.swing.JLabel();
-        jButton8 = new javax.swing.JButton();
+        DGIDeleteItem = new javax.swing.JButton();
+        jLabel23 = new javax.swing.JLabel();
+        DGIGIID = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
+        MGIResponse = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        GSPoints = new javax.swing.JTextField();
+        GSSubmitGrade = new javax.swing.JButton();
+        GSStudentID = new javax.swing.JComboBox<>();
+        GSGIID = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        GSResponse = new javax.swing.JTextArea();
         jLabel8 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        GSFeedback = new javax.swing.JTextField();
         viewAppealsPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        viewAllAppeals = new javax.swing.JButton();
+        VAResponse = new javax.swing.JTextArea();
+        VAViewAllAppeals = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel5.setText("Enter the Student's Name");
+        jLabel5.setText("* Enter the Student's Name");
 
-        jButton2.setText("Create Student Profile");
+        CSCreateStudent.setText("Create Student Profile");
+        CSCreateStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CSCreateStudentActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout profileCLayout = new javax.swing.GroupLayout(profileC);
         profileC.setLayout(profileCLayout);
@@ -117,8 +134,8 @@ public class InstructorUI extends javax.swing.JFrame {
                     .addGroup(profileCLayout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addGroup(profileCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(CSCreateStudent)
+                            .addComponent(CSStudentsName, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         profileCLayout.setVerticalGroup(
@@ -127,105 +144,116 @@ public class InstructorUI extends javax.swing.JFrame {
                 .addGap(41, 41, 41)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(CSStudentsName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
+                .addComponent(CSCreateStudent)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Create New Profile", profileC);
+        RSStudentID.addTab("Create New Profile", profileC);
 
-        jLabel12.setText("Enter Student ID");
+        RSViewStudent.setText("View Student Profile");
+        RSViewStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RSViewStudentActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("View Student Profile");
+        jLabel26.setText("* Select Student ID");
 
         javax.swing.GroupLayout profileRLayout = new javax.swing.GroupLayout(profileR);
         profileR.setLayout(profileRLayout);
         profileRLayout.setHorizontalGroup(
             profileRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(profileRLayout.createSequentialGroup()
+                .addGap(36, 36, 36)
                 .addGroup(profileRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(profileRLayout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(jLabel12))
-                    .addGroup(profileRLayout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addGroup(profileRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton4)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel26))
+                    .addComponent(VPStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(RSViewStudent))
+                .addContainerGap(347, Short.MAX_VALUE))
         );
         profileRLayout.setVerticalGroup(
             profileRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(profileRLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel12)
+                .addGap(31, 31, 31)
+                .addComponent(jLabel26)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(VPStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RSViewStudent)
+                .addContainerGap(184, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("View Profile", profileR);
+        RSStudentID.addTab("View Profile", profileR);
 
-        jLabel14.setText("Enter Student ID");
-
-        jButton6.setText("Update Student Profile");
-
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+        USUpdateStudent.setText("Update Student Profile");
+        USUpdateStudent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
+                USUpdateStudentActionPerformed(evt);
             }
         });
 
-        jLabel15.setText("Enter the Student's Name");
+        UPStudentName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UPStudentNameActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setText("* Enter the Student's Name");
+
+        jLabel25.setText("* Select Student ID");
 
         javax.swing.GroupLayout profileULayout = new javax.swing.GroupLayout(profileU);
         profileU.setLayout(profileULayout);
         profileULayout.setHorizontalGroup(
             profileULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(profileULayout.createSequentialGroup()
+                .addGap(45, 45, 45)
                 .addGroup(profileULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(USUpdateStudent)
                     .addGroup(profileULayout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addComponent(jLabel14))
-                    .addGroup(profileULayout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addGroup(profileULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton6)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel25))
+                    .addComponent(UPStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(profileULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(profileULayout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addComponent(jLabel15))
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(UPStudentName, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(69, 69, 69))
         );
         profileULayout.setVerticalGroup(
             profileULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(profileULayout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addGap(39, 39, 39)
                 .addGroup(profileULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(profileULayout.createSequentialGroup()
-                        .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(profileULayout.createSequentialGroup()
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(UPStudentName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(profileULayout.createSequentialGroup()
+                        .addComponent(jLabel25)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(UPStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton6)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(USUpdateStudent)
+                .addContainerGap(170, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Update Profile", profileU);
+        RSStudentID.addTab("Update Profile", profileU);
 
-        jButton9.setText("Delete Student Profile");
+        DSDeleteStudent.setText("Delete Student Profile");
+        DSDeleteStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DSDeleteStudentActionPerformed(evt);
+            }
+        });
 
-        jLabel21.setText("Enter Student ID");
+        jLabel24.setText("* Select Student ID");
 
         javax.swing.GroupLayout profileDLayout = new javax.swing.GroupLayout(profileD);
         profileD.setLayout(profileDLayout);
@@ -236,28 +264,28 @@ public class InstructorUI extends javax.swing.JFrame {
                 .addGroup(profileDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(profileDLayout.createSequentialGroup()
                         .addGap(8, 8, 8)
-                        .addComponent(jLabel21))
-                    .addComponent(jButton9)
-                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(307, Short.MAX_VALUE))
+                        .addComponent(jLabel24))
+                    .addComponent(DPStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DSDeleteStudent))
+                .addContainerGap(334, Short.MAX_VALUE))
         );
         profileDLayout.setVerticalGroup(
             profileDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(profileDLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(jLabel21)
+                .addGap(37, 37, 37)
+                .addComponent(jLabel24)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(DPStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton9)
+                .addComponent(DSDeleteStudent)
                 .addContainerGap(172, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Delete Profile", profileD);
+        RSStudentID.addTab("Delete Profile", profileD);
 
-        jTextArea4.setColumns(20);
-        jTextArea4.setRows(5);
-        jScrollPane4.setViewportView(jTextArea4);
+        MSPResponse.setColumns(20);
+        MSPResponse.setRows(5);
+        jScrollPane4.setViewportView(MSPResponse);
 
         jLabel7.setText("Response");
 
@@ -268,7 +296,7 @@ public class InstructorUI extends javax.swing.JFrame {
             .addGroup(manageStudentsProfilePanelLayout.createSequentialGroup()
                 .addGroup(manageStudentsProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(RSStudentID, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageStudentsProfilePanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel7)))
@@ -278,29 +306,29 @@ public class InstructorUI extends javax.swing.JFrame {
             manageStudentsProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(manageStudentsProfilePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(RSStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
                 .addComponent(jLabel7)
                 .addGap(1, 1, 1)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))
         );
 
         gradeStuffPanel.addTab("Manage Student Profiles", manageStudentsProfilePanel);
 
-        jLabel9.setText("Select Grading Item's Type");
+        jLabel9.setText("* Select Grading Item's Type");
 
-        jButton3.setText("Create Grading Item");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        CGICreateGradingItem.setText("Create Grading Item");
+        CGICreateGradingItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                CGICreateGradingItemActionPerformed(evt);
             }
         });
 
-        jLabel10.setText("Enter the Grading Item's Name");
+        jLabel10.setText("* Enter the Grading Item's Name");
 
-        jLabel11.setText("Enter the Grading Item's Weightage");
+        jLabel11.setText("* Enter the Grading Item's Weightage");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CGIType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Assignment", "Quiz", "Midterm Exam", "Test", "Homework", "Final Exam" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -311,21 +339,21 @@ public class InstructorUI extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton3)
+                            .addComponent(CGICreateGradingItem)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(8, 8, 8)
                                 .addComponent(jLabel11))
-                            .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
-                            .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(CGIWeightage)
+                            .addComponent(CGIType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(53, 53, 53)
                         .addComponent(jLabel9)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addComponent(jLabel10))
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CGIName, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(47, 47, 47))
         );
         jPanel1Layout.setVerticalGroup(
@@ -336,73 +364,75 @@ public class InstructorUI extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addGap(4, 4, 4)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(CGIType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(CGIName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(CGIWeightage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19)
-                .addComponent(jButton3)
+                .addComponent(CGICreateGradingItem)
                 .addContainerGap(98, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Create Grading Item", jPanel1);
 
-        jLabel13.setText("Enter Grading Item ID");
+        VGIViewDetails.setText("View Grading Item Details");
+        VGIViewDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VGIViewDetailsActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("View Grading Item Details");
+        jLabel22.setText("* Select Grading Item ID");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(36, 36, 36)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(VGIGIID, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(jLabel13))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton5)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel22))
+                    .addComponent(VGIViewDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(353, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel22)
+                .addGap(4, 4, 4)
+                .addComponent(VGIGIID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton5)
+                .addComponent(VGIViewDetails)
                 .addContainerGap(183, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("View Grading Item", jPanel2);
 
-        jButton7.setText("Update Grading Item");
-
-        jTextField9.addActionListener(new java.awt.event.ActionListener() {
+        UGIUpdateItem.setText("Update Grading Item");
+        UGIUpdateItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField9ActionPerformed(evt);
+                UGIUpdateItemActionPerformed(evt);
             }
         });
 
-        jLabel16.setText("Enter the Grading Item's Name");
+        jLabel16.setText("* Enter the Grading Item's Name");
 
-        jLabel17.setText("Enter Grading Item ID");
+        jLabel17.setText("* Select Grading Item ID");
 
-        jLabel18.setText("Enter Grading Item's Weightage");
+        jLabel18.setText("* Enter Grading Item's Weightage");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        UGIType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Assignment", "Quiz", "Midterm Exam", "Test", "Homework", "Final Exam" }));
 
-        jLabel19.setText("Select Grading Item's Type");
+        jLabel19.setText("* Select Grading Item's Type");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -415,22 +445,22 @@ public class InstructorUI extends javax.swing.JFrame {
                         .addComponent(jLabel17))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(45, 45, 45)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton7)
-                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(UGIUpdateItem)
+                            .addComponent(UGIName, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(8, 8, 8)
-                                .addComponent(jLabel16)))))
+                                .addComponent(jLabel16))
+                            .addComponent(UGIGIID, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+                    .addComponent(UGIWeightage, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel19)
                             .addComponent(jLabel18)))
-                    .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(UGIType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(73, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -440,37 +470,37 @@ public class InstructorUI extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(4, 4, 4)
+                        .addComponent(UGIGIID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel19)
                         .addGap(4, 4, 4)
-                        .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(UGIType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel18)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(UGIWeightage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(UGIName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(19, 19, 19)
-                .addComponent(jButton7)
+                .addComponent(UGIUpdateItem)
                 .addContainerGap(98, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Update Grading Item", jPanel4);
 
-        jLabel20.setText("Enter Grading Item ID");
-
-        jButton8.setText("Delete Grading Item");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        DGIDeleteItem.setText("Delete Grading Item");
+        DGIDeleteItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                DGIDeleteItemActionPerformed(evt);
             }
         });
+
+        jLabel23.setText("* Select Grading Item ID");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -479,30 +509,30 @@ public class InstructorUI extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton8)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
-                        .addComponent(jLabel20))
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(320, Short.MAX_VALUE))
+                        .addComponent(jLabel23))
+                    .addComponent(DGIDeleteItem)
+                    .addComponent(DGIGIID, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(347, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jLabel20)
+                .addGap(35, 35, 35)
+                .addComponent(jLabel23)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(DGIGIID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton8)
+                .addComponent(DGIDeleteItem)
                 .addContainerGap(167, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Delete Grading Item", jPanel5);
 
-        jTextArea3.setColumns(20);
-        jTextArea3.setRows(5);
-        jScrollPane3.setViewportView(jTextArea3);
+        MGIResponse.setColumns(20);
+        MGIResponse.setRows(5);
+        jScrollPane3.setViewportView(MGIResponse);
 
         jLabel6.setText("Response");
 
@@ -528,29 +558,32 @@ public class InstructorUI extends javax.swing.JFrame {
                 .addGap(1, 1, 1)
                 .addComponent(jLabel6)
                 .addGap(1, 1, 1)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         gradeStuffPanel.addTab("Manage Grading Items", manageGradingItemsPanel);
 
-        jLabel1.setText("Select Student ID");
+        jLabel1.setText("* Select Student ID");
 
-        jLabel2.setText("Select Grading Item");
+        jLabel2.setText("* Select Grading Item");
 
-        jLabel3.setText("Enter the points (Max 100)");
+        jLabel3.setText("* Enter the points (Max 100)");
 
-        jButton1.setText("Submit Grade");
+        GSSubmitGrade.setText("Submit Grade");
+        GSSubmitGrade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GSSubmitGradeActionPerformed(evt);
+            }
+        });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        GSResponse.setColumns(20);
+        GSResponse.setRows(5);
+        jScrollPane2.setViewportView(GSResponse);
 
         jLabel8.setText("Response");
+
+        jLabel12.setText("Enter the Feedback");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -559,77 +592,80 @@ public class InstructorUI extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGap(70, 70, 70)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(GSStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1))
+                                .addGap(11, 11, 11)
+                                .addComponent(jLabel1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(GSFeedback, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(jLabel1))
-                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                                            .addGap(10, 10, 10)
-                                            .addComponent(jLabel3))))
-                                .addGap(70, 70, 70)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(33, 33, 33))
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
-                        .addComponent(jLabel8))
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel12))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel2))
+                            .addComponent(GSGIID, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(74, 74, 74))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane2)))
+                        .addComponent(jScrollPane2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel8)))
                 .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(68, 68, 68)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(GSPoints, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel3))
+                    .addComponent(GSSubmitGrade))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jLabel1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2)))
+                .addGap(44, 44, 44)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(GSStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(GSGIID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(7, 7, 7)))
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(GSPoints, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(GSFeedback, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(GSSubmitGrade)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         gradeStuffPanel.addTab("Grade Stuff", jPanel3);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        VAResponse.setColumns(20);
+        VAResponse.setRows(5);
+        jScrollPane1.setViewportView(VAResponse);
 
-        viewAllAppeals.setText("View All Appeals");
-        viewAllAppeals.addActionListener(new java.awt.event.ActionListener() {
+        VAViewAllAppeals.setText("View All Appeals");
+        VAViewAllAppeals.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewAllAppealsActionPerformed(evt);
+                VAViewAllAppealsActionPerformed(evt);
             }
         });
 
@@ -644,7 +680,7 @@ public class InstructorUI extends javax.swing.JFrame {
                 .addGroup(viewAppealsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
                     .addGroup(viewAppealsPanelLayout.createSequentialGroup()
-                        .addComponent(viewAllAppeals)
+                        .addComponent(VAViewAllAppeals)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)))
                 .addContainerGap())
@@ -654,10 +690,10 @@ public class InstructorUI extends javax.swing.JFrame {
             .addGroup(viewAppealsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(viewAppealsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(viewAllAppeals)
+                    .addComponent(VAViewAllAppeals)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -683,25 +719,122 @@ public class InstructorUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void viewAllAppealsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllAppealsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_viewAllAppealsActionPerformed
+    private void VAViewAllAppealsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VAViewAllAppealsActionPerformed
+        ClientResponse response = appealsClient.viewAllAppeals();
+        VAResponse.setText("Response Code - " + response.getStatus() + "\n" + response.getEntity(String.class) + "\n\n");
+    }//GEN-LAST:event_VAViewAllAppealsActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void CGICreateGradingItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CGICreateGradingItemActionPerformed
+        String type = CGIType.getSelectedItem().toString();
+        String name = CGIName.getText();
+        String weightage = CGIWeightage.getText();
+        String requestMessage = "{\n"
+                + "\"requestType\" : \"createGradingItem\",\n"
+                + "\"type\" : \"" + type + "\",\n"
+                + "\"name\" : \"" + name + "\",\n"
+                + "\"percentage\" : " + weightage + "\n"
+                + "}";
+        ClientResponse response = gradingItemsClient.createGradingItem(requestMessage);
+        MGIResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+        setGradingItemIDs();
+    }//GEN-LAST:event_CGICreateGradingItemActionPerformed
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+    private void UPStudentNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UPStudentNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
+    }//GEN-LAST:event_UPStudentNameActionPerformed
 
-    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField9ActionPerformed
+    private void DGIDeleteItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DGIDeleteItemActionPerformed
+        if (DGIGIID.getSelectedItem() != null) {
+            int gradingItemID = Integer.parseInt(DGIGIID.getSelectedItem().toString());
+            ClientResponse response = gradingItemsClient.deleteGradingItem(gradingItemID);
+            if (response.getStatus() != 204) {
+                MGIResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+                System.out.println(response.getStatus() + " - " + response.getEntity(String.class) + "\n\n");
+            } else {
+                MGIResponse.setText("Response Code: " + response.getStatus() + "\nNo Response Body!");
+            }
+            setGradingItemIDs();
+        }
+    }//GEN-LAST:event_DGIDeleteItemActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+    private void CSCreateStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CSCreateStudentActionPerformed
+        String studentName = CSStudentsName.getText();
+        String requestMessage = "{\n"
+                + "\"requestType\" : \"createStudentProfile\",\n"
+                + "\"name\" : \"" + studentName + "\"\n"
+                + "}";
+        ClientResponse response = studentProfilesClient.createStudentProfile(requestMessage);
+        MSPResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+        setStudentIDs();
+    }//GEN-LAST:event_CSCreateStudentActionPerformed
+
+    private void RSViewStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RSViewStudentActionPerformed
+        ClientResponse response = studentProfilesClient.readStudentProfile(Integer.parseInt(VPStudentID.getSelectedItem().toString()));
+        MSPResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+    }//GEN-LAST:event_RSViewStudentActionPerformed
+
+    private void USUpdateStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_USUpdateStudentActionPerformed
+        int studentID = Integer.parseInt(UPStudentID.getSelectedItem().toString());
+        String newName = UPStudentName.getText();
+        String requestMessage = "{\n"
+                + "\"requestType\" : \"updateStudentProfile\",\n"
+                + "\"id\" : " + studentID + ",\n"
+                + "\"name\" : \"" + newName + "\"\n"
+                + "}";
+        ClientResponse response = studentProfilesClient.updateStudentProfile(requestMessage);
+        MSPResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+    }//GEN-LAST:event_USUpdateStudentActionPerformed
+
+    private void DSDeleteStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DSDeleteStudentActionPerformed
+        if (DPStudentID.getSelectedItem() != null) {
+            int studentID = Integer.parseInt(DPStudentID.getSelectedItem().toString());
+            ClientResponse response = studentProfilesClient.deleteStudentProfile(studentID);
+            if (response.getStatus() != 204) {
+                MSPResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+                System.out.println(response.getStatus() + " - " + response.getEntity(String.class) + "\n\n");
+            } else {
+                MSPResponse.setText("Response Code: " + response.getStatus() + "\nNo Response Body!");
+            }
+            setStudentIDs();
+        }
+    }//GEN-LAST:event_DSDeleteStudentActionPerformed
+
+    private void VGIViewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VGIViewDetailsActionPerformed
+        ClientResponse response = gradingItemsClient.readGradingItem(Integer.parseInt(VGIGIID.getSelectedItem().toString()));
+        MGIResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+    }//GEN-LAST:event_VGIViewDetailsActionPerformed
+
+    private void UGIUpdateItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UGIUpdateItemActionPerformed
+        int gradingItemID = Integer.parseInt(UGIGIID.getSelectedItem().toString());
+        String gradingItemType = UGIType.getSelectedItem().toString();
+        String gradingItemName = UGIName.getText();
+        double gradingItemWeightage = Double.parseDouble(UGIWeightage.getText());
+        String requestMessage = "{\n"
+                + "\t\"requestType\" : \"updateGradingItem\",\n"
+                + "\t\"id\" : " + gradingItemID + ",\n"
+                + "\t\"type\" : \"" + gradingItemType + "\",\n"
+                + "\t\"name\" : \"" + gradingItemName + "\",\n"
+                + "\t\"percentage\" : " + gradingItemWeightage + "\n"
+                + "}";
+        ClientResponse response = gradingItemsClient.updateGradingItem(requestMessage);
+        MGIResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+    }//GEN-LAST:event_UGIUpdateItemActionPerformed
+
+    private void GSSubmitGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GSSubmitGradeActionPerformed
+        int studentID = Integer.parseInt(GSStudentID.getSelectedItem().toString());
+        int gradingItemID = Integer.parseInt(GSGIID.getSelectedItem().toString());
+        double points = Double.parseDouble(GSPoints.getText());
+        String feedback = GSFeedback.getText();
+        String requestMessage = "{\n"
+                + "\t\"requestType\" : \"updateGrades\",\n"
+                + "\t\"studentId\" : " + studentID + ",\n"
+                + "\t\"gradingItemId\" : " + gradingItemID + ",\n"
+                + "\t\"points\" : " + points + ",\n"
+                + "\t\"feedback\" : \"" + feedback + "\"\n"
+                + "}";
+        ClientResponse response = studentProfilesClient.updateGrade(requestMessage);
+        GSResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+    }//GEN-LAST:event_GSSubmitGradeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -739,34 +872,55 @@ public class InstructorUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton CGICreateGradingItem;
+    private javax.swing.JTextField CGIName;
+    private javax.swing.JComboBox<String> CGIType;
+    private javax.swing.JTextField CGIWeightage;
+    private javax.swing.JButton CSCreateStudent;
+    private javax.swing.JTextField CSStudentsName;
+    private javax.swing.JButton DGIDeleteItem;
+    private javax.swing.JComboBox<String> DGIGIID;
+    private javax.swing.JComboBox<String> DPStudentID;
+    private javax.swing.JButton DSDeleteStudent;
+    private javax.swing.JTextField GSFeedback;
+    private javax.swing.JComboBox<String> GSGIID;
+    private javax.swing.JTextField GSPoints;
+    private javax.swing.JTextArea GSResponse;
+    private javax.swing.JComboBox<String> GSStudentID;
+    private javax.swing.JButton GSSubmitGrade;
+    private javax.swing.JTextArea MGIResponse;
+    private javax.swing.JTextArea MSPResponse;
+    private javax.swing.JTabbedPane RSStudentID;
+    private javax.swing.JButton RSViewStudent;
+    private javax.swing.JComboBox<String> UGIGIID;
+    private javax.swing.JTextField UGIName;
+    private javax.swing.JComboBox<String> UGIType;
+    private javax.swing.JButton UGIUpdateItem;
+    private javax.swing.JTextField UGIWeightage;
+    private javax.swing.JComboBox<String> UPStudentID;
+    private javax.swing.JTextField UPStudentName;
+    private javax.swing.JButton USUpdateStudent;
+    private javax.swing.JTextArea VAResponse;
+    private javax.swing.JButton VAViewAllAppeals;
+    private javax.swing.JComboBox<String> VGIGIID;
+    private javax.swing.JButton VGIViewDetails;
+    private javax.swing.JComboBox<String> VPStudentID;
     private javax.swing.JTabbedPane gradeStuffPanel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -783,32 +937,61 @@ public class InstructorUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextArea jTextArea3;
-    private javax.swing.JTextArea jTextArea4;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JPanel manageGradingItemsPanel;
     private javax.swing.JPanel manageStudentsProfilePanel;
     private javax.swing.JPanel profileC;
     private javax.swing.JPanel profileD;
     private javax.swing.JPanel profileR;
     private javax.swing.JPanel profileU;
-    private javax.swing.JButton viewAllAppeals;
     private javax.swing.JPanel viewAppealsPanel;
     // End of variables declaration//GEN-END:variables
+    StudentProfilesClient studentProfilesClient;
+    GradingItemsClient gradingItemsClient;
+    AppealsClient appealsClient;
+
+    private void customInitComponents() {
+        studentProfilesClient = new StudentProfilesClient();
+        gradingItemsClient = new GradingItemsClient();
+        appealsClient = new AppealsClient();
+        setGradingItemIDs();
+        setStudentIDs();
+    }
+
+    private void setGradingItemIDs() {
+        String gradingItemIDs = gradingItemsClient.getAllGradingItemIDs();
+        Integer[] allGradingItemIDs = convertStringToArray(gradingItemIDs);
+        VGIGIID.setModel(new DefaultComboBoxModel((Object[]) allGradingItemIDs));
+        UGIGIID.setModel(new DefaultComboBoxModel((Object[]) allGradingItemIDs));
+        DGIGIID.setModel(new DefaultComboBoxModel((Object[]) allGradingItemIDs));
+        GSGIID.setModel(new DefaultComboBoxModel((Object[]) allGradingItemIDs));
+    }
+
+    private void setStudentIDs() {
+        String studentIDs = studentProfilesClient.getAllStudentIDs();
+        Integer[] allStudentIDs = convertStringToArray(studentIDs);
+        VPStudentID.setModel(new DefaultComboBoxModel((Object[]) allStudentIDs));
+        UPStudentID.setModel(new DefaultComboBoxModel((Object[]) allStudentIDs));
+        DPStudentID.setModel(new DefaultComboBoxModel((Object[]) allStudentIDs));
+        GSStudentID.setModel(new DefaultComboBoxModel((Object[]) allStudentIDs));
+    }
+
+    private Integer[] convertStringToArray(String input) {
+        input = input.substring(1, input.length() - 1);
+        if (input.equals("")) {
+            return new Integer[]{};
+        } else if (!input.contains(",")) {
+            return new Integer[]{Integer.parseInt(input)};
+        } else {
+            String[] parts = input.split(",");
+            List<Integer> list = new ArrayList<>();
+            for (String s : parts) {
+                list.add(Integer.parseInt(s.trim()));
+            }
+            Object[] objectArray = list.toArray();
+            Integer[] integerArray = Arrays.copyOf(objectArray, objectArray.length, Integer[].class);
+            return integerArray;
+        }
+    }
+
 }

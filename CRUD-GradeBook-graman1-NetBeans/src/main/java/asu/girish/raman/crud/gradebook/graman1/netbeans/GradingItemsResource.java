@@ -13,6 +13,19 @@ public class GradingItemsResource {
     static List<GradingItem> gradingItems = null;
     static int GRADING_ITEM_ID = 1;
 
+    @GET
+    @Path("getAllIDs")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getAllGradingItemIDs() {
+        List<Integer> allIDs = new ArrayList<>();
+        if (gradingItems != null) {
+            for (GradingItem gradingItem : gradingItems) {
+                allIDs.add(gradingItem.getId());
+            }
+        }
+        return allIDs.toString();
+    }
+
     @POST
     @Path("createGradingItem")
     @Produces(MediaType.APPLICATION_JSON)
@@ -71,7 +84,7 @@ public class GradingItemsResource {
                 if (gradingItem.getId() == id) {
                     jsonResponse = "{\n"
                             + "\"responseType\" : \"success\",\n"
-                            + "\"id\" : \"" + gradingItem.getId()+ "\",\n"
+                            + "\"id\" : \"" + gradingItem.getId() + "\",\n"
                             + "\"type\" : \"" + gradingItem.getType() + "\",\n"
                             + "\"name\" : \"" + gradingItem.getName() + "\",\n"
                             + "\"percentage\" : " + gradingItem.getPercentage() + "\n"

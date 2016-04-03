@@ -6,6 +6,7 @@ import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
+import java.util.List;
 import javax.ws.rs.core.MediaType;
 
 public class StudentProfilesClient {
@@ -45,6 +46,10 @@ public class StudentProfilesClient {
 
     public ClientResponse updateGrade(String requestMessage) {
         return webResource.path("/Grades/update").type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).put(ClientResponse.class, requestMessage);
+    }
+
+    public String getAllStudentIDs() {
+        return webResource.path("/getAllIDs").get(String.class);
     }
 
     public void close() {

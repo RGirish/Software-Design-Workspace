@@ -52,22 +52,19 @@ public class AppealsResource {
             Appeal appeal = new Appeal(studentId, gradingItemId, appealMessage);
             appeals.add(appeal);
             jsonResponse = "{\n"
-                    + "\"responseType\":\"success\",\n"
-                    + "\"request-student-id\" : " + studentId + ",\n"
-                    + "\"request-grading-item-id\" : " + gradingItemId + ",\n"
-                    + "\"request-appeal-message\" : \"" + appealMessage + "\"\n"
+                    + "\"responseType\":\"success\"\n"
                     + "}";
             return Response.status(HTTP_CREATED).entity(jsonResponse).build();
         } catch (JSONException e) {
             jsonResponse = "{\n"
                     + "\"responseType\":\"failure\",\n"
-                    + "\"request\":\"" + jsonRequest + "\"\n"
+                    + "\"request\":" + jsonRequest + "\n"
                     + "}";
             return Response.status(HTTP_BAD_REQUEST).entity(jsonResponse).build();
         } catch (Exception e) {
             jsonResponse = "{\n"
                     + "\"responseType\":\"failure\",\n"
-                    + "\"request\":\"" + jsonRequest + "\"\n"
+                    + "\"request\":" + jsonRequest + "\n"
                     + "}";
             return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse).build();
         }

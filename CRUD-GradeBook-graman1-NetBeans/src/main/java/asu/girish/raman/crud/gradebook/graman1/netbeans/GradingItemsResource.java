@@ -43,6 +43,20 @@ public class GradingItemsResource {
             GradingItem gradingItem = new GradingItem(GRADING_ITEM_ID, type, name, percentage);
             if (gradingItems == null) {
                 gradingItems = new ArrayList<>();
+            } else {
+                double totalWeightageSofar = 0;
+                for (GradingItem gi : gradingItems) {
+                    totalWeightageSofar += gi.getPercentage();
+                }
+                if (totalWeightageSofar + percentage > 100) {
+                    jsonResponse = "{\n"
+                            + "\"responseType\":\"failure\",\n"
+                            + "\"reason\":\"Total weightage exceeds 100%\",\n"
+                            + "\"request\":" + jsonRequest + "\n"
+                            + "}";
+                    System.out.println(jsonResponse);
+                    return Response.status(HTTP_BAD_REQUEST).entity(jsonResponse).build();
+                }
             }
             gradingItems.add(gradingItem);
             jsonResponse = "{\n"
@@ -54,13 +68,13 @@ public class GradingItemsResource {
         } catch (JSONException e) {
             jsonResponse = "{\n"
                     + "\"responseType\":\"failure\",\n"
-                    + "\"request\":\"" + jsonRequest + "\"\n"
+                    + "\"request\":" + jsonRequest + "\n"
                     + "}";
             return Response.status(HTTP_BAD_REQUEST).entity(jsonResponse).build();
         } catch (Exception e) {
             jsonResponse = "{\n"
                     + "\"responseType\":\"failure\",\n"
-                    + "\"request\":\"" + jsonRequest + "\"\n"
+                    + "\"request\":" + jsonRequest + "\n"
                     + "}";
             return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse).build();
         }
@@ -128,7 +142,7 @@ public class GradingItemsResource {
             if (gradingItems == null) {
                 jsonResponse = "{\n"
                         + "\"responseType\" : \"failure\",\n"
-                        + "\"request\" : \"" + jsonRequest + "\"\n"
+                        + "\"request\" : " + jsonRequest + "\n"
                         + "}";
                 return Response.status(HTTP_CONFLICT).entity(jsonResponse).build();
             }
@@ -153,19 +167,19 @@ public class GradingItemsResource {
             }
             jsonResponse = "{\n"
                     + "\"responseType\" : \"failure\",\n"
-                    + "\"request\" : \"" + jsonRequest + "\"\n"
+                    + "\"request\" : " + jsonRequest + "\n"
                     + "}";
             return Response.status(HTTP_NOT_FOUND).entity(jsonResponse).build();
         } catch (JSONException e) {
             jsonResponse = "{\n"
                     + "\"responseType\" : \"failure\",\n"
-                    + "\"request\" : \"" + jsonRequest + "\"\n"
+                    + "\"request\" : " + jsonRequest + "\n"
                     + "}";
             return Response.status(HTTP_BAD_REQUEST).entity(jsonResponse).build();
         } catch (Exception e) {
             jsonResponse = "{\n"
                     + "\"responseType\" : \"failure\",\n"
-                    + "\"request\" : \"" + jsonRequest + "\"\n"
+                    + "\"request\" : " + jsonRequest + "\n"
                     + "}";
             return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse).build();
         }

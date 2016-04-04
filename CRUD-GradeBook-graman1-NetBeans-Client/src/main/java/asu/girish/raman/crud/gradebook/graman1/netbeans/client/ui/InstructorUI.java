@@ -743,7 +743,11 @@ public class InstructorUI extends javax.swing.JFrame {
     private void CGICreateGradingItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CGICreateGradingItemActionPerformed
         if (CGIType.getSelectedItem() != null && !CGIName.getText().trim().equals("")) {
             try {
-                Double.parseDouble(CGIWeightage.getText());
+                double w = Double.parseDouble(CGIWeightage.getText());
+                if (w <= 0 || w > 100) {
+                    MGIResponse.setText("Enter a number greater than 0 and less than or equal to 100 for weightage!");
+                    return;
+                }
             } catch (NumberFormatException e) {
                 MGIResponse.setText("Enter a number for weightage!");
                 return;

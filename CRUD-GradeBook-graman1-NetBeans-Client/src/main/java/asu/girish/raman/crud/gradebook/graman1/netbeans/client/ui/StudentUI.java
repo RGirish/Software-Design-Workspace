@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -300,11 +302,17 @@ public class StudentUI extends javax.swing.JFrame {
                     + "\t\"appealMessage\" : \"" + appealMessage + "\"\n"
                     + "}";
             ClientResponse response = appealsClient.fileAnAppeal(requestMessage);
-            if (response.getStatus() != 204) {
-                FAResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+
+            String responseString = response.getEntity(String.class);
+            StringBuilder responseOutput = new StringBuilder();
+            JSONObject root = new JSONObject(responseString);
+            String responseType = root.getString("responseType");
+            if (responseType.equals("success")) {
+                responseOutput.append("Message from Server : Appeal Submitted!");
             } else {
-                FAResponse.setText("Response Code: " + response.getStatus() + "\nNo response body!");
+                responseOutput.append(responseString);
             }
+            FAResponse.setText("Response Code - " + response.getStatus() + "\n\n" + responseOutput + "\n\n");
         } else {
             FAResponse.setText("Enter all values!");
         }
@@ -314,11 +322,24 @@ public class StudentUI extends javax.swing.JFrame {
         if (VAGStudentID.getSelectedItem() != null) {
             int studentID = Integer.parseInt(VAGStudentID.getSelectedItem().toString());
             ClientResponse response = studentProfilesClient.getAllGradesForAStudent(studentID);
-            if (response.getStatus() != 204) {
-                VGResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+
+            String responseString = response.getEntity(String.class);
+            StringBuilder responseOutput = new StringBuilder();
+            JSONObject root = new JSONObject(responseString);
+            String responseType = root.getString("responseType");
+            if (responseType.equals("success")) {
+                responseOutput.append("List of all graded work:");
+                JSONArray gradedItems = root.getJSONArray("graded-items");
+                for (int i = 0; i < gradedItems.length(); ++i) {
+                    JSONObject gradedItem = gradedItems.getJSONObject(i);
+                    responseOutput.append("\n\nGrading Item ID : ").append(gradedItem.getInt("gradingItemId"))
+                            .append("\nPoints : ").append(gradedItem.getDouble("points"))
+                            .append("\nFeedback : ").append(gradedItem.getString("feedback"));
+                }
             } else {
-                VGResponse.setText("Response Code: " + response.getStatus() + "\nNo response body!");
+                responseOutput.append(responseString);
             }
+            VGResponse.setText("Response Code - " + response.getStatus() + "\n\n" + responseOutput + "\n\n");
         } else {
             VGResponse.setText("Enter all values!");
         }
@@ -329,11 +350,18 @@ public class StudentUI extends javax.swing.JFrame {
             int studentID = Integer.parseInt(VAPGStudentID.getSelectedItem().toString());
             int gradingItemID = Integer.parseInt(VAPGGIID.getSelectedItem().toString());
             ClientResponse response = studentProfilesClient.getGradeForAStudent(studentID, gradingItemID);
-            if (response.getStatus() != 204) {
-                VGResponse.setText("Response Code: " + response.getStatus() + "\n" + response.getEntity(String.class));
+
+            String responseString = response.getEntity(String.class);
+            StringBuilder responseOutput = new StringBuilder();
+            JSONObject root = new JSONObject(responseString);
+            String responseType = root.getString("responseType");
+            if (responseType.equals("success")) {
+                responseOutput.append("\n\nPoints : ").append(root.getString("points"))
+                        .append("\nFeedback : ").append(root.getString("feedback"));
             } else {
-                VGResponse.setText("Response Code: " + response.getStatus() + "\nNo response body!");
+                responseOutput.append(responseString);
             }
+            VGResponse.setText("Response Code - " + response.getStatus() + "\n\n" + responseOutput + "\n\n");
         } else {
             VGResponse.setText("Enter all values!");
         }

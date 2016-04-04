@@ -57,13 +57,13 @@ public class StudentProfilesResource {
         } catch (JSONException e) {
             jsonResponse = "{\n"
                     + "\"responseType\":\"failure\",\n"
-                    + "\"request\":\"" + jsonRequest + "\"\n"
+                    + "\"request\":" + jsonRequest + "\n"
                     + "}";
             return Response.status(HTTP_BAD_REQUEST).entity(jsonResponse).build();
         } catch (Exception e) {
             jsonResponse = "{\n"
                     + "\"responseType\":\"failure\",\n"
-                    + "\"request\":\"" + jsonRequest + "\"\n"
+                    + "\"request\":" + jsonRequest + "\n"
                     + "}";
             return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse).build();
         }
@@ -129,7 +129,7 @@ public class StudentProfilesResource {
             if (students == null) {
                 jsonResponse = "{\n"
                         + "\"responseType\" : \"failure\",\n"
-                        + "\"request\" : \"" + jsonRequest + "\"\n"
+                        + "\"request : \"" + jsonRequest + "\n"
                         + "}";
                 return Response.status(HTTP_CONFLICT).entity(jsonResponse).build();
             }
@@ -150,19 +150,19 @@ public class StudentProfilesResource {
             }
             jsonResponse = "{\n"
                     + "\"responseType\" : \"failure\",\n"
-                    + "\"request\" : \"" + jsonRequest + "\"\n"
+                    + "\"request\" : " + jsonRequest + "\n"
                     + "}";
             return Response.status(HTTP_NOT_FOUND).entity(jsonResponse).build();
         } catch (JSONException e) {
             jsonResponse = "{\n"
                     + "\"responseType\" : \"failure\",\n"
-                    + "\"request\" : \"" + jsonRequest + "\"\n"
+                    + "\"request\" : " + jsonRequest + "\n"
                     + "}";
             return Response.status(HTTP_BAD_REQUEST).entity(jsonResponse).build();
         } catch (Exception e) {
             jsonResponse = "{\n"
                     + "\"responseType\" : \"failure\",\n"
-                    + "\"request\" : \"" + jsonRequest + "\"\n"
+                    + "\"request\" : " + jsonRequest + "\n"
                     + "}";
             return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse).build();
         }
@@ -223,7 +223,7 @@ public class StudentProfilesResource {
             if (students == null || gradingItems == null) {
                 jsonResponse = "{\n"
                         + "\"responseType\" : \"failure\",\n"
-                        + "\"request\" : \"" + jsonRequest + "\"\n"
+                        + "\"request\" : " + jsonRequest + "\n"
                         + "}";
                 return Response.status(HTTP_CONFLICT).entity(jsonResponse).build();
             }
@@ -256,19 +256,19 @@ public class StudentProfilesResource {
             }
             jsonResponse = "{\n"
                     + "\"responseType\" : \"failure\",\n"
-                    + "\"request\" : \"" + jsonRequest + "\"\n"
+                    + "\"request\" : " + jsonRequest + "\n"
                     + "}";
             return Response.status(HTTP_NOT_FOUND).entity(jsonResponse).build();
         } catch (JSONException e) {
             jsonResponse = "{\n"
                     + "\"responseType\" : \"failure\",\n"
-                    + "\"request\" : \"" + jsonRequest + "\"\n"
+                    + "\"request\" : " + jsonRequest + "\n"
                     + "}";
             return Response.status(HTTP_BAD_REQUEST).entity(jsonResponse).build();
         } catch (Exception e) {
             jsonResponse = "{\n"
                     + "\"responseType\" : \"failure\",\n"
-                    + "\"request\" : \"" + jsonRequest + "\"\n"
+                    + "\"request\" : " + jsonRequest + "\n"
                     + "}";
             return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse).build();
         }
@@ -298,14 +298,14 @@ public class StudentProfilesResource {
                         if (allFeedbacks.get(gradingItemId).trim().equals("")) {
                             jsonResponse = "{\n"
                                     + "\"responseType\" : \"success\",\n"
-                                    + "\"points\" : " + allPoints.get(gradingItemId) + ",\n"
+                                    + "\"points\" : \"" + allPoints.get(gradingItemId) + "\",\n"
                                     + "\"feedback\" : \"No feedback given!\"\n"
                                     + "}";
                             return Response.status(HTTP_OK).entity(jsonResponse).build();
                         } else {
                             jsonResponse = "{\n"
                                     + "\"responseType\" : \"success\",\n"
-                                    + "\"points\" : " + allPoints.get(gradingItemId) + ",\n"
+                                    + "\"points\" : \"" + allPoints.get(gradingItemId) + "\",\n"
                                     + "\"feedback\" : \"" + allFeedbacks.get(gradingItemId) + "\"\n"
                                     + "}";
                             return Response.status(HTTP_OK).entity(jsonResponse).build();
@@ -379,7 +379,7 @@ public class StudentProfilesResource {
                     StringBuilder builder = new StringBuilder();
                     builder.append("{\n\t\"responseType\" : \"success\",\n\t\"graded-items\" : [");
                     for (Map.Entry pair : allPoints.entrySet()) {
-                        builder.append("\n\t{\n\t\"gradinItemId\" : ").append(pair.getKey()).append(",\n");
+                        builder.append("\n\t{\n\t\"gradingItemId\" : ").append(pair.getKey()).append(",\n");
                         builder.append("\t\"points\" : ").append(pair.getValue()).append(",\n");
                         if (allFeedbacks.get((int) pair.getKey()).trim().equals("")) {
                             builder.append("\t\"feedback\" : \"No feedback given!\"\n\t},");

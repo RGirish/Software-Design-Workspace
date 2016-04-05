@@ -208,6 +208,72 @@ public class StudentProfilesResource {
         }
     }
 
+    @DELETE
+    @Path("deleteAGrade/{studentId}/{gradingItemId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteAGrade(@PathParam("studentId") int studentId, @PathParam("gradingItemId") int gradingItemId) {
+        String jsonResponse;
+        try {
+            if (students == null || gradingItems == null) {
+                jsonResponse = "{\n"
+                        + "\"responseType\" : \"failure\",\n"
+                        + "\"request-student-id\" : \"" + studentId + "\",\n"
+                        + "\"request-grading-item-id\" : \"" + gradingItemId + "\"\n"
+                        + "}";
+                return Response.status(HTTP_GONE).entity(jsonResponse).build();
+            }
+
+            for (Student student : students) {
+                if (student.getId() == studentId) {
+                    HashMap<Integer, Double> allPoints = (HashMap<Integer, Double>) student.getPoints();
+                    HashMap<Integer, String> allFeedbacks = (HashMap<Integer, String>) student.getFeedbacks();
+
+                    if (allPoints.containsKey(gradingItemId)) {
+                        allPoints.remove(gradingItemId);
+                        allFeedbacks.remove(gradingItemId);
+                        return Response.status(HTTP_NO_CONTENT).build();
+                    } else {
+                        for (GradingItem gradingItem : gradingItems) {
+                            if (gradingItem.getId() == gradingItemId) {
+                                jsonResponse = "{\n"
+                                        + "\"responseType\" : \"failure\",\n"
+                                        + "\"reason\" : \"Grading Item not graded for the student yet!\"\n"
+                                        + "}";
+                                return Response.status(HTTP_NOT_FOUND).entity(jsonResponse).build();
+                            }
+                        }
+                        jsonResponse = "{\n"
+                                + "\"responseType\" : \"failure\",\n"
+                                + "\"reason\" : \"Invalid GradingItem ID\",\n"
+                                + "\"request-grading-item-id\" : \"" + gradingItemId + "\"\n"
+                                + "}";
+                        return Response.status(HTTP_NOT_FOUND).entity(jsonResponse).build();
+                    }
+                }
+            }
+            jsonResponse = "{\n"
+                    + "\"responseType\" : \"failure\",\n"
+                    + "\"reason\" : \"Invalid Student ID\",\n"
+                    + "\"request-student-id\" : \"" + studentId + "\"\n"
+                    + "}";
+            return Response.status(HTTP_NOT_FOUND).entity(jsonResponse).build();
+        } catch (JSONException e) {
+            jsonResponse = "{\n"
+                    + "\"responseType\" : \"failure\",\n"
+                    + "\"request-student-id\" : \"" + studentId + "\"\n"
+                    + "\"request-grading-item-id\" : \"" + gradingItemId + "\"\n"
+                    + "}";
+            return Response.status(HTTP_BAD_REQUEST).entity(jsonResponse).build();
+        } catch (Exception e) {
+            jsonResponse = "{\n"
+                    + "\"responseType\" : \"failure\",\n"
+                    + "\"request-student-id\" : \"" + studentId + "\"\n"
+                    + "\"request-grading-item-id\" : \"" + gradingItemId + "\"\n"
+                    + "}";
+            return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse).build();
+        }
+    }
+
     @PUT
     @Path("/Grades/update")
     @Produces(MediaType.APPLICATION_JSON)

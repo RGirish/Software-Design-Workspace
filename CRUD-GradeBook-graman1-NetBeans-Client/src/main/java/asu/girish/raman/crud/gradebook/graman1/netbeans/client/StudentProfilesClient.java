@@ -6,9 +6,12 @@ import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
-import java.util.List;
 import javax.ws.rs.core.MediaType;
 
+/**
+ *
+ * @author Girish
+ */
 public class StudentProfilesClient {
 
     private final WebResource webResource;
@@ -34,6 +37,10 @@ public class StudentProfilesClient {
 
     public ClientResponse deleteStudentProfile(int id) throws UniformInterfaceException {
         return webResource.path("deleteStudentProfile/" + String.valueOf(id)).delete(ClientResponse.class);
+    }
+
+    public ClientResponse deleteAGrade(int studentId, int gradingItemId) throws UniformInterfaceException {
+        return webResource.path("deleteAGrade/" + studentId + "/" + gradingItemId).delete(ClientResponse.class);
     }
 
     public ClientResponse getAllGradesForAStudent(int studentId) throws UniformInterfaceException {

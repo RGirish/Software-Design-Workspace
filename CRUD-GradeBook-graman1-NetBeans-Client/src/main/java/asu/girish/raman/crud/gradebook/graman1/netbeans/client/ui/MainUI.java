@@ -1,5 +1,9 @@
 package asu.girish.raman.crud.gradebook.graman1.netbeans.client.ui;
 
+/**
+ *
+ * @author Girish
+ */
 public class MainUI extends javax.swing.JFrame {
 
     public MainUI() {

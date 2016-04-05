@@ -8,6 +8,10 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import javax.ws.rs.core.MediaType;
 
+/**
+ *
+ * @author Girish
+ */
 public class GradingItemsClient {
 
     private final WebResource webResource;

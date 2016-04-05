@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package asu.girish.raman.crud.gradebook.graman1.netbeans.client.ui;
 
 import asu.girish.raman.crud.gradebook.graman1.netbeans.client.AppealsClient;
 import asu.girish.raman.crud.gradebook.graman1.netbeans.client.GradingItemsClient;
 import asu.girish.raman.crud.gradebook.graman1.netbeans.client.StudentProfilesClient;
 import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.json.impl.provider.entity.JSONObjectProvider;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -108,11 +102,21 @@ public class InstructorUI extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         GSFeedback = new javax.swing.JTextField();
+        jPanel6 = new javax.swing.JPanel();
+        DGSID = new javax.swing.JComboBox<>();
+        DGGIID = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        DGDeleteGrade = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        DGResponse = new javax.swing.JTextArea();
+        jLabel20 = new javax.swing.JLabel();
         viewAppealsPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         VAResponse = new javax.swing.JTextArea();
         VAViewAllAppeals = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        Close = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -307,7 +311,7 @@ public class InstructorUI extends javax.swing.JFrame {
                 .addGap(1, 1, 1)
                 .addComponent(jLabel7)
                 .addGap(1, 1, 1)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
         );
 
         gradeStuffPanel.addTab("Manage Student Profiles", manageStudentsProfilePanel);
@@ -555,7 +559,7 @@ public class InstructorUI extends javax.swing.JFrame {
                 .addGap(1, 1, 1)
                 .addComponent(jLabel6)
                 .addGap(1, 1, 1)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -655,6 +659,76 @@ public class InstructorUI extends javax.swing.JFrame {
 
         gradeStuffPanel.addTab("Grade Stuff", jPanel3);
 
+        jLabel13.setText("* Select Grading Item ID");
+
+        jLabel14.setText("* Select Student ID");
+
+        DGDeleteGrade.setText("Delete Grade");
+        DGDeleteGrade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DGDeleteGradeActionPerformed(evt);
+            }
+        });
+
+        DGResponse.setColumns(20);
+        DGResponse.setRows(5);
+        jScrollPane5.setViewportView(DGResponse);
+
+        jLabel20.setText("Response");
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addComponent(jLabel14)
+                .addGap(88, 88, 88)
+                .addComponent(jLabel13)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane5))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel20))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(DGDeleteGrade))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(DGSID, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(DGGIID, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 151, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel14))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(DGGIID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DGSID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(DGDeleteGrade)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addComponent(jLabel20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        gradeStuffPanel.addTab("Delete Grades", jPanel6);
+
         VAResponse.setColumns(20);
         VAResponse.setRows(5);
         jScrollPane1.setViewportView(VAResponse);
@@ -690,11 +764,18 @@ public class InstructorUI extends javax.swing.JFrame {
                     .addComponent(VAViewAllAppeals)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         gradeStuffPanel.addTab("View Appeals", viewAppealsPanel);
+
+        Close.setText("Close");
+        Close.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CloseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -702,14 +783,20 @@ public class InstructorUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(gradeStuffPanel)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(gradeStuffPanel)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Close)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(gradeStuffPanel)
+                .addComponent(Close)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(gradeStuffPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -1005,6 +1092,26 @@ public class InstructorUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_GSSubmitGradeActionPerformed
 
+    private void DGDeleteGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DGDeleteGradeActionPerformed
+        if (DGSID.getSelectedItem() != null || DGGIID.getSelectedItem() != null) {
+            int studentID = Integer.parseInt(DGSID.getSelectedItem().toString());
+            int gradingItemID = Integer.parseInt(DGGIID.getSelectedItem().toString());
+            ClientResponse response = studentProfilesClient.deleteAGrade(studentID, gradingItemID);
+            if (response.getStatus() != 204) {
+                String responseString = response.getEntity(String.class);
+                DGResponse.setText("Response Code - " + response.getStatus() + "\n\n" + responseString + "\n\n");
+            } else {
+                DGResponse.setText("Response Code: " + response.getStatus() + "\nGrade Deleted!");
+            }
+        } else {
+            DGResponse.setText("Enter all the values!");
+        }
+    }//GEN-LAST:event_DGDeleteGradeActionPerformed
+
+    private void CloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_CloseActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1047,8 +1154,13 @@ public class InstructorUI extends javax.swing.JFrame {
     private javax.swing.JTextField CGIWeightage;
     private javax.swing.JButton CSCreateStudent;
     private javax.swing.JTextField CSStudentsName;
+    private javax.swing.JButton Close;
+    private javax.swing.JButton DGDeleteGrade;
+    private javax.swing.JComboBox<String> DGGIID;
     private javax.swing.JButton DGIDeleteItem;
     private javax.swing.JComboBox<String> DGIGIID;
+    private javax.swing.JTextArea DGResponse;
+    private javax.swing.JComboBox<String> DGSID;
     private javax.swing.JComboBox<String> DPStudentID;
     private javax.swing.JButton DSDeleteStudent;
     private javax.swing.JTextField GSFeedback;
@@ -1079,12 +1191,15 @@ public class InstructorUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
@@ -1102,10 +1217,12 @@ public class InstructorUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JPanel manageGradingItemsPanel;
     private javax.swing.JPanel manageStudentsProfilePanel;
@@ -1134,6 +1251,7 @@ public class InstructorUI extends javax.swing.JFrame {
         UGIGIID.setModel(new DefaultComboBoxModel((Object[]) allGradingItemIDs));
         DGIGIID.setModel(new DefaultComboBoxModel((Object[]) allGradingItemIDs));
         GSGIID.setModel(new DefaultComboBoxModel((Object[]) allGradingItemIDs));
+        DGGIID.setModel(new DefaultComboBoxModel((Object[]) allGradingItemIDs));
     }
 
     private void setStudentIDs() {
@@ -1143,6 +1261,7 @@ public class InstructorUI extends javax.swing.JFrame {
         UPStudentID.setModel(new DefaultComboBoxModel((Object[]) allStudentIDs));
         DPStudentID.setModel(new DefaultComboBoxModel((Object[]) allStudentIDs));
         GSStudentID.setModel(new DefaultComboBoxModel((Object[]) allStudentIDs));
+        DGSID.setModel(new DefaultComboBoxModel((Object[]) allStudentIDs));
     }
 
     private Integer[] convertStringToArray(String input) {

@@ -815,7 +815,9 @@ public class InstructorUI extends javax.swing.JFrame {
             JSONArray appeals = root.getJSONArray("appeals");
             for (int i = 0; i < appeals.length(); ++i) {
                 JSONObject appeal = (JSONObject) appeals.get(i);
-                responseOutput.append("Student ID : ")
+                responseOutput.append("Appeal ID : ")
+                        .append(appeal.getInt("appealId"))
+                        .append("\nStudent ID : ")
                         .append(appeal.getInt("studentId"))
                         .append("\nGrading Item ID : ")
                         .append(appeal.getInt("gradingItemId"))

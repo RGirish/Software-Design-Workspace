@@ -1,6 +1,8 @@
 package asu.girish.raman.crud.gradebook.graman1.netbeans;
 
+import static asu.girish.raman.crud.gradebook.graman1.netbeans.AppealsResource.appeals;
 import static asu.girish.raman.crud.gradebook.graman1.netbeans.GradingItemsResource.gradingItems;
+import asu.girish.raman.crud.gradebook.models.Appeal;
 import asu.girish.raman.crud.gradebook.models.GradingItem;
 import asu.girish.raman.crud.gradebook.models.Student;
 import static java.net.HttpURLConnection.*;
@@ -231,6 +233,11 @@ public class StudentProfilesResource {
                     if (allPoints.containsKey(gradingItemId)) {
                         allPoints.remove(gradingItemId);
                         allFeedbacks.remove(gradingItemId);
+                        for (Appeal appeal : appeals) {
+                            if (appeal.getStudentId() == studentId && appeal.getGradingItemId() == gradingItemId) {
+                                appeals.remove(appeal);
+                            }
+                        }
                         return Response.status(HTTP_NO_CONTENT).build();
                     } else {
                         for (GradingItem gradingItem : gradingItems) {

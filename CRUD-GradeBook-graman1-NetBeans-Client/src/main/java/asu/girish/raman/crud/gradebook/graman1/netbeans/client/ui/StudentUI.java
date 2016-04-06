@@ -264,7 +264,7 @@ public class StudentUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("File Appeal", jPanel2);
+        jTabbedPane1.addTab("File An Appeal", jPanel2);
 
         Close.setText("Close");
         Close.addActionListener(new java.awt.event.ActionListener() {
@@ -317,7 +317,8 @@ public class StudentUI extends javax.swing.JFrame {
             JSONObject root = new JSONObject(responseString);
             String responseType = root.getString("responseType");
             if (responseType.equals("success")) {
-                responseOutput.append("Message from Server : Appeal Submitted!");
+                int appealId = root.getInt("appealId");
+                responseOutput.append("Message from Server : Appeal Submitted! ID is ").append(appealId);
             } else {
                 responseOutput.append(responseString);
             }

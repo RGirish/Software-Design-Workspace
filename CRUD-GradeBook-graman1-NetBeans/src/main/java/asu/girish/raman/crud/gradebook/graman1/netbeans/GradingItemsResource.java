@@ -1,6 +1,10 @@
 package asu.girish.raman.crud.gradebook.graman1.netbeans;
 
+import static asu.girish.raman.crud.gradebook.graman1.netbeans.AppealsResource.appeals;
+import static asu.girish.raman.crud.gradebook.graman1.netbeans.StudentProfilesResource.students;
+import asu.girish.raman.crud.gradebook.models.Appeal;
 import asu.girish.raman.crud.gradebook.models.GradingItem;
+import asu.girish.raman.crud.gradebook.models.Student;
 import static java.net.HttpURLConnection.*;
 import java.util.*;
 import javax.ws.rs.*;
@@ -202,6 +206,23 @@ public class GradingItemsResource {
             for (GradingItem gradingItem : gradingItems) {
                 if (gradingItem.getId() == id) {
                     gradingItems.remove(gradingItem);
+                    //Delete grades related to the deleted grading item from student data
+                    for (Student student : students) {
+                        HashMap<Integer, Double> allPoints = (HashMap<Integer, Double>) student.getPoints();
+                        HashMap<Integer, String> allFeedbacks = (HashMap<Integer, String>) student.getFeedbacks();
+                        if (allPoints.containsKey(id)) {
+                            allPoints.remove(id);
+                        }
+                        if (allFeedbacks.containsKey(id)) {
+                            allFeedbacks.remove(id);
+                        }
+                    }
+                    //Delete appeals related to the deleted grading item from appeals data
+                    for (Appeal appeal : appeals) {
+                        if (appeal.getGradingItemId() == id) {
+                            appeals.remove(appeal);
+                        }
+                    }
                     return Response.status(HTTP_NO_CONTENT).build();
                 }
             }

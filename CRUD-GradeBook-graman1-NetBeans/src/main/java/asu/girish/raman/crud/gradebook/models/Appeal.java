@@ -2,8 +2,17 @@ package asu.girish.raman.crud.gradebook.models;
 
 public class Appeal {
 
+    int appealId;
     int studentId, gradingItemId;
     String appealMessage;
+
+    public int getAppealId() {
+        return appealId;
+    }
+
+    public void setAppealId(int appealId) {
+        this.appealId = appealId;
+    }
 
     public Appeal(int studentId, int gradingItemId, String appealMessage) {
         this.studentId = studentId;

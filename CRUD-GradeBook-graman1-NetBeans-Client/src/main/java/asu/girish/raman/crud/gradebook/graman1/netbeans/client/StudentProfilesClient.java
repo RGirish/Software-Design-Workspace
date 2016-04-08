@@ -24,23 +24,23 @@ public class StudentProfilesClient {
     }
 
     public ClientResponse createStudentProfile(String jsonRequestMessage) throws UniformInterfaceException {
-        return webResource.path("createStudentProfile").type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(ClientResponse.class, jsonRequestMessage);
+        return webResource.type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(ClientResponse.class, jsonRequestMessage);
     }
 
     public ClientResponse readStudentProfile(int id) throws UniformInterfaceException {
-        return webResource.path("readStudentProfile/" + String.valueOf(id)).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+        return webResource.path("/" + String.valueOf(id)).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
     }
 
     public ClientResponse updateStudentProfile(String jsonRequestMessage) throws UniformInterfaceException {
-        return webResource.path("updateStudentProfile").type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).put(ClientResponse.class, jsonRequestMessage);
+        return webResource.type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).put(ClientResponse.class, jsonRequestMessage);
     }
 
     public ClientResponse deleteStudentProfile(int id) throws UniformInterfaceException {
-        return webResource.path("deleteStudentProfile/" + String.valueOf(id)).delete(ClientResponse.class);
+        return webResource.path("/" + String.valueOf(id)).delete(ClientResponse.class);
     }
 
     public ClientResponse deleteAGrade(int studentId, int gradingItemId) throws UniformInterfaceException {
-        return webResource.path("deleteAGrade/" + studentId + "/" + gradingItemId).delete(ClientResponse.class);
+        return webResource.path("Grades/" + studentId + "/" + gradingItemId).delete(ClientResponse.class);
     }
 
     public ClientResponse getAllGradesForAStudent(int studentId) throws UniformInterfaceException {
@@ -52,7 +52,7 @@ public class StudentProfilesClient {
     }
 
     public ClientResponse updateGrade(String requestMessage) {
-        return webResource.path("/Grades/update").type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).put(ClientResponse.class, requestMessage);
+        return webResource.path("/Grades").type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).put(ClientResponse.class, requestMessage);
     }
 
     public String getAllStudentIDs() {

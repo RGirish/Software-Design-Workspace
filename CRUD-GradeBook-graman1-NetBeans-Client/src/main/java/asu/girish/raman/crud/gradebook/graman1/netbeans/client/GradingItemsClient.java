@@ -20,31 +20,31 @@ public class GradingItemsClient {
     public GradingItemsClient() {
         ClientConfig clientConfig = new DefaultClientConfig();
         client = Client.create(clientConfig);
-        webResource = client.resource("http://localhost:8080/CRUD-GradeBook-graman1-NetBeans/webresources").path("Gradebook/GradingItem");
+        webResource = client.resource("http://localhost:8080/CRUD-GradeBook-graman1-NetBeans/webresources").path("Gradebook/GradingItems");
     }
 
     public ClientResponse createGradingItem(String jsonRequestMessage) throws UniformInterfaceException {
-        return webResource.path("createGradingItem").type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(ClientResponse.class, jsonRequestMessage);
+        return webResource.type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(ClientResponse.class, jsonRequestMessage);
     }
 
     public ClientResponse readGradingItem(int id) throws UniformInterfaceException {
-        return webResource.path("readGradingItem/" + String.valueOf(id)).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+        return webResource.path("/" + String.valueOf(id)).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
     }
 
     public ClientResponse updateGradingItem(String jsonRequestMessage) throws UniformInterfaceException {
-        return webResource.path("updateGradingItem").type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).put(ClientResponse.class, jsonRequestMessage);
+        return webResource.type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).put(ClientResponse.class, jsonRequestMessage);
     }
 
     public ClientResponse deleteGradingItem(int id) throws UniformInterfaceException {
-        return webResource.path("deleteGradingItem/" + String.valueOf(id)).delete(ClientResponse.class);
-    }
-
-    public void close() {
-        client.destroy();
+        return webResource.path("/" + String.valueOf(id)).delete(ClientResponse.class);
     }
 
     public String getAllGradingItemIDs() {
         return webResource.path("/getAllIDs").get(String.class);
+    }
+
+    public void close() {
+        client.destroy();
     }
 
 }

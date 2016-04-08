@@ -24,11 +24,11 @@ public class AppealsClient {
     }
 
     public ClientResponse viewAllAppeals() throws UniformInterfaceException {
-        return webResource.path("/viewAllAppeals").accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+        return webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
     }
 
     public ClientResponse fileAnAppeal(String jsonRequest) throws UniformInterfaceException {
-        return webResource.path("/fileAnAppeal").type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(ClientResponse.class, jsonRequest);
+        return webResource.type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(ClientResponse.class, jsonRequest);
     }
 
     public void close() {

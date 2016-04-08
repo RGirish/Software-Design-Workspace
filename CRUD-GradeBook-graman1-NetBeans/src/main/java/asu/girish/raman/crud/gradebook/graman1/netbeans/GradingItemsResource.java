@@ -11,7 +11,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import org.json.*;
 
-@Path("Gradebook/GradingItem")
+@Path("Gradebook/GradingItems")
 public class GradingItemsResource {
 
     static List<GradingItem> gradingItems = null;
@@ -31,7 +31,6 @@ public class GradingItemsResource {
     }
 
     @POST
-    @Path("createGradingItem")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createGradingItem(String jsonRequest) {
@@ -50,6 +49,14 @@ public class GradingItemsResource {
             } else {
                 double totalWeightageSofar = 0;
                 for (GradingItem gi : gradingItems) {
+                    if (gi.getName().equals(name)) {
+                        jsonResponse = "{\n"
+                                + "\"responseType\" : \"failure\",\n"
+                                + "\"reason\" : \"GradeItem with this name already exists!\",\n"
+                                + "\"request\" : " + jsonRequest + "\n"
+                                + "}";
+                        return Response.status(HTTP_CONFLICT).entity(jsonResponse).build();
+                    }
                     totalWeightageSofar += gi.getPercentage();
                 }
                 if (totalWeightageSofar + percentage > 100) {
@@ -85,7 +92,7 @@ public class GradingItemsResource {
     }
 
     @GET
-    @Path("readGradingItem/{id}")
+    @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response readGradingItem(@PathParam("id") int id) {
         String jsonResponse;
@@ -131,7 +138,6 @@ public class GradingItemsResource {
     }
 
     @PUT
-    @Path("updateGradingItem")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateGradingItem(String jsonRequest) {
@@ -190,7 +196,7 @@ public class GradingItemsResource {
     }
 
     @DELETE
-    @Path("deleteGradingItem/{id}")
+    @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteGradingItem(@PathParam("id") int id) {
         String jsonResponse;

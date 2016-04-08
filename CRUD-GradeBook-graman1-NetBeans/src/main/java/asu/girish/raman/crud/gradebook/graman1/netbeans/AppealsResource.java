@@ -18,7 +18,6 @@ public class AppealsResource {
     static int appealId = 1;
 
     @GET
-    @Path("viewAllAppeals")
     @Produces(MediaType.APPLICATION_JSON)
     public Response viewAllAppeals() {
         StringBuilder builder = new StringBuilder("{\n\t\"appeals\" : [");
@@ -42,7 +41,6 @@ public class AppealsResource {
     }
 
     @POST
-    @Path("fileAnAppeal")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response fileAnAppeal(String jsonRequest) {

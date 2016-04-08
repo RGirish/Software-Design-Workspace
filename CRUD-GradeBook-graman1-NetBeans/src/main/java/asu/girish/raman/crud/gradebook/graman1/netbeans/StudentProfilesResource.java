@@ -31,7 +31,6 @@ public class StudentProfilesResource {
     }
 
     @POST
-    @Path("createStudentProfile")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createStudentProfile(String jsonRequest) {
@@ -72,7 +71,7 @@ public class StudentProfilesResource {
     }
 
     @GET
-    @Path("readStudentProfile/{id}")
+    @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response readStudentProfile(@PathParam("id") int id) {
         String jsonResponse;
@@ -116,7 +115,6 @@ public class StudentProfilesResource {
     }
 
     @PUT
-    @Path("updateStudentProfile")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateStudentProfile(String jsonRequest) {
@@ -171,7 +169,7 @@ public class StudentProfilesResource {
     }
 
     @DELETE
-    @Path("deleteStudentProfile/{id}")
+    @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteStudentProfile(@PathParam("id") int id) {
         String jsonResponse;
@@ -211,7 +209,7 @@ public class StudentProfilesResource {
     }
 
     @DELETE
-    @Path("deleteAGrade/{studentId}/{gradingItemId}")
+    @Path("/Grades/{studentId}/{gradingItemId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteAGrade(@PathParam("studentId") int studentId, @PathParam("gradingItemId") int gradingItemId) {
         String jsonResponse;
@@ -282,7 +280,7 @@ public class StudentProfilesResource {
     }
 
     @PUT
-    @Path("/Grades/update")
+    @Path("/Grades")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateGrades(String jsonRequest) {

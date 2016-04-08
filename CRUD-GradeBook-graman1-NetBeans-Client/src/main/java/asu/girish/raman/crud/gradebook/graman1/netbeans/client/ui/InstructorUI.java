@@ -45,6 +45,8 @@ public class InstructorUI extends javax.swing.JFrame {
         RSViewStudent = new javax.swing.JButton();
         jLabel26 = new javax.swing.JLabel();
         VPStudentID = new javax.swing.JComboBox<>();
+        jPanel8 = new javax.swing.JPanel();
+        MSPViewAllProfiles = new javax.swing.JButton();
         profileU = new javax.swing.JPanel();
         USUpdateStudent = new javax.swing.JButton();
         UPStudentName = new javax.swing.JTextField();
@@ -72,6 +74,8 @@ public class InstructorUI extends javax.swing.JFrame {
         VGIViewDetails = new javax.swing.JButton();
         jLabel22 = new javax.swing.JLabel();
         VGIGIID = new javax.swing.JComboBox<>();
+        jPanel7 = new javax.swing.JPanel();
+        VAGIViewAllItems = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         UGIUpdateItem = new javax.swing.JButton();
         UGIName = new javax.swing.JTextField();
@@ -195,6 +199,32 @@ public class InstructorUI extends javax.swing.JFrame {
         );
 
         RSStudentID.addTab("View Profile", profileR);
+
+        MSPViewAllProfiles.setText("View All Profiles");
+        MSPViewAllProfiles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MSPViewAllProfilesActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(223, 223, 223)
+                .addComponent(MSPViewAllProfiles)
+                .addContainerGap(225, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(125, 125, 125)
+                .addComponent(MSPViewAllProfiles)
+                .addContainerGap(144, Short.MAX_VALUE))
+        );
+
+        RSStudentID.addTab("View All Profiles", jPanel8);
 
         USUpdateStudent.setText("Update Student Profile");
         USUpdateStudent.addActionListener(new java.awt.event.ActionListener() {
@@ -376,7 +406,7 @@ public class InstructorUI extends javax.swing.JFrame {
                 .addComponent(CGIWeightage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19)
                 .addComponent(CGICreateGradingItem)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Create Grading Item", jPanel1);
@@ -413,10 +443,36 @@ public class InstructorUI extends javax.swing.JFrame {
                 .addComponent(VGIGIID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(VGIViewDetails)
-                .addContainerGap(183, Short.MAX_VALUE))
+                .addContainerGap(167, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("View Grading Item", jPanel2);
+
+        VAGIViewAllItems.setText("View All Grading Items");
+        VAGIViewAllItems.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VAGIViewAllItemsActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap(210, Short.MAX_VALUE)
+                .addComponent(VAGIViewAllItems)
+                .addGap(197, 197, 197))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(116, 116, 116)
+                .addComponent(VAGIViewAllItems)
+                .addContainerGap(136, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("View All Grading Items", jPanel7);
 
         UGIUpdateItem.setText("Update Grading Item");
         UGIUpdateItem.addActionListener(new java.awt.event.ActionListener() {
@@ -489,7 +545,7 @@ public class InstructorUI extends javax.swing.JFrame {
                         .addComponent(UGIName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(19, 19, 19)
                 .addComponent(UGIUpdateItem)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Update Grading Item", jPanel4);
@@ -526,7 +582,7 @@ public class InstructorUI extends javax.swing.JFrame {
                 .addComponent(DGIGIID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(DGIDeleteItem)
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Delete Grading Item", jPanel5);
@@ -1114,6 +1170,16 @@ public class InstructorUI extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_CloseActionPerformed
 
+    private void VAGIViewAllItemsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VAGIViewAllItemsActionPerformed
+        ClientResponse response = gradingItemsClient.readAllGradingItems();
+        MGIResponse.setText("Response Code - " + response.getStatus() + "\n\n" + response.getEntity(String.class) + "\n\n");
+    }//GEN-LAST:event_VAGIViewAllItemsActionPerformed
+
+    private void MSPViewAllProfilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MSPViewAllProfilesActionPerformed
+        ClientResponse response = studentProfilesClient.readAllStudentProfiles();
+        MSPResponse.setText("Response Code - " + response.getStatus() + "\n\n" + response.getEntity(String.class) + "\n\n");
+    }//GEN-LAST:event_MSPViewAllProfilesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1173,6 +1239,7 @@ public class InstructorUI extends javax.swing.JFrame {
     private javax.swing.JButton GSSubmitGrade;
     private javax.swing.JTextArea MGIResponse;
     private javax.swing.JTextArea MSPResponse;
+    private javax.swing.JButton MSPViewAllProfiles;
     private javax.swing.JTabbedPane RSStudentID;
     private javax.swing.JButton RSViewStudent;
     private javax.swing.JComboBox<String> UGIGIID;
@@ -1183,6 +1250,7 @@ public class InstructorUI extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> UPStudentID;
     private javax.swing.JTextField UPStudentName;
     private javax.swing.JButton USUpdateStudent;
+    private javax.swing.JButton VAGIViewAllItems;
     private javax.swing.JTextArea VAResponse;
     private javax.swing.JButton VAViewAllAppeals;
     private javax.swing.JComboBox<String> VGIGIID;
@@ -1220,6 +1288,8 @@ public class InstructorUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

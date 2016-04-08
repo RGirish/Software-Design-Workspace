@@ -24,14 +24,17 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="135" max="-2" attributes="0"/>
-              <Component id="imTheInstructor" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="138" max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="imAStudent" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="147" max="-2" attributes="0"/>
+              <EmptySpace pref="54" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="imAStudent" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="164" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="imTheInstructor" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
@@ -39,7 +42,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace pref="108" max="32767" attributes="0"/>
-              <Component id="imTheInstructor" min="-2" max="-2" attributes="0"/>
+              <Component id="imTheInstructor" min="-2" pref="32" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="imAStudent" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="122" max="-2" attributes="0"/>
@@ -50,7 +53,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="imTheInstructor">
       <Properties>
-        <Property name="text" type="java.lang.String" value="I&apos;m the Instructor"/>
+        <Property name="text" type="java.lang.String" value="Manage Students, Manage Grading Items, Grade Students, View Appeals"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="imTheInstructorActionPerformed"/>
@@ -58,7 +61,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="imAStudent">
       <Properties>
-        <Property name="text" type="java.lang.String" value="I&apos;m a Student"/>
+        <Property name="text" type="java.lang.String" value="View Grades and File Appeals"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="imAStudentActionPerformed"/>

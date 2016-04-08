@@ -71,6 +71,47 @@ public class StudentProfilesResource {
     }
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response readAllStudentProfiles() {
+        StringBuilder jsonResponse = new StringBuilder();
+        try {
+            if (students == null) {
+                jsonResponse.append("{\n"
+                        + "\"responseType\" : \"failure\"\n"
+                        + "}");
+                return Response.status(HTTP_GONE).entity(jsonResponse.toString()).build();
+            }
+
+            jsonResponse.append("{\n"
+                    + "\"responseType\" : \"success\",\n"
+                    + "\"studentProfiles\" : [\n");
+            for (Student student : students) {
+                jsonResponse.append("{\n"
+                        + "\"id\" : \"" + student.getId() + "\",\n"
+                        + "\"name\" : \"" + student.getName() + "\"\n"
+                        + "},\n");
+            }
+            if (jsonResponse.toString().endsWith("[\n")) {
+                jsonResponse.append("]\n}");
+            } else {
+                jsonResponse = new StringBuilder(jsonResponse.substring(0, jsonResponse.length() - 2));
+                jsonResponse.append("\n]\n}");
+            }
+            return Response.status(HTTP_OK).entity(jsonResponse.toString()).build();
+        } catch (JSONException e) {
+            jsonResponse = new StringBuilder("{\n"
+                    + "\"responseType\" : \"failure\"\n"
+                    + "}");
+            return Response.status(HTTP_BAD_REQUEST).entity(jsonResponse.toString()).build();
+        } catch (Exception e) {
+            jsonResponse = new StringBuilder("{\n"
+                    + "\"responseType\" : \"failure\"\n"
+                    + "}");
+            return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse.toString()).build();
+        }
+    }
+
+    @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response readStudentProfile(@PathParam("id") int id) {
@@ -481,6 +522,60 @@ public class StudentProfilesResource {
                     + "\"request-student-id\" : " + studentId + "\n"
                     + "}";
             return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse).build();
+        }
+    }
+
+    @GET
+    @Path("Grades")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllGradesOfAllStudents() {
+        StringBuilder jsonResponse = new StringBuilder();
+        try {
+            if (students == null || gradingItems == null) {
+                jsonResponse.append("{\n"
+                        + "\"responseType\" : \"failure\"\n"
+                        + "}");
+                return Response.status(HTTP_GONE).entity(jsonResponse.toString()).build();
+            }
+            jsonResponse.append("{\n\"responseType\" : \"success\",\n\"students\" : [");
+            for (Student student : students) {
+                HashMap<Integer, Double> allPoints = (HashMap<Integer, Double>) student.getPoints();
+                HashMap<Integer, String> allFeedbacks = (HashMap<Integer, String>) student.getFeedbacks();
+                if (allPoints.isEmpty()) {
+                    continue;
+                }
+                jsonResponse.append("{\n\t\"studentID\" : \"" + student.getId() + "\",\n\t\"graded-items\" : [");
+                for (Map.Entry pair : allPoints.entrySet()) {
+                    jsonResponse.append("\n\t{\n\t\"gradingItemId\" : ").append(pair.getKey()).append(",\n");
+                    jsonResponse.append("\t\"points\" : ").append(pair.getValue()).append(",\n");
+                    if (allFeedbacks.get((int) pair.getKey()).trim().equals("")) {
+                        jsonResponse.append("\t\"feedback\" : \"No feedback given!\"\n\t},");
+                    } else {
+                        jsonResponse.append("\t\"feedback\" : \"").append(allFeedbacks.get((int) pair.getKey())).append("\"\n\t},\n");
+                    }
+                }
+                if (jsonResponse.toString().endsWith(",")) {
+                    String temp = jsonResponse.substring(0, jsonResponse.length() - 1);
+                    jsonResponse = new StringBuilder(temp);
+                }
+                jsonResponse.append("]\n},");
+            }
+            if (jsonResponse.toString().endsWith(",")) {
+                String temp = jsonResponse.substring(0, jsonResponse.length() - 1);
+                jsonResponse = new StringBuilder(temp);
+            }
+            jsonResponse.append("\n\t]\n}");
+            return Response.status(HTTP_OK).entity(jsonResponse.toString()).build();
+        } catch (JSONException e) {
+            jsonResponse.append("{\n"
+                    + "\"responseType\" : \"failure\"\n"
+                    + "}");
+            return Response.status(HTTP_BAD_REQUEST).entity(jsonResponse.toString()).build();
+        } catch (Exception e) {
+            jsonResponse.append("{\n"
+                    + "\"responseType\" : \"failure\"\n"
+                    + "}");
+            return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse.toString()).build();
         }
     }
 }

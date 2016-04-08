@@ -17,19 +17,6 @@ public class GradingItemsResource {
     static List<GradingItem> gradingItems = null;
     static int GRADING_ITEM_ID = 1;
 
-    @GET
-    @Path("getAllIDs")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getAllGradingItemIDs() {
-        List<Integer> allIDs = new ArrayList<>();
-        if (gradingItems != null) {
-            for (GradingItem gradingItem : gradingItems) {
-                allIDs.add(gradingItem.getId());
-            }
-        }
-        return allIDs.toString();
-    }
-
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -88,6 +75,49 @@ public class GradingItemsResource {
                     + "\"request\":" + jsonRequest + "\n"
                     + "}";
             return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse).build();
+        }
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response readAllGradingItems() {
+        StringBuilder jsonResponse = new StringBuilder();
+        try {
+            if (gradingItems == null) {
+                jsonResponse.append("{\n"
+                        + "\"responseType\" : \"failure\"\n"
+                        + "}");
+                return Response.status(HTTP_GONE).entity(jsonResponse.toString()).build();
+            }
+
+            jsonResponse.append("{\n"
+                    + "\"responseType\" : \"success\",\n"
+                    + "\"gradingItems\" : [\n");
+            for (GradingItem gradingItem : gradingItems) {
+                jsonResponse.append("{\n"
+                        + "\"id\" : \"" + gradingItem.getId() + "\",\n"
+                        + "\"type\" : \"" + gradingItem.getType() + "\",\n"
+                        + "\"name\" : \"" + gradingItem.getName() + "\",\n"
+                        + "\"percentage\" : " + gradingItem.getPercentage() + "\n"
+                        + "},\n");
+            }
+            if (jsonResponse.toString().endsWith("[\n")) {
+                jsonResponse.append("]\n}");
+            } else {
+                jsonResponse = new StringBuilder(jsonResponse.substring(0, jsonResponse.length() - 2));
+                jsonResponse.append("\n]\n}");
+            }
+            return Response.status(HTTP_OK).entity(jsonResponse.toString()).build();
+        } catch (JSONException e) {
+            jsonResponse = new StringBuilder("{\n"
+                    + "\"responseType\" : \"failure\"\n"
+                    + "}");
+            return Response.status(HTTP_BAD_REQUEST).entity(jsonResponse.toString()).build();
+        } catch (Exception e) {
+            jsonResponse = new StringBuilder("{\n"
+                    + "\"responseType\" : \"failure\"\n"
+                    + "}");
+            return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse.toString()).build();
         }
     }
 
@@ -250,5 +280,18 @@ public class GradingItemsResource {
                     + "}";
             return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse).build();
         }
+    }
+
+    @GET
+    @Path("getAllIDs")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getAllGradingItemIDs() {
+        List<Integer> allIDs = new ArrayList<>();
+        if (gradingItems != null) {
+            for (GradingItem gradingItem : gradingItems) {
+                allIDs.add(gradingItem.getId());
+            }
+        }
+        return allIDs.toString();
     }
 }

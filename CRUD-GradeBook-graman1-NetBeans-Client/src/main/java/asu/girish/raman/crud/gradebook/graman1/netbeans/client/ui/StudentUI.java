@@ -37,6 +37,8 @@ public class StudentUI extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
+        jPanel5 = new javax.swing.JPanel();
+        VAGViewAllGrades = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         VAGStudentID = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
@@ -65,6 +67,32 @@ public class StudentUI extends javax.swing.JFrame {
         Close = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        VAGViewAllGrades.setText("View All Grades of All Students");
+        VAGViewAllGrades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VAGViewAllGradesActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(176, Short.MAX_VALUE)
+                .addComponent(VAGViewAllGrades)
+                .addGap(170, 170, 170))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(107, 107, 107)
+                .addComponent(VAGViewAllGrades)
+                .addContainerGap(115, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("View All Grades", jPanel5);
 
         jLabel3.setText("Select Student ID");
 
@@ -99,7 +127,7 @@ public class StudentUI extends javax.swing.JFrame {
                 .addContainerGap(118, Short.MAX_VALUE))
         );
 
-        jTabbedPane2.addTab("View All Grades", jPanel3);
+        jTabbedPane2.addTab("View All Grades For a Student", jPanel3);
 
         VAPGViewGrade.setText("View Grade");
         VAPGViewGrade.addActionListener(new java.awt.event.ActionListener() {
@@ -143,7 +171,7 @@ public class StudentUI extends javax.swing.JFrame {
                 .addContainerGap(47, Short.MAX_VALUE))
         );
 
-        jTabbedPane2.addTab("View A Particular Grade", jPanel4);
+        jTabbedPane2.addTab("View A Particular Grade For a Student", jPanel4);
 
         VGResponse.setColumns(20);
         VGResponse.setRows(5);
@@ -381,6 +409,11 @@ public class StudentUI extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_CloseActionPerformed
 
+    private void VAGViewAllGradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VAGViewAllGradesActionPerformed
+        ClientResponse response = studentProfilesClient.getAllGradesForAllStudents();
+        VGResponse.setText("Response Code - " + response.getStatus() + "\n\n" + response.getEntity(String.class) + "\n\n");
+    }//GEN-LAST:event_VAGViewAllGradesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -424,6 +457,7 @@ public class StudentUI extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> FAStudentID;
     private javax.swing.JButton FASubmitAppeal;
     private javax.swing.JComboBox<String> VAGStudentID;
+    private javax.swing.JButton VAGViewAllGrades;
     private javax.swing.JButton VAGViewGrades;
     private javax.swing.JComboBox<String> VAPGGIID;
     private javax.swing.JComboBox<String> VAPGStudentID;
@@ -441,6 +475,7 @@ public class StudentUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;

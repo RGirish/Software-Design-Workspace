@@ -59,6 +59,14 @@ public class StudentProfilesClient {
         return webResource.path("/getAllIDs").get(String.class);
     }
 
+    public ClientResponse readAllStudentProfiles() {
+        return webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+    }
+
+    public ClientResponse getAllGradesForAllStudents() {
+        return webResource.path("Grades").get(ClientResponse.class);
+    }
+
     public void close() {
         client.destroy();
     }

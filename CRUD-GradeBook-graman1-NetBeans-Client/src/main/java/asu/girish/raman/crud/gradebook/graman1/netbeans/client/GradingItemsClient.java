@@ -31,6 +31,10 @@ public class GradingItemsClient {
         return webResource.path("/" + String.valueOf(id)).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
     }
 
+    public ClientResponse readAllGradingItems() throws UniformInterfaceException {
+        return webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+    }
+
     public ClientResponse updateGradingItem(String jsonRequestMessage) throws UniformInterfaceException {
         return webResource.type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).put(ClientResponse.class, jsonRequestMessage);
     }

@@ -6,6 +6,7 @@ import asu.girish.raman.crud.gradebook.models.Appeal;
 import asu.girish.raman.crud.gradebook.models.GradingItem;
 import asu.girish.raman.crud.gradebook.models.Student;
 import static java.net.HttpURLConnection.*;
+import java.net.URI;
 import java.util.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -14,6 +15,8 @@ import org.json.*;
 @Path("Gradebook/GradingItems")
 public class GradingItemsResource {
 
+    @Context
+    private UriInfo context;
     static List<GradingItem> gradingItems = null;
     static int GRADING_ITEM_ID = 1;
 
@@ -62,7 +65,7 @@ public class GradingItemsResource {
                     + "\"id\":" + GRADING_ITEM_ID + "\n"
                     + "}";
             GRADING_ITEM_ID++;
-            return Response.status(HTTP_CREATED).entity(jsonResponse).build();
+            return Response.status(HTTP_CREATED).entity(jsonResponse).location(new URI(context.getAbsolutePath() + "/" + (GRADING_ITEM_ID - 1))).build();
         } catch (JSONException e) {
             jsonResponse = "{\n"
                     + "\"responseType\":\"failure\",\n"
@@ -182,7 +185,31 @@ public class GradingItemsResource {
             if (gradingItems == null) {
                 jsonResponse = "{\n"
                         + "\"responseType\" : \"failure\",\n"
+                        + "\"reason\" : \"Resource GONE.\",\n"
                         + "\"request\" : " + jsonRequest + "\n"
+                        + "}";
+                return Response.status(HTTP_CONFLICT).entity(jsonResponse).build();
+            }
+
+            double totalWeightageSofar = 0;
+            for (GradingItem gi : gradingItems) {
+                if (gi.getName().equals(root.getString("name")) && gi.getId() != id) {
+                    jsonResponse = "{\n"
+                            + "\"responseType\" : \"failure\",\n"
+                            + "\"reason\" : \"Grading Item with this name already exists!\",\n"
+                            + "\"request\" : " + jsonRequest + "\n"
+                            + "}";
+                    return Response.status(HTTP_CONFLICT).entity(jsonResponse).build();
+                }
+                if (gi.getId() != id) {
+                    totalWeightageSofar += gi.getPercentage();
+                }
+            }
+            if (totalWeightageSofar + root.getDouble("percentage") > 100) {
+                jsonResponse = "{\n"
+                        + "\"responseType\":\"failure\",\n"
+                        + "\"reason\":\"Total weightage exceeds 100%\",\n"
+                        + "\"request\":" + jsonRequest + "\n"
                         + "}";
                 return Response.status(HTTP_CONFLICT).entity(jsonResponse).build();
             }
@@ -207,9 +234,10 @@ public class GradingItemsResource {
             }
             jsonResponse = "{\n"
                     + "\"responseType\" : \"failure\",\n"
+                    + "\"reason\" : \"Invalid Grading Item ID!\",\n"
                     + "\"request\" : " + jsonRequest + "\n"
                     + "}";
-            return Response.status(HTTP_NOT_FOUND).entity(jsonResponse).build();
+            return Response.status(HTTP_CONFLICT).entity(jsonResponse).build();
         } catch (JSONException e) {
             jsonResponse = "{\n"
                     + "\"responseType\" : \"failure\",\n"
@@ -226,6 +254,45 @@ public class GradingItemsResource {
     }
 
     @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteAllGradingItems() {
+        String jsonResponse;
+        try {
+            if (gradingItems == null) {
+                jsonResponse = "{\n"
+                        + "\"responseType\" : \"failure\",\n"
+                        + "\"reason\" : \"Resources GONE.\"\n"
+                        + "}";
+                return Response.status(HTTP_CONFLICT).entity(jsonResponse).build();
+            }
+            if (gradingItems.isEmpty()) {
+                jsonResponse = "{\n"
+                        + "\"responseType\" : \"failure\",\n"
+                        + "\"reason\" : \"Nothing to Delete.\"\n"
+                        + "}";
+                return Response.status(HTTP_CONFLICT).entity(jsonResponse).build();
+            }
+            gradingItems.clear();
+            appeals.clear();
+            for (Student student : students) {
+                student.setPoints(new LinkedHashMap<Integer, Double>());
+                student.setFeedbacks(new LinkedHashMap<Integer, String>());
+            }
+            return Response.status(HTTP_NO_CONTENT).build();
+        } catch (JSONException e) {
+            jsonResponse = "{\n"
+                    + "\"responseType\" : \"failure\"\n"
+                    + "}";
+            return Response.status(HTTP_BAD_REQUEST).entity(jsonResponse).build();
+        } catch (Exception e) {
+            jsonResponse = "{\n"
+                    + "\"responseType\" : \"failure\"\n"
+                    + "}";
+            return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse).build();
+        }
+    }
+
+    @DELETE
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteGradingItem(@PathParam("id") int id) {
@@ -234,9 +301,9 @@ public class GradingItemsResource {
             if (gradingItems == null) {
                 jsonResponse = "{\n"
                         + "\"responseType\" : \"failure\",\n"
-                        + "\"request-id\" : \"" + id + "\"\n"
+                        + "\"reason\" : \"Resource GONE.\"\n"
                         + "}";
-                return Response.status(HTTP_GONE).entity(jsonResponse).build();
+                return Response.status(HTTP_CONFLICT).entity(jsonResponse).build();
             }
 
             for (GradingItem gradingItem : gradingItems) {
@@ -264,9 +331,9 @@ public class GradingItemsResource {
             }
             jsonResponse = "{\n"
                     + "\"responseType\" : \"failure\",\n"
-                    + "\"request-id\" : \"" + id + "\"\n"
+                    + "\"reason\" : \"Grading Item with given ID doesn't exist.\"\n"
                     + "}";
-            return Response.status(HTTP_NOT_FOUND).entity(jsonResponse).build();
+            return Response.status(HTTP_CONFLICT).entity(jsonResponse).build();
         } catch (JSONException e) {
             jsonResponse = "{\n"
                     + "\"responseType\" : \"failure\",\n"

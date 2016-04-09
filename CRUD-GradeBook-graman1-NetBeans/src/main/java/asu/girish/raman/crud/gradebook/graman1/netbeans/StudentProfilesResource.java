@@ -6,6 +6,7 @@ import asu.girish.raman.crud.gradebook.models.Appeal;
 import asu.girish.raman.crud.gradebook.models.GradingItem;
 import asu.girish.raman.crud.gradebook.models.Student;
 import static java.net.HttpURLConnection.*;
+import java.net.URI;
 import java.util.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -14,21 +15,10 @@ import org.json.*;
 @Path("Gradebook/StudentProfiles")
 public class StudentProfilesResource {
 
+    @Context
+    UriInfo context;
     static List<Student> students = null;
     static int STUDENT_ID = 1;
-
-    @GET
-    @Path("getAllIDs")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getAllStudentIDs() {
-        List<Integer> allIDs = new ArrayList<>();
-        if (students != null) {
-            for (Student student : students) {
-                allIDs.add(student.getId());
-            }
-        }
-        return allIDs.toString();
-    }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -54,7 +44,7 @@ public class StudentProfilesResource {
                     + "\"id\":" + STUDENT_ID + "\n"
                     + "}";
             STUDENT_ID++;
-            return Response.status(HTTP_CREATED).entity(jsonResponse).build();
+            return Response.status(HTTP_CREATED).entity(jsonResponse).location(new URI(context.getAbsolutePath() + "/" + (STUDENT_ID - 1))).build();
         } catch (JSONException e) {
             jsonResponse = "{\n"
                     + "\"responseType\":\"failure\",\n"
@@ -170,7 +160,7 @@ public class StudentProfilesResource {
             if (students == null) {
                 jsonResponse = "{\n"
                         + "\"responseType\" : \"failure\",\n"
-                        + "\"request : \"" + jsonRequest + "\n"
+                        + "\"request\" : " + jsonRequest + "\n"
                         + "}";
                 return Response.status(HTTP_CONFLICT).entity(jsonResponse).build();
             }
@@ -204,6 +194,32 @@ public class StudentProfilesResource {
             jsonResponse = "{\n"
                     + "\"responseType\" : \"failure\",\n"
                     + "\"request\" : " + jsonRequest + "\n"
+                    + "}";
+            return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse).build();
+        }
+    }
+
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteAllStudentProfiles() {
+        String jsonResponse;
+        try {
+            if (students == null) {
+                jsonResponse = "{\n"
+                        + "\"responseType\" : \"failure\"\n"
+                        + "}";
+                return Response.status(HTTP_GONE).entity(jsonResponse).build();
+            }
+            students.clear();
+            return Response.status(HTTP_NO_CONTENT).build();
+        } catch (JSONException e) {
+            jsonResponse = "{\n"
+                    + "\"responseType\" : \"failure\"\n"
+                    + "}";
+            return Response.status(HTTP_BAD_REQUEST).entity(jsonResponse).build();
+        } catch (Exception e) {
+            jsonResponse = "{\n"
+                    + "\"responseType\" : \"failure\"\n"
                     + "}";
             return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse).build();
         }
@@ -244,6 +260,78 @@ public class StudentProfilesResource {
             jsonResponse = "{\n"
                     + "\"responseType\" : \"failure\",\n"
                     + "\"request-id\" : \"" + id + "\"\n"
+                    + "}";
+            return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse).build();
+        }
+    }
+
+    @DELETE
+    @Path("Grades")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteAllGrades() {
+        String jsonResponse;
+        try {
+            if (students == null || gradingItems == null) {
+                jsonResponse = "{\n"
+                        + "\"responseType\" : \"failure\"\n"
+                        + "}";
+                return Response.status(HTTP_GONE).entity(jsonResponse).build();
+            }
+            for (Student student : students) {
+                student.setPoints(new LinkedHashMap<Integer, Double>());
+                student.setFeedbacks(new LinkedHashMap<Integer, String>());
+            }
+            return Response.status(HTTP_NO_CONTENT).build();
+        } catch (JSONException e) {
+            jsonResponse = "{\n"
+                    + "\"responseType\" : \"failure\"\n"
+                    + "}";
+            return Response.status(HTTP_BAD_REQUEST).entity(jsonResponse).build();
+        } catch (Exception e) {
+            jsonResponse = "{\n"
+                    + "\"responseType\" : \"failure\"\n"
+                    + "}";
+            return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse).build();
+        }
+    }
+
+    @DELETE
+    @Path("/Grades/{studentId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteAllGradesForAStudent(@PathParam("studentId") int studentId) {
+        String jsonResponse;
+        try {
+            if (students == null || gradingItems == null) {
+                jsonResponse = "{\n"
+                        + "\"responseType\" : \"failure\",\n"
+                        + "\"request-student-id\" : \"" + studentId + "\"\n"
+                        + "}";
+                return Response.status(HTTP_GONE).entity(jsonResponse).build();
+            }
+
+            for (Student student : students) {
+                if (student.getId() == studentId) {
+                    student.setPoints(new LinkedHashMap<Integer, Double>());
+                    student.setFeedbacks(new LinkedHashMap<Integer, String>());
+                    return Response.status(HTTP_NO_CONTENT).build();
+                }
+            }
+            jsonResponse = "{\n"
+                    + "\"responseType\" : \"failure\",\n"
+                    + "\"reason\" : \"Invalid Student ID\",\n"
+                    + "\"request-student-id\" : \"" + studentId + "\"\n"
+                    + "}";
+            return Response.status(HTTP_NOT_FOUND).entity(jsonResponse).build();
+        } catch (JSONException e) {
+            jsonResponse = "{\n"
+                    + "\"responseType\" : \"failure\",\n"
+                    + "\"request-student-id\" : \"" + studentId + "\"\n"
+                    + "}";
+            return Response.status(HTTP_BAD_REQUEST).entity(jsonResponse).build();
+        } catch (Exception e) {
+            jsonResponse = "{\n"
+                    + "\"responseType\" : \"failure\",\n"
+                    + "\"request-student-id\" : \"" + studentId + "\"\n"
                     + "}";
             return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse).build();
         }
@@ -306,14 +394,14 @@ public class StudentProfilesResource {
         } catch (JSONException e) {
             jsonResponse = "{\n"
                     + "\"responseType\" : \"failure\",\n"
-                    + "\"request-student-id\" : \"" + studentId + "\"\n"
+                    + "\"request-student-id\" : \"" + studentId + "\",\n"
                     + "\"request-grading-item-id\" : \"" + gradingItemId + "\"\n"
                     + "}";
             return Response.status(HTTP_BAD_REQUEST).entity(jsonResponse).build();
         } catch (Exception e) {
             jsonResponse = "{\n"
                     + "\"responseType\" : \"failure\",\n"
-                    + "\"request-student-id\" : \"" + studentId + "\"\n"
+                    + "\"request-student-id\" : \"" + studentId + "\",\n"
                     + "\"request-grading-item-id\" : \"" + gradingItemId + "\"\n"
                     + "}";
             return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse).build();
@@ -577,5 +665,18 @@ public class StudentProfilesResource {
                     + "}");
             return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse.toString()).build();
         }
+    }
+
+    @GET
+    @Path("getAllIDs")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getAllStudentIDs() {
+        List<Integer> allIDs = new ArrayList<>();
+        if (students != null) {
+            for (Student student : students) {
+                allIDs.add(student.getId());
+            }
+        }
+        return allIDs.toString();
     }
 }

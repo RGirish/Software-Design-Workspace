@@ -39,6 +39,10 @@ public class StudentProfilesClient {
         return webResource.path("/" + String.valueOf(id)).delete(ClientResponse.class);
     }
 
+    public ClientResponse deleteAllStudentProfiles() throws UniformInterfaceException {
+        return webResource.delete(ClientResponse.class);
+    }
+
     public ClientResponse deleteAGrade(int studentId, int gradingItemId) throws UniformInterfaceException {
         return webResource.path("Grades/" + studentId + "/" + gradingItemId).delete(ClientResponse.class);
     }
@@ -69,6 +73,14 @@ public class StudentProfilesClient {
 
     public void close() {
         client.destroy();
+    }
+
+    public ClientResponse deleteAllGradesForStudent(int studentID) {
+        return webResource.path("Grades/" + studentID).delete(ClientResponse.class);
+    }
+
+    public ClientResponse deleteAllGrades() {
+        return webResource.path("Grades").delete(ClientResponse.class);
     }
 
 }

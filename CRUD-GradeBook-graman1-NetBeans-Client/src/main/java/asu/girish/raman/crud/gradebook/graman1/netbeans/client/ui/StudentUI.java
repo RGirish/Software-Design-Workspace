@@ -346,7 +346,8 @@ public class StudentUI extends javax.swing.JFrame {
             String responseType = root.getString("responseType");
             if (responseType.equals("success")) {
                 int appealId = root.getInt("appealId");
-                responseOutput.append("Message from Server : Appeal Submitted! ID is ").append(appealId);
+                String uri = response.getLocation().toString();
+                responseOutput.append("Message from Server : Appeal Submitted!\nID is ").append(appealId).append("\nLocation: ").append(uri);
             } else {
                 responseOutput.append(responseString);
             }

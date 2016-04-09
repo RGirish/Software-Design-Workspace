@@ -43,6 +43,10 @@ public class GradingItemsClient {
         return webResource.path("/" + String.valueOf(id)).delete(ClientResponse.class);
     }
 
+    public ClientResponse deleteAllGradingItems() throws UniformInterfaceException {
+        return webResource.delete(ClientResponse.class);
+    }
+
     public String getAllGradingItemIDs() {
         return webResource.path("/getAllIDs").get(String.class);
     }

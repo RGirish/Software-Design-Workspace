@@ -6,6 +6,7 @@ import asu.girish.raman.crud.gradebook.models.Appeal;
 import asu.girish.raman.crud.gradebook.models.GradingItem;
 import asu.girish.raman.crud.gradebook.models.Student;
 import static java.net.HttpURLConnection.*;
+import java.net.URI;
 import java.util.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -14,31 +15,10 @@ import org.json.*;
 @Path("Gradebook/Appeals")
 public class AppealsResource {
 
+    @Context
+    private UriInfo context;
     static List<Appeal> appeals = new ArrayList<>();
     static int appealId = 1;
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response viewAllAppeals() {
-        StringBuilder builder = new StringBuilder("{\n\t\"appeals\" : [");
-        for (Appeal appeal : appeals) {
-            builder.append("\n\t{\n");
-            builder.append("\t\t\"appealId\" : ").append(appeal.getAppealId()).append(",\n");
-            builder.append("\t\t\"studentId\" : ").append(appeal.getStudentId()).append(",\n");
-            builder.append("\t\t\"gradingItemId\" : ").append(appeal.getGradingItemId()).append(",\n");
-            builder.append("\t\t\"appealMessage\" : \"").append(appeal.getAppealMessage()).append("\"\n");
-            builder.append("\t},\n");
-        }
-        String jsonSoFar;
-        if (builder.toString().endsWith("[")) {
-            jsonSoFar = builder.toString();
-        } else {
-            jsonSoFar = builder.substring(0, builder.length() - 2);
-        }
-        builder = new StringBuilder(jsonSoFar);
-        builder.append("\n\t]\n}");
-        return Response.status(HTTP_OK).entity(builder.toString()).build();
-    }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -77,7 +57,7 @@ public class AppealsResource {
                                         + "\"appealId\":" + appealId + "\n"
                                         + "}";
                                 appealId++;
-                                return Response.status(HTTP_CREATED).entity(jsonResponse).build();
+                                return Response.status(HTTP_CREATED).entity(jsonResponse).location(new URI(context.getAbsolutePath() + "/")).build();
                             } else {
                                 jsonResponse = "{\n"
                                         + "\"responseType\":\"failure\",\n"
@@ -90,16 +70,18 @@ public class AppealsResource {
                     }
                     jsonResponse = "{\n"
                             + "\"responseType\":\"failure\",\n"
+                            + "\"reason\":\"Can not file appeal for a Grading Item that doesn't exist!\",\n"
                             + "\"request\": " + jsonRequest + "\n"
                             + "}";
-                    return Response.status(HTTP_NOT_FOUND).entity(jsonResponse).build();
+                    return Response.status(HTTP_CONFLICT).entity(jsonResponse).build();
                 }
             }
             jsonResponse = "{\n"
                     + "\"responseType\":\"failure\",\n"
+                    + "\"reason\":\"Can not file appeal for a Student that doesn't exist!\",\n"
                     + "\"request\": " + jsonRequest + "\n"
                     + "}";
-            return Response.status(HTTP_NOT_FOUND).entity(jsonResponse).build();
+            return Response.status(HTTP_CONFLICT).entity(jsonResponse).build();
         } catch (JSONException e) {
             jsonResponse = "{\n"
                     + "\"responseType\":\"failure\",\n"
@@ -113,5 +95,31 @@ public class AppealsResource {
                     + "}";
             return Response.status(HTTP_INTERNAL_ERROR).entity(jsonResponse).build();
         }
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response viewAllAppeals() {
+        if (appeals.isEmpty()) {
+            return Response.status(HTTP_NOT_FOUND).entity("").build();
+        }
+        StringBuilder builder = new StringBuilder("{\n\t\"appeals\" : [");
+        for (Appeal appeal : appeals) {
+            builder.append("\n\t{\n");
+            builder.append("\t\t\"appealId\" : ").append(appeal.getAppealId()).append(",\n");
+            builder.append("\t\t\"studentId\" : ").append(appeal.getStudentId()).append(",\n");
+            builder.append("\t\t\"gradingItemId\" : ").append(appeal.getGradingItemId()).append(",\n");
+            builder.append("\t\t\"appealMessage\" : \"").append(appeal.getAppealMessage()).append("\"\n");
+            builder.append("\t},\n");
+        }
+        String jsonSoFar;
+        if (builder.toString().endsWith("[")) {
+            jsonSoFar = builder.toString();
+        } else {
+            jsonSoFar = builder.substring(0, builder.length() - 2);
+        }
+        builder = new StringBuilder(jsonSoFar);
+        builder.append("\n\t]\n}");
+        return Response.status(HTTP_OK).entity(builder.toString()).build();
     }
 }

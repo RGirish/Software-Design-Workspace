@@ -439,17 +439,27 @@ public class StudentProfilesResource {
                         if (gradingItem.getId() == gradingItemId) {
                             students.remove(student);
                             HashMap<Integer, Double> allPoints = (HashMap<Integer, Double>) student.getPoints();
+                            boolean firstTime = !allPoints.containsKey(gradingItemId);
                             allPoints.put(gradingItemId, points);
                             HashMap<Integer, String> allFeedbacks = (HashMap<Integer, String>) student.getFeedbacks();
                             allFeedbacks.put(gradingItemId, feedback);
                             student.setFeedbacks(allFeedbacks);
                             student.setPoints(allPoints);
                             students.add(student);
-                            jsonResponse = "{\n"
-                                    + "\"responseType\" : \"success\",\n"
-                                    + "\"message\" : \"Points and Feedback updated!\"\n"
-                                    + "}";
-                            return Response.status(HTTP_OK).entity(jsonResponse).build();
+                            if (firstTime) {
+                                jsonResponse = "{\n"
+                                        + "\"responseType\" : \"success\",\n"
+                                        + "\"message\" : \"Points and Feedback submitted!\"\n"
+                                        + "}";
+                                return Response.status(HTTP_CREATED).location(new URI(context.getAbsolutePath() + "/" + studentId + "/" + gradingItemId)).entity(jsonResponse).build();
+                            } else {
+                                jsonResponse = "{\n"
+                                        + "\"responseType\" : \"success\",\n"
+                                        + "\"message\" : \"Points and Feedback updated!\"\n"
+                                        + "}";
+                                return Response.status(HTTP_OK).entity(jsonResponse).build();
+                            }
+
                         }
                     }
                 }

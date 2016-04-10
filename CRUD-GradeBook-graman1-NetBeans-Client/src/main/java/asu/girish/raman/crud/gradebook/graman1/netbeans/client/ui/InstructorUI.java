@@ -906,7 +906,7 @@ public class InstructorUI extends javax.swing.JFrame {
 
         gradeStuffPanel.addTab("Delete All Grades For Student", jPanel9);
 
-        DAGDeleteButton.setText("Delete All Grades");
+        DAGDeleteButton.setText("Delete All Grades For All Students");
         DAGDeleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DAGDeleteButtonActionPerformed(evt);
@@ -924,24 +924,23 @@ public class InstructorUI extends javax.swing.JFrame {
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(204, 204, 204)
-                .addComponent(DAGDeleteButton)
-                .addContainerGap(567, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 886, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel28)))
+                        .addComponent(jLabel28))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addComponent(DAGDeleteButton)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap(86, Short.MAX_VALUE)
+                .addContainerGap(64, Short.MAX_VALUE)
                 .addComponent(DAGDeleteButton)
-                .addGap(17, 17, 17)
+                .addGap(39, 39, 39)
                 .addComponent(jLabel28)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1316,7 +1315,12 @@ public class InstructorUI extends javax.swing.JFrame {
             } else {
                 responseOutput.append(responseString);
             }
-            GSResponse.setText("Response Code - " + response.getStatus() + "\n\n" + responseOutput + "\n\n");
+            int responseCode = response.getStatus();
+            if (responseCode == 201) {
+                GSResponse.setText("Response Code - " + response.getStatus() + "\n\n" + responseOutput + "\n\nLocation: " + response.getLocation().toString());
+            } else {
+                GSResponse.setText("Response Code - " + response.getStatus() + "\n\n" + responseOutput + "\n\n");
+            }
         } else {
             GSResponse.setText("Enter all the values!");
         }

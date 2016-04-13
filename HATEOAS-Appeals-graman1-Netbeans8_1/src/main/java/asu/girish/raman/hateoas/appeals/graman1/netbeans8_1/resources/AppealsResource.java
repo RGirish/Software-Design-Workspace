@@ -1,4 +1,4 @@
-package asu.girish.raman.hateoas.appeals.graman1.netbeans8_1;
+package asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.resources;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;

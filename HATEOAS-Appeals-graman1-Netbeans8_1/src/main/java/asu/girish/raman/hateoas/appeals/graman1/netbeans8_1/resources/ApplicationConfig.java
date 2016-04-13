@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package asu.girish.raman.hateoas.appeals.graman1.netbeans8_1;
+package asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.resources;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
@@ -29,7 +29,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.AppealsResource.class);
+        resources.add(asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.resources.AppealsResource.class);
     }
     
 }

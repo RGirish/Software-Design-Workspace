@@ -9,6 +9,6 @@ package asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions;
  *
  * @author Girish
  */
-public class AppealAlreadyAbandonedException extends RuntimeException {
+public class InvalidRequestException extends RuntimeException {
 
 }

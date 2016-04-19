@@ -14,6 +14,8 @@ import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.models.AppealStatus;
 import static asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.repositories.AppealRepository.APPEAL_REPOSITORY;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.representations.AppealRepresentation;
 import static asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.representations.AllUris.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  *
@@ -42,7 +44,9 @@ public class ReviewAppealEvent {
             APPEAL_REPOSITORY.resetAppealByID(id, appeal);
 
             String finishAppealProcessingUri = FINISH_PROCESSING_URI + "/" + id;
-            return new AppealRepresentation(appeal, finishAppealProcessingUri);
+            Map<String, String> nextStateUris = new LinkedHashMap<>();
+            nextStateUris.put("finishAppealProcessingUri", finishAppealProcessingUri);
+            return new AppealRepresentation(appeal, nextStateUris);
         } else {
             throw new InvalidAppealIDException();
         }

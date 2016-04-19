@@ -3,31 +3,38 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.representations;
+package asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.client.representations;
 
-import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.events.CreateAppealEvent;
-import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.models.Appeal;
-import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.models.AppealStatus;
-import static asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.representations.AllUris.ENTRY_POINT;
+import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.client.models.Appeal;
+import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.client.models.AppealStatus;
+import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.List;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.Map;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  *
  * @author Girish
  */
+@XmlRootElement(name = "appeal")
 public class AppealRepresentation {
 
-    private final int appealID, studentID, gradingItemID;
-    private final String appealMessage;
-    private final List<String> images;
-    private final List<String> appealItems;
-    private final AppealStatus appealStatus;
-    private final List<String> nextStateUris;
+    private int appealID;
+    private int studentID;
+    private int gradingItemID;
+    private String appealMessage;
+    private List<String> images;
+    private List<String> appealItems;
+    private AppealStatus appealStatus;
 
-    public AppealRepresentation(Appeal appeal, String... appealsUris) {
+    private Map<String, String> nextStateUris;
+
+    public AppealRepresentation(Appeal appeal, Map<String, String> appealsUris) {
         this.appealID = appeal.getAppealID();
         this.studentID = appeal.getStudentID();
         this.gradingItemID = appeal.getGradingItemID();
@@ -35,17 +42,100 @@ public class AppealRepresentation {
         this.images = appeal.getImages();
         this.appealItems = appeal.getAppealItems();
         this.appealStatus = appeal.getAppealStatus();
-        this.nextStateUris = Arrays.asList(appealsUris);
+        this.nextStateUris = appealsUris;
     }
 
-    public static AppealRepresentation createAppealJsonRequestToObject(String jsonString) throws JSONException {
-        JSONObject root = new JSONObject(jsonString);
-        Appeal appeal = new Appeal(root.getInt("studentID"), root.getInt("gradingItemID"), root.getString("appealMessage"));
-        return new CreateAppealEvent().createAppeal(appeal);
+    AppealRepresentation(Appeal appeal) {
+
     }
 
-    public String getLocationURI() {
-        return ENTRY_POINT + "/" + appealID;
+    AppealRepresentation() {
+
+    }
+
+    @XmlElement(name = "appealID")
+    public int getAppealID() {
+        return appealID;
+    }
+
+    public void setAppealID(int appealID) {
+        this.appealID = appealID;
+    }
+
+    @XmlElement(name = "studentID")
+    public int getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(int studentID) {
+        this.studentID = studentID;
+    }
+
+    @XmlElement(name = "gradingItemID")
+    public int getGradingItemID() {
+        return gradingItemID;
+    }
+
+    public void setGradingItemID(int gradingItemID) {
+        this.gradingItemID = gradingItemID;
+    }
+
+    @XmlElement(name = "appealMessage")
+    public String getAppealMessage() {
+        return appealMessage;
+    }
+
+    public void setAppealMessage(String appealMessage) {
+        this.appealMessage = appealMessage;
+    }
+
+    @XmlElement(name = "image")
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
+    @XmlElement(name = "appealItem")
+    public List<String> getAppealItems() {
+        return appealItems;
+    }
+
+    public void setAppealItems(List<String> appealItems) {
+        this.appealItems = appealItems;
+    }
+
+    @XmlElement(name = "appealStatus")
+    public AppealStatus getAppealStatus() {
+        return appealStatus;
+    }
+
+    public void setAppealStatus(AppealStatus appealStatus) {
+        this.appealStatus = appealStatus;
+    }
+
+    @XmlJavaTypeAdapter(NextStateURIMapperAdapter.class)
+    public Map<String, String> getNextStateUris() {
+        return nextStateUris;
+    }
+
+    public void setNextStateUris(Map<String, String> nextStateUris) {
+        this.nextStateUris = nextStateUris;
+    }
+
+    @Override
+    public String toString() {
+        try {
+            JAXBContext context = JAXBContext.newInstance(AppealRepresentation.class);
+            Marshaller marshaller = context.createMarshaller();
+            StringWriter stringWriter = new StringWriter();
+            marshaller.marshal(this, stringWriter);
+            return stringWriter.toString();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

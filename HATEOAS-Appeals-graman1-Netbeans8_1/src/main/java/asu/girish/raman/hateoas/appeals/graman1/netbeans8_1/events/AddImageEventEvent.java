@@ -13,7 +13,9 @@ import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.models.Appeal;
 import static asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.repositories.AppealRepository.APPEAL_REPOSITORY;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.representations.AppealRepresentation;
 import static asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.representations.AllUris.*;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -48,7 +50,13 @@ public class AddImageEventEvent {
             String addImageUri = ADD_IMAGE_URI + "/" + id;
             String reviewAppealUri = REVIEW_URI + "/" + id;
             String abandonAppealUri = ABANDON_URI + "/" + id;
-            return new AppealRepresentation(appeal, addAppealItemUri, rewordAppealUri, addImageUri, reviewAppealUri, abandonAppealUri);
+            Map<String, String> nextStateUris = new LinkedHashMap<>();
+            nextStateUris.put("addAppealItemUri", addAppealItemUri);
+            nextStateUris.put("rewordAppealUri", rewordAppealUri);
+            nextStateUris.put("addImageUri", addImageUri);
+            nextStateUris.put("reviewAppealUri", reviewAppealUri);
+            nextStateUris.put("abandonAppealUri", abandonAppealUri);
+            return new AppealRepresentation(appeal, nextStateUris);
         } else {
             throw new InvalidAppealIDException();
         }

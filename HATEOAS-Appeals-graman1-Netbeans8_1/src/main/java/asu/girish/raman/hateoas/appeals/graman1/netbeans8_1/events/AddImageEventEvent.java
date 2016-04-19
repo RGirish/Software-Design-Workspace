@@ -26,7 +26,7 @@ public class AddImageEventEvent {
     public AddImageEventEvent() {
     }
 
-    public AppealRepresentation addImage(int id, String imageURL) {
+    public AppealRepresentation addImage(int id, List<String> images) {
         if (APPEAL_REPOSITORY.containsAppealID(id)) {
             Appeal appeal = APPEAL_REPOSITORY.getAppealByID(id);
             switch (appeal.getAppealStatus()) {
@@ -40,9 +40,11 @@ public class AddImageEventEvent {
                     break;
             }
 
-            List<String> images = appeal.getImages();
-            images.add(imageURL);
-            appeal.setImages(images);
+            List<String> oldImages = appeal.getImages();
+            for (String newImage : images) {
+                oldImages.add(newImage);
+            }
+            appeal.setImages(oldImages);
             APPEAL_REPOSITORY.resetAppealByID(id, appeal);
 
             String addAppealItemUri = ADD_APPEAL_ITEM_URI + "/" + id;
@@ -56,6 +58,8 @@ public class AddImageEventEvent {
             nextStateUris.put("addImageUri", addImageUri);
             nextStateUris.put("reviewAppealUri", reviewAppealUri);
             nextStateUris.put("abandonAppealUri", abandonAppealUri);
+            String readAppealUri = READ_APPEAL_URI + "/" + id;
+            nextStateUris.put("readAppealUri", readAppealUri);
             return new AppealRepresentation(appeal, nextStateUris);
         } else {
             throw new InvalidAppealIDException();

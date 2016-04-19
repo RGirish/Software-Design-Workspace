@@ -26,7 +26,7 @@ public class AddAppealItemEvent {
     public AddAppealItemEvent() {
     }
 
-    public AppealRepresentation addAppealItem(int id, String appealItem) {
+    public AppealRepresentation addAppealItem(int id, List<String> appealItems) {
         if (APPEAL_REPOSITORY.containsAppealID(id)) {
             Appeal appeal = APPEAL_REPOSITORY.getAppealByID(id);
             switch (appeal.getAppealStatus()) {
@@ -40,9 +40,11 @@ public class AddAppealItemEvent {
                     break;
             }
 
-            List<String> appealItems = appeal.getAppealItems();
-            appealItems.add(appealItem);
-            appeal.setAppealItems(appealItems);
+            List<String> oldAppealItems = appeal.getAppealItems();
+            for (String appealItem : appealItems) {
+                oldAppealItems.add(appealItem);
+            }
+            appeal.setAppealItems(oldAppealItems);
             APPEAL_REPOSITORY.resetAppealByID(id, appeal);
 
             String addAppealItemUri = ADD_APPEAL_ITEM_URI + "/" + id;
@@ -56,6 +58,8 @@ public class AddAppealItemEvent {
             nextStateUris.put("addImageUri", addImageUri);
             nextStateUris.put("reviewAppealUri", reviewAppealUri);
             nextStateUris.put("abandonAppealUri", abandonAppealUri);
+            String readAppealUri = READ_APPEAL_URI + "/" + id;
+            nextStateUris.put("readAppealUri", readAppealUri);
             return new AppealRepresentation(appeal, nextStateUris);
         } else {
             throw new InvalidAppealIDException();

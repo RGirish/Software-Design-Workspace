@@ -36,6 +36,8 @@ public class CreateAppealEvent {
         nextStateUris.put("addImageUri", addImageUri);
         nextStateUris.put("reviewAppealUri", reviewAppealUri);
         nextStateUris.put("abandonAppealUri", abandonAppealUri);
+        String readAppealUri = READ_APPEAL_URI + "/" + id;
+        nextStateUris.put("readAppealUri", readAppealUri);
         return new AppealRepresentation(appeal, nextStateUris);
     }
 }

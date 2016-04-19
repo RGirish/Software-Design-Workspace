@@ -8,13 +8,14 @@ package asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.events;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions.AppealAlreadyAbandonedException;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions.AppealAlreadyFinishedProcessingException;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions.AppealHasNotStartedProcessingYetException;
-import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions.CannotAbandonAppealNowException;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions.InvalidAppealIDException;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.models.Appeal;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.models.AppealStatus;
 import static asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.repositories.AppealRepository.APPEAL_REPOSITORY;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.representations.AppealRepresentation;
 import static asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.representations.AllUris.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  *
@@ -35,13 +36,14 @@ public class FinishAppealProcessingEvent {
                     throw new AppealHasNotStartedProcessingYetException();
                 case FINISHED:
                     throw new AppealAlreadyFinishedProcessingException();
-                default:
-                    break;
             }
 
-            appeal.setAppealStatus(AppealStatus.PROCESSING);
+            appeal.setAppealStatus(AppealStatus.FINISHED);
             APPEAL_REPOSITORY.resetAppealByID(id, appeal);
-            return new AppealRepresentation(appeal);
+            String readAppealUri = READ_APPEAL_URI + "/" + id;
+            Map<String, String> nextStateUris = new LinkedHashMap<>();
+            nextStateUris.put("readAppealUri", readAppealUri);
+            return new AppealRepresentation(appeal, nextStateUris);
         } else {
             throw new InvalidAppealIDException();
         }

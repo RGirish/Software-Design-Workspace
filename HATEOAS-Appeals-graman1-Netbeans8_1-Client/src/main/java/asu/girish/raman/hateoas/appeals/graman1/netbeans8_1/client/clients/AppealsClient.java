@@ -30,4 +30,29 @@ public class AppealsClient {
         return appealRepresentation;
     }
 
+    public AppealRepresentation rewordAppeal(String rewordAppealUri, String xmlRequest) {
+        AppealRepresentation appealRepresentation = client.resource(rewordAppealUri).accept(APPEALS_MEDIA_TYPE).type(APPEALS_MEDIA_TYPE).put(AppealRepresentation.class, xmlRequest);
+        return appealRepresentation;
+    }
+
+    public AppealRepresentation addAppealItem(String addAppealItemUri, String request) {
+        AppealRepresentation appealRepresentation = client.resource(addAppealItemUri).accept(APPEALS_MEDIA_TYPE).type(APPEALS_MEDIA_TYPE).put(AppealRepresentation.class, request);
+        return appealRepresentation;
+    }
+
+    public AppealRepresentation addImage(String addAppealItemUri, String request) {
+        AppealRepresentation appealRepresentation = client.resource(addAppealItemUri).accept(APPEALS_MEDIA_TYPE).type(APPEALS_MEDIA_TYPE).put(AppealRepresentation.class, request);
+        return appealRepresentation;
+    }
+
+    public AppealRepresentation reviewAppeal(String reviewAppealUri) {
+        AppealRepresentation appealRepresentation = client.resource(reviewAppealUri).accept(APPEALS_MEDIA_TYPE).put(AppealRepresentation.class);
+        return appealRepresentation;
+    }
+
+    public AppealRepresentation finishAppealProcessing(String finishAppealProcessingUri) {
+        AppealRepresentation appealRepresentation = client.resource(finishAppealProcessingUri).accept(APPEALS_MEDIA_TYPE).put(AppealRepresentation.class);
+        return appealRepresentation;
+    }
+
 }

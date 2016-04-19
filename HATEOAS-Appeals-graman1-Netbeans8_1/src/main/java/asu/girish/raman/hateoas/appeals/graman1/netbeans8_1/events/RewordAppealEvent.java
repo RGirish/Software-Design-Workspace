@@ -47,12 +47,14 @@ public class RewordAppealEvent {
             String addImageUri = ADD_IMAGE_URI + "/" + id;
             String reviewAppealUri = REVIEW_URI + "/" + id;
             String abandonAppealUri = ABANDON_URI + "/" + id;
+            String readAppealUri = READ_APPEAL_URI + "/" + id;
             Map<String, String> nextStateUris = new LinkedHashMap<>();
             nextStateUris.put("addAppealItemUri", addAppealItemUri);
             nextStateUris.put("rewordAppealUri", rewordAppealUri);
             nextStateUris.put("addImageUri", addImageUri);
             nextStateUris.put("reviewAppealUri", reviewAppealUri);
             nextStateUris.put("abandonAppealUri", abandonAppealUri);
+            nextStateUris.put("readAppealUri", readAppealUri);
             return new AppealRepresentation(appeal, nextStateUris);
         } else {
             throw new InvalidAppealIDException();

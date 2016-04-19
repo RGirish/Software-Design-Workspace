@@ -44,8 +44,10 @@ public class ReviewAppealEvent {
             APPEAL_REPOSITORY.resetAppealByID(id, appeal);
 
             String finishAppealProcessingUri = FINISH_PROCESSING_URI + "/" + id;
+            String readAppealUri = READ_APPEAL_URI + "/" + id;
             Map<String, String> nextStateUris = new LinkedHashMap<>();
             nextStateUris.put("finishAppealProcessingUri", finishAppealProcessingUri);
+            nextStateUris.put("readAppealUri", readAppealUri);
             return new AppealRepresentation(appeal, nextStateUris);
         } else {
             throw new InvalidAppealIDException();

@@ -32,7 +32,7 @@ public class FinishAppealProcessingEvent {
             switch (appeal.getAppealStatus()) {
                 case ABANDONED:
                     throw new AppealAlreadyAbandonedException();
-                case CREATED:
+                case SUBMITTED:
                     throw new AppealHasNotStartedProcessingYetException();
                 case FINISHED:
                     throw new AppealAlreadyFinishedProcessingException();

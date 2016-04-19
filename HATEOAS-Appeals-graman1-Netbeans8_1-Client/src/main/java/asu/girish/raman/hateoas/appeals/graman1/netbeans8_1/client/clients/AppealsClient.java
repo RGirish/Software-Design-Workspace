@@ -40,6 +40,11 @@ public class AppealsClient {
         return appealRepresentation;
     }
 
+    public AppealRepresentation followUp(String followUpUri, String request) {
+        AppealRepresentation appealRepresentation = client.resource(followUpUri).accept(APPEALS_MEDIA_TYPE).type(APPEALS_MEDIA_TYPE).put(AppealRepresentation.class, request);
+        return appealRepresentation;
+    }
+
     public AppealRepresentation addImage(String addAppealItemUri, String request) {
         AppealRepresentation appealRepresentation = client.resource(addAppealItemUri).accept(APPEALS_MEDIA_TYPE).type(APPEALS_MEDIA_TYPE).put(AppealRepresentation.class, request);
         return appealRepresentation;
@@ -52,6 +57,11 @@ public class AppealsClient {
 
     public AppealRepresentation finishAppealProcessing(String finishAppealProcessingUri) {
         AppealRepresentation appealRepresentation = client.resource(finishAppealProcessingUri).accept(APPEALS_MEDIA_TYPE).put(AppealRepresentation.class);
+        return appealRepresentation;
+    }
+
+    public AppealRepresentation abandonAppeal(String abandonAppealUri) {
+        AppealRepresentation appealRepresentation = client.resource(abandonAppealUri).accept(APPEALS_MEDIA_TYPE).put(AppealRepresentation.class);
         return appealRepresentation;
     }
 

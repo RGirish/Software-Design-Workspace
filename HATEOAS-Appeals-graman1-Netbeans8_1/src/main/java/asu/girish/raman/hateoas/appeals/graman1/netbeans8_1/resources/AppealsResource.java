@@ -1,9 +1,11 @@
 package asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.resources;
 
+import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.events.AbandonAppealEvent;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.events.AddAppealItemEvent;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.events.AddImageEventEvent;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.events.CreateAppealEvent;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.events.FinishAppealProcessingEvent;
+import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.events.FollowUpOnAppealEvent;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.events.ReadAppealEvent;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.events.ReviewAppealEvent;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.events.RewordAppealEvent;
@@ -110,11 +112,42 @@ public class AppealsResource {
     }
 
     @PUT
+    @Path("/followUp/{appealID}")
+    @Produces(APPEALS_MEDIA_TYPE)
+    @Consumes(APPEALS_MEDIA_TYPE)
+    public Response followUpOnAppeal(@PathParam("appealID") int appealID, String xmlRequest) {
+        try {
+            AppealRepresentation requestRepresentation = AppealRepresentation.XMLRequestToObject(xmlRequest);
+            List<String> followUps = requestRepresentation.getFollowUps();
+            AppealRepresentation responseRepresentation = new FollowUpOnAppealEvent().followUp(appealID, followUps);
+            return Response.ok().entity(responseRepresentation).build();
+        } catch (InvalidRequestException e) {
+            return Response.status(HTTP_BAD_REQUEST).entity(xmlRequest).build();
+        } catch (Exception e) {
+            return Response.status(HTTP_INTERNAL_ERROR).entity(xmlRequest).build();
+        }
+    }
+
+    @PUT
     @Path("/review/{appealID}")
     @Produces(APPEALS_MEDIA_TYPE)
     public Response reviewAppeal(@PathParam("appealID") int appealID) {
         try {
             AppealRepresentation responseRepresentation = new ReviewAppealEvent().reviewAppeal(appealID);
+            return Response.ok().entity(responseRepresentation).build();
+        } catch (InvalidRequestException e) {
+            return Response.status(HTTP_BAD_REQUEST).entity(String.valueOf(appealID)).build();
+        } catch (Exception e) {
+            return Response.status(HTTP_INTERNAL_ERROR).entity(String.valueOf(appealID)).build();
+        }
+    }
+
+    @PUT
+    @Path("/abandonAppeal/{appealID}")
+    @Produces(APPEALS_MEDIA_TYPE)
+    public Response abandonAppeal(@PathParam("appealID") int appealID) {
+        try {
+            AppealRepresentation responseRepresentation = new AbandonAppealEvent().abandonAppeal(appealID);
             return Response.ok().entity(responseRepresentation).build();
         } catch (InvalidRequestException e) {
             return Response.status(HTTP_BAD_REQUEST).entity(String.valueOf(appealID)).build();

@@ -50,6 +50,8 @@ public class RewordAppealEvent {
             String readAppealUri = READ_APPEAL_URI + "/" + id;
             Map<String, String> nextStateUris = new LinkedHashMap<>();
             nextStateUris.put("addAppealItemUri", addAppealItemUri);
+            String followUpUri = FOLLOW_UP_URI + "/" + id;
+            nextStateUris.put("followUpUri", followUpUri);
             nextStateUris.put("rewordAppealUri", rewordAppealUri);
             nextStateUris.put("addImageUri", addImageUri);
             nextStateUris.put("reviewAppealUri", reviewAppealUri);

@@ -21,12 +21,12 @@ import java.util.Map;
  *
  * @author Girish
  */
-public class AddImageEventEvent {
+public class FollowUpOnAppealEvent {
 
-    public AddImageEventEvent() {
+    public FollowUpOnAppealEvent() {
     }
 
-    public AppealRepresentation addImage(int id, List<String> images) {
+    public AppealRepresentation followUp(int id, List<String> followUps) {
         if (APPEAL_REPOSITORY.containsAppealID(id)) {
             Appeal appeal = APPEAL_REPOSITORY.getAppealByID(id);
             switch (appeal.getAppealStatus()) {
@@ -40,11 +40,11 @@ public class AddImageEventEvent {
                     break;
             }
 
-            List<String> oldImages = appeal.getImages();
-            for (String newImage : images) {
-                oldImages.add(newImage);
+            List<String> oldFollowUps = appeal.getFollowUps();
+            for (String followUp : followUps) {
+                oldFollowUps.add(followUp);
             }
-            appeal.setImages(oldImages);
+            appeal.setFollowUps(oldFollowUps);
             APPEAL_REPOSITORY.resetAppealByID(id, appeal);
 
             String addAppealItemUri = ADD_APPEAL_ITEM_URI + "/" + id;
@@ -52,6 +52,7 @@ public class AddImageEventEvent {
             String addImageUri = ADD_IMAGE_URI + "/" + id;
             String reviewAppealUri = REVIEW_URI + "/" + id;
             String abandonAppealUri = ABANDON_URI + "/" + id;
+            String readAppealUri = READ_APPEAL_URI + "/" + id;
             Map<String, String> nextStateUris = new LinkedHashMap<>();
             nextStateUris.put("addAppealItemUri", addAppealItemUri);
             String followUpUri = FOLLOW_UP_URI + "/" + id;
@@ -60,7 +61,6 @@ public class AddImageEventEvent {
             nextStateUris.put("addImageUri", addImageUri);
             nextStateUris.put("reviewAppealUri", reviewAppealUri);
             nextStateUris.put("abandonAppealUri", abandonAppealUri);
-            String readAppealUri = READ_APPEAL_URI + "/" + id;
             nextStateUris.put("readAppealUri", readAppealUri);
             return new AppealRepresentation(appeal, nextStateUris);
         } else {

@@ -29,9 +29,9 @@ public class AppealRepresentation {
     private int gradingItemID;
     private String appealMessage;
     private List<String> images;
+    private List<String> followUps;
     private List<String> appealItems;
     private AppealStatus appealStatus;
-
     private Map<String, String> nextStateUris;
 
     public AppealRepresentation(Appeal appeal, Map<String, String> appealsUris) {
@@ -40,6 +40,7 @@ public class AppealRepresentation {
         this.gradingItemID = appeal.getGradingItemID();
         this.appealMessage = appeal.getAppealMessage();
         this.images = appeal.getImages();
+        this.followUps = appeal.getFollowUps();
         this.appealItems = appeal.getAppealItems();
         this.appealStatus = appeal.getAppealStatus();
         this.nextStateUris = appealsUris;
@@ -51,6 +52,15 @@ public class AppealRepresentation {
 
     AppealRepresentation() {
 
+    }
+
+    @XmlElement(name = "followUp")
+    public List<String> getFollowUps() {
+        return followUps;
+    }
+
+    public void setFollowUps(List<String> followUps) {
+        this.followUps = followUps;
     }
 
     @XmlElement(name = "appealID")

@@ -27,7 +27,7 @@ public class ReadAppealEvent {
             Appeal appeal = APPEAL_REPOSITORY.getAppealByID(appealID);
             Map<String, String> nextStateUris = new LinkedHashMap<>();
             switch (appeal.getAppealStatus()) {
-                case CREATED:
+                case SUBMITTED:
                     String addAppealItemUri = ADD_APPEAL_ITEM_URI + "/" + appealID;
                     String rewordAppealUri = REWORD_URI + "/" + appealID;
                     String addImageUri = ADD_IMAGE_URI + "/" + appealID;
@@ -37,6 +37,8 @@ public class ReadAppealEvent {
                     nextStateUris.put("addAppealItemUri", addAppealItemUri);
                     nextStateUris.put("rewordAppealUri", rewordAppealUri);
                     nextStateUris.put("addImageUri", addImageUri);
+                    String followUpUri = FOLLOW_UP_URI + "/" + appealID;
+                    nextStateUris.put("followUpUri", followUpUri);
                     nextStateUris.put("reviewAppealUri", reviewAppealUri);
                     nextStateUris.put("abandonAppealUri", abandonAppealUri);
                     nextStateUris.put("readAppealUri", readAppealUri);

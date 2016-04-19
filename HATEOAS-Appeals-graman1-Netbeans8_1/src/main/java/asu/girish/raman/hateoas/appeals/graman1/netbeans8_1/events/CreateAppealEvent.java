@@ -30,13 +30,15 @@ public class CreateAppealEvent {
         String addImageUri = ADD_IMAGE_URI + "/" + id;
         String reviewAppealUri = REVIEW_URI + "/" + id;
         String abandonAppealUri = ABANDON_URI + "/" + id;
+        String readAppealUri = READ_APPEAL_URI + "/" + id;
         Map<String, String> nextStateUris = new LinkedHashMap<>();
         nextStateUris.put("addAppealItemUri", addAppealItemUri);
         nextStateUris.put("rewordAppealUri", rewordAppealUri);
         nextStateUris.put("addImageUri", addImageUri);
+        String followUpUri = FOLLOW_UP_URI + "/" + id;
+        nextStateUris.put("followUpUri", followUpUri);
         nextStateUris.put("reviewAppealUri", reviewAppealUri);
         nextStateUris.put("abandonAppealUri", abandonAppealUri);
-        String readAppealUri = READ_APPEAL_URI + "/" + id;
         nextStateUris.put("readAppealUri", readAppealUri);
         return new AppealRepresentation(appeal, nextStateUris);
     }

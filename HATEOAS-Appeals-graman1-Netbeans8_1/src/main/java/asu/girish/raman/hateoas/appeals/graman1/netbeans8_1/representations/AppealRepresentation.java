@@ -35,6 +35,7 @@ public class AppealRepresentation {
     private List<String> images;
     private List<String> appealItems;
     private AppealStatus appealStatus;
+    private List<String> followUps;
     private Map<String, String> nextStateUris;
 
     public AppealRepresentation(Appeal appeal, Map<String, String> appealsUris) {
@@ -44,6 +45,7 @@ public class AppealRepresentation {
         this.appealMessage = appeal.getAppealMessage();
         this.images = appeal.getImages();
         this.appealItems = appeal.getAppealItems();
+        this.followUps = appeal.getFollowUps();
         this.appealStatus = appeal.getAppealStatus();
         this.nextStateUris = appealsUris;
     }
@@ -53,6 +55,7 @@ public class AppealRepresentation {
         this.studentID = appeal.getStudentID();
         this.gradingItemID = appeal.getGradingItemID();
         this.appealMessage = appeal.getAppealMessage();
+        this.followUps = appeal.getFollowUps();
         this.images = appeal.getImages();
         this.appealItems = appeal.getAppealItems();
         this.appealStatus = appeal.getAppealStatus();
@@ -60,6 +63,15 @@ public class AppealRepresentation {
     }
 
     public AppealRepresentation() {
+    }
+
+    @XmlElement(name = "followUp")
+    public List<String> getFollowUps() {
+        return followUps;
+    }
+
+    public void setFollowUps(List<String> followUps) {
+        this.followUps = followUps;
     }
 
     @XmlElement(name = "appealID")

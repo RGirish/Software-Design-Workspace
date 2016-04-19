@@ -16,8 +16,9 @@ public class Appeal {
 
     int appealID, studentID, gradingItemID;
     String appealMessage;
-    List<String> images;
-    List<String> appealItems;
+    List<String> images = new LinkedList<>();
+    List<String> appealItems = new LinkedList<>();
+    List<String> followUps = new LinkedList<>();
     private AppealStatus appealStatus = AppealStatus.CREATED;
 
     public Appeal(int studentID, int gradingItemID, String appealMessage) {
@@ -29,6 +30,14 @@ public class Appeal {
     }
 
     public Appeal() {
+    }
+
+    public List<String> getFollowUps() {
+        return followUps;
+    }
+
+    public void setFollowUps(List<String> followUps) {
+        this.followUps = followUps;
     }
 
     public List<String> getAppealItems() {

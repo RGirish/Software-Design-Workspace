@@ -19,7 +19,10 @@ public class Main {
 
     public static void main(String[] args) {
         appealsClient = new AppealsClient();
-        happyCaseSimulator();
+        //happyCaseSimulator();
+        //abandonedCaseSimulator();
+        //forgottenCaseSimulator();
+        badIDSimulator();
     }
 
     public static void happyCaseSimulator() {
@@ -42,6 +45,8 @@ public class Main {
         System.out.println("rewordAppealUri " + rewordAppealUri);
         String addImageUri = map.get("addImageUri");
         System.out.println("addImageUri " + addImageUri);
+        String followUpUri = map.get("followUpUri");
+        System.out.println("followUpUri " + followUpUri);
         String reviewAppealUri = map.get("reviewAppealUri");
         System.out.println("reviewAppealUri " + reviewAppealUri);
         String abandonAppealUri = map.get("abandonAppealUri");
@@ -64,6 +69,8 @@ public class Main {
         System.out.println("rewordAppealUri " + rewordAppealUri);
         addImageUri = map.get("addImageUri");
         System.out.println("addImageUri " + addImageUri);
+        followUpUri = map.get("followUpUri");
+        System.out.println("followUpUri " + followUpUri);
         reviewAppealUri = map.get("reviewAppealUri");
         System.out.println("reviewAppealUri " + reviewAppealUri);
         abandonAppealUri = map.get("abandonAppealUri");
@@ -93,19 +100,130 @@ public class Main {
         System.out.println("\n\n");
     }
 
-    public void abandonedCaseSimulator() {
+    public static void abandonedCaseSimulator() {
+        System.out.println("\n\nABANDONED CASE SIMULATOR\n\n");
+
+        //Step - 1 - CREATE an Appeal
+        String xmlRequest = "<appeal>\n"
+                + "<studentID>10</studentID>\n"
+                + "<gradingItemID>10</gradingItemID>\n"
+                + "<appealMessage>Hey there</appealMessage>\n"
+                + "</appeal>";
+        AppealRepresentation appealRepresentation = appealsClient.createAppeal(xmlRequest);
+        Map<String, String> map = appealRepresentation.getNextStateUris();
+        int appealID = appealRepresentation.getAppealID();
+        System.out.println("*** Step - 1 - CREATE an Appeal ***\n");
+        System.out.println("appealID " + appealID);
+        String addAppealItemUri = map.get("addAppealItemUri");
+        System.out.println("addAppealItemUri " + addAppealItemUri);
+        String rewordAppealUri = map.get("rewordAppealUri");
+        System.out.println("rewordAppealUri " + rewordAppealUri);
+        String addImageUri = map.get("addImageUri");
+        System.out.println("addImageUri " + addImageUri);
+        String followUpUri = map.get("followUpUri");
+        System.out.println("followUpUri " + followUpUri);
+        String reviewAppealUri = map.get("reviewAppealUri");
+        System.out.println("reviewAppealUri " + reviewAppealUri);
+        String abandonAppealUri = map.get("abandonAppealUri");
+        System.out.println("abandonAppealUri " + abandonAppealUri);
+        String readAppealUri = map.get("readAppealUri");
+        System.out.println("readAppealUri " + readAppealUri);
+        System.out.println("\n\n");
+
+        //Step - 2 - REWORD the Appeal (Update)
+        xmlRequest = "<appeal>\n"
+                + "<appealMessage>Hey there - updated</appealMessage>\n"
+                + "</appeal>";
+        appealRepresentation = appealsClient.rewordAppeal(rewordAppealUri, xmlRequest);
+        map = appealRepresentation.getNextStateUris();
+        System.out.println("*** Step - 2 - REWORD the Appeal (Update) ***\n");
+        System.out.println("appealID " + appealID);
+        addAppealItemUri = map.get("addAppealItemUri");
+        System.out.println("addAppealItemUri " + addAppealItemUri);
+        rewordAppealUri = map.get("rewordAppealUri");
+        System.out.println("rewordAppealUri " + rewordAppealUri);
+        addImageUri = map.get("addImageUri");
+        System.out.println("addImageUri " + addImageUri);
+        followUpUri = map.get("followUpUri");
+        System.out.println("followUpUri " + followUpUri);
+        reviewAppealUri = map.get("reviewAppealUri");
+        System.out.println("reviewAppealUri " + reviewAppealUri);
+        abandonAppealUri = map.get("abandonAppealUri");
+        System.out.println("abandonAppealUri " + abandonAppealUri);
+        readAppealUri = map.get("readAppealUri");
+        System.out.println("readAppealUri " + readAppealUri);
+        System.out.println("\n\n");
+
+        //Step - 3 - Abandon Appeal
+        appealRepresentation = appealsClient.abandonAppeal(abandonAppealUri);
+        map = appealRepresentation.getNextStateUris();
+        System.out.println("*** Step - 3 - Abandon Appeal***\n");
+        System.out.println("appealID " + appealID);
+        readAppealUri = map.get("readAppealUri");
+        System.out.println("readAppealUri " + readAppealUri);
+        System.out.println("\n\n");
+    }
+
+    public static void forgottenCaseSimulator() {
+        System.out.println("\n\nFORGOTTEN CASE SIMULATOR\n\n");
+
+        //Step - 1 - CREATE an Appeal
+        String xmlRequest = "<appeal>\n"
+                + "<studentID>10</studentID>\n"
+                + "<gradingItemID>10</gradingItemID>\n"
+                + "<appealMessage>Hey there</appealMessage>\n"
+                + "</appeal>";
+        AppealRepresentation appealRepresentation = appealsClient.createAppeal(xmlRequest);
+        Map<String, String> map = appealRepresentation.getNextStateUris();
+        int appealID = appealRepresentation.getAppealID();
+        System.out.println("*** Step - 1 - CREATE an Appeal ***\n");
+        System.out.println("appealID " + appealID);
+        String addAppealItemUri = map.get("addAppealItemUri");
+        System.out.println("addAppealItemUri " + addAppealItemUri);
+        String rewordAppealUri = map.get("rewordAppealUri");
+        System.out.println("rewordAppealUri " + rewordAppealUri);
+        String addImageUri = map.get("addImageUri");
+        System.out.println("addImageUri " + addImageUri);
+        String followUpUri = map.get("followUpUri");
+        System.out.println("followUpUri " + followUpUri);
+        String reviewAppealUri = map.get("reviewAppealUri");
+        System.out.println("reviewAppealUri " + reviewAppealUri);
+        String abandonAppealUri = map.get("abandonAppealUri");
+        System.out.println("abandonAppealUri " + abandonAppealUri);
+        String readAppealUri = map.get("readAppealUri");
+        System.out.println("readAppealUri " + readAppealUri);
+        System.out.println("\n\n");
+
+        //Step - 2 - FOLLOW UP on the Appeal
+        xmlRequest = "<appeal>\n"
+                + "<followUp>Hello. It has been long. What is happeneing?</followUp>\n"
+                + "</appeal>";
+        appealRepresentation = appealsClient.followUp(followUpUri, xmlRequest);
+        map = appealRepresentation.getNextStateUris();
+        System.out.println("*** Step - 2 - FOLLOW UP on the Appeal ***\n");
+        System.out.println("appealID " + appealID);
+        addAppealItemUri = map.get("addAppealItemUri");
+        System.out.println("addAppealItemUri " + addAppealItemUri);
+        rewordAppealUri = map.get("rewordAppealUri");
+        System.out.println("rewordAppealUri " + rewordAppealUri);
+        addImageUri = map.get("addImageUri");
+        System.out.println("addImageUri " + addImageUri);
+        reviewAppealUri = map.get("reviewAppealUri");
+        followUpUri = map.get("followUpUri");
+        System.out.println("followUpUri " + followUpUri);
+        System.out.println("reviewAppealUri " + reviewAppealUri);
+        abandonAppealUri = map.get("abandonAppealUri");
+        System.out.println("abandonAppealUri " + abandonAppealUri);
+        readAppealUri = map.get("readAppealUri");
+        System.out.println("readAppealUri " + readAppealUri);
+        System.out.println("\n\n");
+    }
+
+    public static void badStartSimulator() {
 
     }
 
-    public void forgottenCaseSimulator() {
-
-    }
-
-    public void badStartSimulator() {
-
-    }
-
-    public void badIDSimulator() {
+    public static void badIDSimulator() {
 
     }
 }

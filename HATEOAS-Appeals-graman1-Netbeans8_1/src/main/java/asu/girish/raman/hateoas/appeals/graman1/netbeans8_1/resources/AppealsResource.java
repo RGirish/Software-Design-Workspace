@@ -9,6 +9,10 @@ import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.events.FollowUpOnApp
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.events.ReadAppealEvent;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.events.ReviewAppealEvent;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.events.RewordAppealEvent;
+import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions.AppealAlreadyAbandonedException;
+import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions.AppealAlreadyFinishedProcessingException;
+import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions.AppealHasNotStartedProcessingYetException;
+import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions.AppealProcessingAlreadyStartedException;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions.InvalidRequestException;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.models.Appeal;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.representations.AppealRepresentation;
@@ -70,8 +74,14 @@ public class AppealsResource {
 
             AppealRepresentation responseRepresentation = new RewordAppealEvent().rewordAppeal(appealID, appealMessage);
             return Response.ok().entity(responseRepresentation).build();
+        } catch (AppealAlreadyAbandonedException e) {
+            return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyAbandoned/>").build();
+        } catch (AppealProcessingAlreadyStartedException e) {
+            return Response.status(HTTP_CONFLICT).entity("<AppealProcessingAlreadyStarted/>").build();
+        } catch (AppealAlreadyFinishedProcessingException e) {
+            return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyFinishedProcessing/>").build();
         } catch (InvalidRequestException e) {
-            return Response.status(HTTP_BAD_REQUEST).entity(xmlRequest).build();
+            return Response.status(HTTP_BAD_REQUEST).entity("<InvalidRequest/>").build();
         } catch (Exception e) {
             return Response.status(HTTP_INTERNAL_ERROR).entity(xmlRequest).build();
         }
@@ -87,6 +97,12 @@ public class AppealsResource {
             List<String> images = requestRepresentation.getImages();
             AppealRepresentation responseRepresentation = new AddImageEventEvent().addImage(appealID, images);
             return Response.ok().entity(responseRepresentation).build();
+        } catch (AppealAlreadyAbandonedException e) {
+            return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyAbandoned/>").build();
+        } catch (AppealProcessingAlreadyStartedException e) {
+            return Response.status(HTTP_CONFLICT).entity("<AppealProcessingAlreadyStarted/>").build();
+        } catch (AppealAlreadyFinishedProcessingException e) {
+            return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyFinishedProcessing/>").build();
         } catch (InvalidRequestException e) {
             return Response.status(HTTP_BAD_REQUEST).entity(xmlRequest).build();
         } catch (Exception e) {
@@ -104,6 +120,12 @@ public class AppealsResource {
             List<String> appealItems = requestRepresentation.getAppealItems();
             AppealRepresentation responseRepresentation = new AddAppealItemEvent().addAppealItem(appealID, appealItems);
             return Response.ok().entity(responseRepresentation).build();
+        } catch (AppealAlreadyAbandonedException e) {
+            return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyAbandoned/>").build();
+        } catch (AppealProcessingAlreadyStartedException e) {
+            return Response.status(HTTP_CONFLICT).entity("<AppealProcessingAlreadyStarted/>").build();
+        } catch (AppealAlreadyFinishedProcessingException e) {
+            return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyFinishedProcessing/>").build();
         } catch (InvalidRequestException e) {
             return Response.status(HTTP_BAD_REQUEST).entity(xmlRequest).build();
         } catch (Exception e) {
@@ -121,6 +143,12 @@ public class AppealsResource {
             List<String> followUps = requestRepresentation.getFollowUps();
             AppealRepresentation responseRepresentation = new FollowUpOnAppealEvent().followUp(appealID, followUps);
             return Response.ok().entity(responseRepresentation).build();
+        } catch (AppealAlreadyAbandonedException e) {
+            return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyAbandoned/>").build();
+        } catch (AppealProcessingAlreadyStartedException e) {
+            return Response.status(HTTP_CONFLICT).entity("<AppealProcessingAlreadyStarted/>").build();
+        } catch (AppealAlreadyFinishedProcessingException e) {
+            return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyFinishedProcessing/>").build();
         } catch (InvalidRequestException e) {
             return Response.status(HTTP_BAD_REQUEST).entity(xmlRequest).build();
         } catch (Exception e) {
@@ -135,6 +163,12 @@ public class AppealsResource {
         try {
             AppealRepresentation responseRepresentation = new ReviewAppealEvent().reviewAppeal(appealID);
             return Response.ok().entity(responseRepresentation).build();
+        } catch (AppealAlreadyAbandonedException e) {
+            return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyAbandoned/>").build();
+        } catch (AppealProcessingAlreadyStartedException e) {
+            return Response.status(HTTP_CONFLICT).entity("<AppealProcessingAlreadyStarted/>").build();
+        } catch (AppealAlreadyFinishedProcessingException e) {
+            return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyFinishedProcessing/>").build();
         } catch (InvalidRequestException e) {
             return Response.status(HTTP_BAD_REQUEST).entity(String.valueOf(appealID)).build();
         } catch (Exception e) {
@@ -149,6 +183,12 @@ public class AppealsResource {
         try {
             AppealRepresentation responseRepresentation = new AbandonAppealEvent().abandonAppeal(appealID);
             return Response.ok().entity(responseRepresentation).build();
+        } catch (AppealAlreadyAbandonedException e) {
+            return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyAbandoned/>").build();
+        } catch (AppealProcessingAlreadyStartedException e) {
+            return Response.status(HTTP_CONFLICT).entity("<AppealProcessingAlreadyStarted/>").build();
+        } catch (AppealAlreadyFinishedProcessingException e) {
+            return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyFinishedProcessing/>").build();
         } catch (InvalidRequestException e) {
             return Response.status(HTTP_BAD_REQUEST).entity(String.valueOf(appealID)).build();
         } catch (Exception e) {
@@ -163,6 +203,12 @@ public class AppealsResource {
         try {
             AppealRepresentation responseRepresentation = new FinishAppealProcessingEvent().finishAppealProcessing(appealID);
             return Response.ok().entity(responseRepresentation).build();
+        } catch (AppealAlreadyAbandonedException e) {
+            return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyAbandoned/>").build();
+        } catch (AppealHasNotStartedProcessingYetException e) {
+            return Response.status(HTTP_CONFLICT).entity("<AppealHasNotStartedProcessingYet/>").build();
+        } catch (AppealAlreadyFinishedProcessingException e) {
+            return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyFinishedProcessing/>").build();
         } catch (InvalidRequestException e) {
             System.out.println("ire " + e.toString());
             return Response.status(HTTP_BAD_REQUEST).entity(String.valueOf(appealID)).build();
@@ -178,7 +224,6 @@ public class AppealsResource {
     public String getAppeal(@PathParam("appealID") int appealID) {
         try {
             AppealRepresentation responseRepresentation = new ReadAppealEvent().readAppeal(appealID);
-            System.out.println(responseRepresentation.toString());
             return responseRepresentation.toString();
         } catch (InvalidRequestException e) {
             return "Invalid Request";

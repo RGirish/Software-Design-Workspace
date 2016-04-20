@@ -13,6 +13,7 @@ import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions.AppealAlr
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions.AppealAlreadyFinishedProcessingException;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions.AppealHasNotStartedProcessingYetException;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions.AppealProcessingAlreadyStartedException;
+import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions.InvalidAppealIDException;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions.InvalidRequestException;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.models.Appeal;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.representations.AppealRepresentation;
@@ -23,8 +24,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -35,9 +34,6 @@ import javax.ws.rs.core.Response;
 public class AppealsResource {
 
     public static final String APPEALS_MEDIA_TYPE = "application/vnd-cse564-appeals+xml";
-
-    @Context
-    private UriInfo context;
 
     @POST
     @Produces(APPEALS_MEDIA_TYPE)
@@ -71,7 +67,6 @@ public class AppealsResource {
         try {
             AppealRepresentation requestRepresentation = AppealRepresentation.XMLRequestToObject(xmlRequest);
             String appealMessage = requestRepresentation.getAppealMessage();
-
             AppealRepresentation responseRepresentation = new RewordAppealEvent().rewordAppeal(appealID, appealMessage);
             return Response.ok().entity(responseRepresentation).build();
         } catch (AppealAlreadyAbandonedException e) {
@@ -80,6 +75,8 @@ public class AppealsResource {
             return Response.status(HTTP_CONFLICT).entity("<AppealProcessingAlreadyStarted/>").build();
         } catch (AppealAlreadyFinishedProcessingException e) {
             return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyFinishedProcessing/>").build();
+        } catch (InvalidAppealIDException e) {
+            return Response.status(HTTP_NOT_FOUND).entity("<InvalidAppealID/>").build();
         } catch (InvalidRequestException e) {
             return Response.status(HTTP_BAD_REQUEST).entity("<InvalidRequest/>").build();
         } catch (Exception e) {
@@ -103,6 +100,8 @@ public class AppealsResource {
             return Response.status(HTTP_CONFLICT).entity("<AppealProcessingAlreadyStarted/>").build();
         } catch (AppealAlreadyFinishedProcessingException e) {
             return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyFinishedProcessing/>").build();
+        } catch (InvalidAppealIDException e) {
+            return Response.status(HTTP_NOT_FOUND).entity("<InvalidAppealID/>").build();
         } catch (InvalidRequestException e) {
             return Response.status(HTTP_BAD_REQUEST).entity(xmlRequest).build();
         } catch (Exception e) {
@@ -126,6 +125,8 @@ public class AppealsResource {
             return Response.status(HTTP_CONFLICT).entity("<AppealProcessingAlreadyStarted/>").build();
         } catch (AppealAlreadyFinishedProcessingException e) {
             return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyFinishedProcessing/>").build();
+        } catch (InvalidAppealIDException e) {
+            return Response.status(HTTP_NOT_FOUND).entity("<InvalidAppealID/>").build();
         } catch (InvalidRequestException e) {
             return Response.status(HTTP_BAD_REQUEST).entity(xmlRequest).build();
         } catch (Exception e) {
@@ -149,6 +150,8 @@ public class AppealsResource {
             return Response.status(HTTP_CONFLICT).entity("<AppealProcessingAlreadyStarted/>").build();
         } catch (AppealAlreadyFinishedProcessingException e) {
             return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyFinishedProcessing/>").build();
+        } catch (InvalidAppealIDException e) {
+            return Response.status(HTTP_NOT_FOUND).entity("<InvalidAppealID/>").build();
         } catch (InvalidRequestException e) {
             return Response.status(HTTP_BAD_REQUEST).entity(xmlRequest).build();
         } catch (Exception e) {
@@ -169,10 +172,12 @@ public class AppealsResource {
             return Response.status(HTTP_CONFLICT).entity("<AppealProcessingAlreadyStarted/>").build();
         } catch (AppealAlreadyFinishedProcessingException e) {
             return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyFinishedProcessing/>").build();
+        } catch (InvalidAppealIDException e) {
+            return Response.status(HTTP_NOT_FOUND).entity("<InvalidAppealID/>").build();
         } catch (InvalidRequestException e) {
-            return Response.status(HTTP_BAD_REQUEST).entity(String.valueOf(appealID)).build();
+            return Response.status(HTTP_BAD_REQUEST).entity("<AppealID>" + appealID + "</AppealID>").build();
         } catch (Exception e) {
-            return Response.status(HTTP_INTERNAL_ERROR).entity(String.valueOf(appealID)).build();
+            return Response.status(HTTP_INTERNAL_ERROR).entity("<AppealID>" + appealID + "</AppealID>").build();
         }
     }
 
@@ -189,10 +194,12 @@ public class AppealsResource {
             return Response.status(HTTP_CONFLICT).entity("<AppealProcessingAlreadyStarted/>").build();
         } catch (AppealAlreadyFinishedProcessingException e) {
             return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyFinishedProcessing/>").build();
+        } catch (InvalidAppealIDException e) {
+            return Response.status(HTTP_NOT_FOUND).entity("<InvalidAppealID/>").build();
         } catch (InvalidRequestException e) {
-            return Response.status(HTTP_BAD_REQUEST).entity(String.valueOf(appealID)).build();
+            return Response.status(HTTP_BAD_REQUEST).entity("<AppealID>" + appealID + "</AppealID>").build();
         } catch (Exception e) {
-            return Response.status(HTTP_INTERNAL_ERROR).entity(String.valueOf(appealID)).build();
+            return Response.status(HTTP_INTERNAL_ERROR).entity("<AppealID>" + appealID + "</AppealID>").build();
         }
     }
 
@@ -209,12 +216,14 @@ public class AppealsResource {
             return Response.status(HTTP_CONFLICT).entity("<AppealHasNotStartedProcessingYet/>").build();
         } catch (AppealAlreadyFinishedProcessingException e) {
             return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyFinishedProcessing/>").build();
+        } catch (InvalidAppealIDException e) {
+            return Response.status(HTTP_NOT_FOUND).entity("<InvalidAppealID/>").build();
         } catch (InvalidRequestException e) {
             System.out.println("ire " + e.toString());
-            return Response.status(HTTP_BAD_REQUEST).entity(String.valueOf(appealID)).build();
+            return Response.status(HTTP_BAD_REQUEST).entity("<AppealID>" + appealID + "</AppealID>").build();
         } catch (Exception e) {
             System.out.println("e " + e.toString());
-            return Response.status(HTTP_INTERNAL_ERROR).entity(String.valueOf(appealID)).build();
+            return Response.status(HTTP_INTERNAL_ERROR).entity("<AppealID>" + appealID + "</AppealID>").build();
         }
     }
 
@@ -225,10 +234,12 @@ public class AppealsResource {
         try {
             AppealRepresentation responseRepresentation = new ReadAppealEvent().readAppeal(appealID);
             return responseRepresentation.toString();
+        } catch (InvalidAppealIDException e) {
+            return "Response code - 404 - Invalid Appeal ID";
         } catch (InvalidRequestException e) {
-            return "Invalid Request";
+            return "Response code - 400 - Invalid Request";
         } catch (Exception e) {
-            return "Internal Server Error";
+            return "Response code - 500 - Internal Server Error";
         }
     }
 }

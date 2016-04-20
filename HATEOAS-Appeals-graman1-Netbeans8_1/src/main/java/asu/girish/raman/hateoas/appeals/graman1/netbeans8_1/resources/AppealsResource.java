@@ -40,6 +40,7 @@ public class AppealsResource {
     @Consumes(APPEALS_MEDIA_TYPE)
     public Response createNewAppeal(String xmlRequest) {
         try {
+            System.out.println("\nLanded on @POST createNewAppeal in Server...");
             AppealRepresentation requestRepresentation = AppealRepresentation.XMLRequestToObject(xmlRequest);
             int studentID = requestRepresentation.getStudentID();
             int gradingItemID = requestRepresentation.getGradingItemID();
@@ -51,10 +52,13 @@ public class AppealsResource {
             appeal.setAppealMessage(appealMessage);
 
             AppealRepresentation responseRepresentation = new CreateAppealEvent().createAppeal(appeal);
+            System.out.println("\nSuccess - Leaving Server...");
             return Response.created(new URI(responseRepresentation.getLocationURI())).entity(responseRepresentation).build();
         } catch (InvalidRequestException e) {
+            System.out.println("\nFailure - 400  - Leaving Server...");
             return Response.status(HTTP_BAD_REQUEST).entity(xmlRequest).build();
         } catch (Exception e) {
+            System.out.println("\nFailure - 500  - Leaving Server...");
             return Response.status(HTTP_INTERNAL_ERROR).entity(xmlRequest).build();
         }
     }
@@ -65,21 +69,29 @@ public class AppealsResource {
     @Consumes(APPEALS_MEDIA_TYPE)
     public Response rewordAppeal(@PathParam("appealID") int appealID, String xmlRequest) {
         try {
+            System.out.println("\nLanded on @PUT rewordAppeal in Server...");
             AppealRepresentation requestRepresentation = AppealRepresentation.XMLRequestToObject(xmlRequest);
             String appealMessage = requestRepresentation.getAppealMessage();
             AppealRepresentation responseRepresentation = new RewordAppealEvent().rewordAppeal(appealID, appealMessage);
+            System.out.println("\nSuccess - Leaving Server...");
             return Response.ok().entity(responseRepresentation).build();
         } catch (AppealAlreadyAbandonedException e) {
+            System.out.println("\nFailure - 409 - Leaving Server...");
             return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyAbandoned/>").build();
         } catch (AppealProcessingAlreadyStartedException e) {
+            System.out.println("\nFailure - 409 - Leaving Server...");
             return Response.status(HTTP_CONFLICT).entity("<AppealProcessingAlreadyStarted/>").build();
         } catch (AppealAlreadyFinishedProcessingException e) {
+            System.out.println("\nFailure - 409 - Leaving Server...");
             return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyFinishedProcessing/>").build();
         } catch (InvalidAppealIDException e) {
+            System.out.println("\nFailure - 404 - Leaving Server...");
             return Response.status(HTTP_NOT_FOUND).entity("<InvalidAppealID/>").build();
         } catch (InvalidRequestException e) {
+            System.out.println("\nFailure - 400 - Leaving Server...");
             return Response.status(HTTP_BAD_REQUEST).entity("<InvalidRequest/>").build();
         } catch (Exception e) {
+            System.out.println("\nFailure - 500  - Leaving Server...");
             return Response.status(HTTP_INTERNAL_ERROR).entity(xmlRequest).build();
         }
     }
@@ -90,21 +102,29 @@ public class AppealsResource {
     @Consumes(APPEALS_MEDIA_TYPE)
     public Response addImage(@PathParam("appealID") int appealID, String xmlRequest) {
         try {
+            System.out.println("\nLanded on @PUT addImage in Server...");
             AppealRepresentation requestRepresentation = AppealRepresentation.XMLRequestToObject(xmlRequest);
             List<String> images = requestRepresentation.getImages();
             AppealRepresentation responseRepresentation = new AddImageEventEvent().addImage(appealID, images);
+            System.out.println("\nSuccess - Leaving Server...");
             return Response.ok().entity(responseRepresentation).build();
         } catch (AppealAlreadyAbandonedException e) {
+            System.out.println("\nFailure - 409 - Leaving Server...");
             return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyAbandoned/>").build();
         } catch (AppealProcessingAlreadyStartedException e) {
+            System.out.println("\nFailure - 409 - Leaving Server...");
             return Response.status(HTTP_CONFLICT).entity("<AppealProcessingAlreadyStarted/>").build();
         } catch (AppealAlreadyFinishedProcessingException e) {
+            System.out.println("\nFailure - 409 - Leaving Server...");
             return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyFinishedProcessing/>").build();
         } catch (InvalidAppealIDException e) {
+            System.out.println("\nFailure - 404 - Leaving Server...");
             return Response.status(HTTP_NOT_FOUND).entity("<InvalidAppealID/>").build();
         } catch (InvalidRequestException e) {
+            System.out.println("\nFailure - 400 - Leaving Server...");
             return Response.status(HTTP_BAD_REQUEST).entity(xmlRequest).build();
         } catch (Exception e) {
+            System.out.println("\nFailure - 500  - Leaving Server...");
             return Response.status(HTTP_INTERNAL_ERROR).entity(xmlRequest).build();
         }
     }
@@ -115,21 +135,29 @@ public class AppealsResource {
     @Consumes(APPEALS_MEDIA_TYPE)
     public Response addAppealItem(@PathParam("appealID") int appealID, String xmlRequest) {
         try {
+            System.out.println("\nLanded on @PUT addAppealItem in Server...");
             AppealRepresentation requestRepresentation = AppealRepresentation.XMLRequestToObject(xmlRequest);
             List<String> appealItems = requestRepresentation.getAppealItems();
             AppealRepresentation responseRepresentation = new AddAppealItemEvent().addAppealItem(appealID, appealItems);
+            System.out.println("\nSuccess - Leaving Server...");
             return Response.ok().entity(responseRepresentation).build();
         } catch (AppealAlreadyAbandonedException e) {
+            System.out.println("\nFailure - 409 - Leaving Server...");
             return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyAbandoned/>").build();
         } catch (AppealProcessingAlreadyStartedException e) {
+            System.out.println("\nFailure - 409 - Leaving Server...");
             return Response.status(HTTP_CONFLICT).entity("<AppealProcessingAlreadyStarted/>").build();
         } catch (AppealAlreadyFinishedProcessingException e) {
+            System.out.println("\nFailure - 409 - Leaving Server...");
             return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyFinishedProcessing/>").build();
         } catch (InvalidAppealIDException e) {
+            System.out.println("\nFailure - 404 - Leaving Server...");
             return Response.status(HTTP_NOT_FOUND).entity("<InvalidAppealID/>").build();
         } catch (InvalidRequestException e) {
+            System.out.println("\nFailure - 400 - Leaving Server...");
             return Response.status(HTTP_BAD_REQUEST).entity(xmlRequest).build();
         } catch (Exception e) {
+            System.out.println("\nFailure - 500  - Leaving Server...");
             return Response.status(HTTP_INTERNAL_ERROR).entity(xmlRequest).build();
         }
     }
@@ -140,21 +168,29 @@ public class AppealsResource {
     @Consumes(APPEALS_MEDIA_TYPE)
     public Response followUpOnAppeal(@PathParam("appealID") int appealID, String xmlRequest) {
         try {
+            System.out.println("\nLanded on @PUT followUpOnAppeal in Server...");
             AppealRepresentation requestRepresentation = AppealRepresentation.XMLRequestToObject(xmlRequest);
             List<String> followUps = requestRepresentation.getFollowUps();
             AppealRepresentation responseRepresentation = new FollowUpOnAppealEvent().followUp(appealID, followUps);
+            System.out.println("\nSuccess - Leaving Server...");
             return Response.ok().entity(responseRepresentation).build();
         } catch (AppealAlreadyAbandonedException e) {
+            System.out.println("\nFailure - 409 - Leaving Server...");
             return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyAbandoned/>").build();
         } catch (AppealProcessingAlreadyStartedException e) {
+            System.out.println("\nFailure - 409 - Leaving Server...");
             return Response.status(HTTP_CONFLICT).entity("<AppealProcessingAlreadyStarted/>").build();
         } catch (AppealAlreadyFinishedProcessingException e) {
+            System.out.println("\nFailure - 409 - Leaving Server...");
             return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyFinishedProcessing/>").build();
         } catch (InvalidAppealIDException e) {
+            System.out.println("\nFailure - 404 - Leaving Server...");
             return Response.status(HTTP_NOT_FOUND).entity("<InvalidAppealID/>").build();
         } catch (InvalidRequestException e) {
+            System.out.println("\nFailure - 400 - Leaving Server...");
             return Response.status(HTTP_BAD_REQUEST).entity(xmlRequest).build();
         } catch (Exception e) {
+            System.out.println("\nFailure - 500  - Leaving Server...");
             return Response.status(HTTP_INTERNAL_ERROR).entity(xmlRequest).build();
         }
     }
@@ -164,19 +200,27 @@ public class AppealsResource {
     @Produces(APPEALS_MEDIA_TYPE)
     public Response reviewAppeal(@PathParam("appealID") int appealID) {
         try {
+            System.out.println("\nLanded on @PUT reviewAppeal in Server...");
             AppealRepresentation responseRepresentation = new ReviewAppealEvent().reviewAppeal(appealID);
+            System.out.println("\nSuccess - Leaving Server...");
             return Response.ok().entity(responseRepresentation).build();
         } catch (AppealAlreadyAbandonedException e) {
+            System.out.println("\nFailure - 409 - Leaving Server...");
             return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyAbandoned/>").build();
         } catch (AppealProcessingAlreadyStartedException e) {
+            System.out.println("\nFailure - 409 - Leaving Server...");
             return Response.status(HTTP_CONFLICT).entity("<AppealProcessingAlreadyStarted/>").build();
         } catch (AppealAlreadyFinishedProcessingException e) {
+            System.out.println("\nFailure - 409 - Leaving Server...");
             return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyFinishedProcessing/>").build();
         } catch (InvalidAppealIDException e) {
+            System.out.println("\nFailure - 404 - Leaving Server...");
             return Response.status(HTTP_NOT_FOUND).entity("<InvalidAppealID/>").build();
         } catch (InvalidRequestException e) {
+            System.out.println("\nFailure - 400 - Leaving Server...");
             return Response.status(HTTP_BAD_REQUEST).entity("<AppealID>" + appealID + "</AppealID>").build();
         } catch (Exception e) {
+            System.out.println("\nFailure - 500  - Leaving Server...");
             return Response.status(HTTP_INTERNAL_ERROR).entity("<AppealID>" + appealID + "</AppealID>").build();
         }
     }
@@ -186,19 +230,27 @@ public class AppealsResource {
     @Produces(APPEALS_MEDIA_TYPE)
     public Response abandonAppeal(@PathParam("appealID") int appealID) {
         try {
+            System.out.println("\nLanded on @PUT abandonAppeal in Server...");
             AppealRepresentation responseRepresentation = new AbandonAppealEvent().abandonAppeal(appealID);
+            System.out.println("\nSuccess - Leaving Server...");
             return Response.ok().entity(responseRepresentation).build();
         } catch (AppealAlreadyAbandonedException e) {
+            System.out.println("\nFailure - 409 - Leaving Server...");
             return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyAbandoned/>").build();
         } catch (AppealProcessingAlreadyStartedException e) {
+            System.out.println("\nFailure - 409 - Leaving Server...");
             return Response.status(HTTP_CONFLICT).entity("<AppealProcessingAlreadyStarted/>").build();
         } catch (AppealAlreadyFinishedProcessingException e) {
+            System.out.println("\nFailure - 409 - Leaving Server...");
             return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyFinishedProcessing/>").build();
         } catch (InvalidAppealIDException e) {
+            System.out.println("\nFailure - 404 - Leaving Server...");
             return Response.status(HTTP_NOT_FOUND).entity("<InvalidAppealID/>").build();
         } catch (InvalidRequestException e) {
+            System.out.println("\nFailure - 400 - Leaving Server...");
             return Response.status(HTTP_BAD_REQUEST).entity("<AppealID>" + appealID + "</AppealID>").build();
         } catch (Exception e) {
+            System.out.println("\nFailure - 500  - Leaving Server...");
             return Response.status(HTTP_INTERNAL_ERROR).entity("<AppealID>" + appealID + "</AppealID>").build();
         }
     }
@@ -208,21 +260,27 @@ public class AppealsResource {
     @Produces(APPEALS_MEDIA_TYPE)
     public Response finishAppealProcessing(@PathParam("appealID") int appealID) {
         try {
+            System.out.println("\nLanded on @PUT finishAppealProcessing in Server...");
             AppealRepresentation responseRepresentation = new FinishAppealProcessingEvent().finishAppealProcessing(appealID);
+            System.out.println("\nSuccess - Leaving Server...");
             return Response.ok().entity(responseRepresentation).build();
         } catch (AppealAlreadyAbandonedException e) {
+            System.out.println("\nFailure - 409 - Leaving Server...");
             return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyAbandoned/>").build();
         } catch (AppealHasNotStartedProcessingYetException e) {
+            System.out.println("\nFailure - 409 - Leaving Server...");
             return Response.status(HTTP_CONFLICT).entity("<AppealHasNotStartedProcessingYet/>").build();
         } catch (AppealAlreadyFinishedProcessingException e) {
+            System.out.println("\nFailure - 409 - Leaving Server...");
             return Response.status(HTTP_CONFLICT).entity("<AppealAlreadyFinishedProcessing/>").build();
         } catch (InvalidAppealIDException e) {
+            System.out.println("\nFailure - 404 - Leaving Server...");
             return Response.status(HTTP_NOT_FOUND).entity("<InvalidAppealID/>").build();
         } catch (InvalidRequestException e) {
-            System.out.println("ire " + e.toString());
+            System.out.println("\nFailure - 400 - Leaving Server...");
             return Response.status(HTTP_BAD_REQUEST).entity("<AppealID>" + appealID + "</AppealID>").build();
         } catch (Exception e) {
-            System.out.println("e " + e.toString());
+            System.out.println("\nFailure - 500  - Leaving Server...");
             return Response.status(HTTP_INTERNAL_ERROR).entity("<AppealID>" + appealID + "</AppealID>").build();
         }
     }
@@ -232,13 +290,18 @@ public class AppealsResource {
     @Produces(APPLICATION_XML)
     public String getAppeal(@PathParam("appealID") int appealID) {
         try {
+            System.out.println("\nLanded on @GET getAppeal in Server...");
             AppealRepresentation responseRepresentation = new ReadAppealEvent().readAppeal(appealID);
+            System.out.println("\nSuccess - Leaving Server...");
             return responseRepresentation.toString();
         } catch (InvalidAppealIDException e) {
+            System.out.println("\nFailure - 404  - Leaving Server...");
             return "Response code - 404 - Invalid Appeal ID";
         } catch (InvalidRequestException e) {
+            System.out.println("\nFailure - 400  - Leaving Server...");
             return "Response code - 400 - Invalid Request";
         } catch (Exception e) {
+            System.out.println("\nFailure - 500 - Leaving Server...");
             return "Response code - 500 - Internal Server Error";
         }
     }

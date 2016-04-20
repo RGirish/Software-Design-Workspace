@@ -31,10 +31,13 @@ public class FinishAppealProcessingEvent {
             Appeal appeal = APPEAL_REPOSITORY.getAppealByID(id);
             switch (appeal.getAppealStatus()) {
                 case ABANDONED:
+                    System.out.println("\nResource found to be in an unexpected state! Throwing an Exception.");
                     throw new AppealAlreadyAbandonedException();
                 case SUBMITTED:
+                    System.out.println("\nResource found to be in an unexpected state! Throwing an Exception.");
                     throw new AppealHasNotStartedProcessingYetException();
                 case FINISHED:
+                    System.out.println("\nResource found to be in an unexpected state! Throwing an Exception.");
                     throw new AppealAlreadyFinishedProcessingException();
             }
 
@@ -43,8 +46,10 @@ public class FinishAppealProcessingEvent {
             String readAppealUri = READ_APPEAL_URI + "/" + id;
             Map<String, String> nextStateUris = new LinkedHashMap<>();
             nextStateUris.put("readAppealUri", readAppealUri);
+            System.out.println("\nFinishAppealProcessing - Activity Completed successfully!");
             return new AppealRepresentation(appeal, nextStateUris);
         } else {
+            System.out.println("\nInvalid ID given. Throwing an Exception.");
             throw new InvalidAppealIDException();
         }
     }

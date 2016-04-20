@@ -40,6 +40,7 @@ public class CreateAppealEvent {
         nextStateUris.put("reviewAppealUri", reviewAppealUri);
         nextStateUris.put("abandonAppealUri", abandonAppealUri);
         nextStateUris.put("readAppealUri", readAppealUri);
+        System.out.println("\nCreate Appeal - Activity Completed successfully!");
         return new AppealRepresentation(appeal, nextStateUris);
     }
 }

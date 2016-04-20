@@ -48,8 +48,10 @@ public class ReadAppealEvent {
                     nextStateUris.put("readAppealUri", readAppealUri);
                     nextStateUris.put("finishAppealProcessingUri", finishAppealProcessingUri);
             }
+            System.out.println("\nRead Appeal - Activity Completed successfully!");
             return new AppealRepresentation(appeal, nextStateUris);
         } else {
+            System.out.println("\nInvalid ID given. Throwing an Exception.");
             throw new InvalidAppealIDException();
         }
     }

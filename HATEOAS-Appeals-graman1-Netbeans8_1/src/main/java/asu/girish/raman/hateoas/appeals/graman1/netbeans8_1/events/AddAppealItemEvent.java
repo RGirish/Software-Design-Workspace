@@ -31,13 +31,14 @@ public class AddAppealItemEvent {
             Appeal appeal = APPEAL_REPOSITORY.getAppealByID(id);
             switch (appeal.getAppealStatus()) {
                 case ABANDONED:
+                    System.out.println("\nResource found to be in an unexpected state! Throwing an Exception.");
                     throw new AppealAlreadyAbandonedException();
                 case PROCESSING:
+                    System.out.println("\nResource found to be in an unexpected state! Throwing an Exception.");
                     throw new AppealProcessingAlreadyStartedException();
                 case FINISHED:
+                    System.out.println("\nResource found to be in an unexpected state! Throwing an Exception.");
                     throw new AppealAlreadyFinishedProcessingException();
-                default:
-                    break;
             }
 
             List<String> oldAppealItems = appeal.getAppealItems();
@@ -62,8 +63,10 @@ public class AddAppealItemEvent {
             nextStateUris.put("abandonAppealUri", abandonAppealUri);
             String readAppealUri = READ_APPEAL_URI + "/" + id;
             nextStateUris.put("readAppealUri", readAppealUri);
+            System.out.println("\nAddAppealItem - Activity Completed successfully!");
             return new AppealRepresentation(appeal, nextStateUris);
         } else {
+            System.out.println("\nInvalid ID given. Throwing an Exception.");
             throw new InvalidAppealIDException();
         }
     }

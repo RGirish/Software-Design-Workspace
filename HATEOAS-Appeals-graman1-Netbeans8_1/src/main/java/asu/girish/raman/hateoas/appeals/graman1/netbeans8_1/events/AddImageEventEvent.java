@@ -7,7 +7,6 @@ package asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.events;
 
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions.AppealAlreadyAbandonedException;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions.AppealAlreadyFinishedProcessingException;
-import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions.AppealHasNotStartedProcessingYetException;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions.AppealProcessingAlreadyStartedException;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.exceptions.InvalidAppealIDException;
 import asu.girish.raman.hateoas.appeals.graman1.netbeans8_1.models.Appeal;
@@ -32,13 +31,14 @@ public class AddImageEventEvent {
             Appeal appeal = APPEAL_REPOSITORY.getAppealByID(id);
             switch (appeal.getAppealStatus()) {
                 case ABANDONED:
+                    System.out.println("\nResource found to be in an unexpected state! Throwing an Exception.");
                     throw new AppealAlreadyAbandonedException();
                 case PROCESSING:
+                    System.out.println("\nResource found to be in an unexpected state! Throwing an Exception.");
                     throw new AppealProcessingAlreadyStartedException();
                 case FINISHED:
+                    System.out.println("\nResource found to be in an unexpected state! Throwing an Exception.");
                     throw new AppealAlreadyFinishedProcessingException();
-                default:
-                    break;
             }
 
             List<String> oldImages = appeal.getImages();
@@ -63,8 +63,10 @@ public class AddImageEventEvent {
             nextStateUris.put("abandonAppealUri", abandonAppealUri);
             String readAppealUri = READ_APPEAL_URI + "/" + id;
             nextStateUris.put("readAppealUri", readAppealUri);
+            System.out.println("\nAddImage - Activity Completed successfully!");
             return new AppealRepresentation(appeal, nextStateUris);
         } else {
+            System.out.println("\nInvalid ID given. Throwing an Exception.");
             throw new InvalidAppealIDException();
         }
     }

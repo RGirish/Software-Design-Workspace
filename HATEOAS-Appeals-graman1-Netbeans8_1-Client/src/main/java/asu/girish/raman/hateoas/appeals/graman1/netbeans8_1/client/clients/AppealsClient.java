@@ -18,6 +18,7 @@ public class AppealsClient {
 
     public static final String APPEALS_MEDIA_TYPE = "application/vnd-cse564-appeals+xml";
     public static final String ENTRY_POINT = "http://localhost:8080/HATEOAS-Appeals-graman1-Netbeans8_1/webresources/appeals";
+    public static final String BAD_ENTRY_POINT = "http://localhost:8080/HATEOAS-Appeals-graman1-Netbeans8_1/webresources/badappeals";
     Client client;
     WebResource webResource;
 
@@ -26,12 +27,33 @@ public class AppealsClient {
         webResource = client.resource(ENTRY_POINT);
     }
 
+    public AppealsClient(String bad) {
+        client = Client.create();
+        webResource = client.resource(BAD_ENTRY_POINT);
+    }
+
     public AppealRepresentation createAppeal(String request) throws UniformInterfaceException {
-        AppealRepresentation appealRepresentation = webResource.accept(APPEALS_MEDIA_TYPE).type(APPEALS_MEDIA_TYPE).post(AppealRepresentation.class, request);
+        System.out.println("\nAbout to send the request to the server...");
+        AppealRepresentation appealRepresentation;
+        try {
+            appealRepresentation = webResource.accept(APPEALS_MEDIA_TYPE).type(APPEALS_MEDIA_TYPE).post(AppealRepresentation.class, request);
+        } catch (UniformInterfaceException e) {
+            if (e.toString().contains("404 Not Found")) {
+                System.out.println("Response Code - 404 Not Found\n");
+            } else if (e.toString().contains("409 Conflict")) {
+                System.out.println("Response Code - 409 Conflict\n");
+            } else if (e.toString().contains("400 Bad Request")) {
+                System.out.println("Response Code - 400 Bad Request\n");
+            } else {
+                System.out.println("Response Code - 500 Internal Server Error\n");
+            }
+            return null;
+        }
         return appealRepresentation;
     }
 
     public AppealRepresentation rewordAppeal(String rewordAppealUri, String xmlRequest) throws UniformInterfaceException {
+        System.out.println("\nAbout to send the request to the server...");
         AppealRepresentation appealRepresentation;
         try {
             appealRepresentation = client.resource(rewordAppealUri).accept(APPEALS_MEDIA_TYPE).type(APPEALS_MEDIA_TYPE).put(AppealRepresentation.class, xmlRequest);
@@ -42,7 +64,7 @@ public class AppealsClient {
                 System.out.println("Response Code - 409 Conflict\n");
             } else if (e.toString().contains("400 Bad Request")) {
                 System.out.println("Response Code - 400 Bad Request\n");
-            } else if (e.toString().contains("500 Internal")) {
+            } else {
                 System.out.println("Response Code - 500 Internal Server Error\n");
             }
             return null;
@@ -51,6 +73,7 @@ public class AppealsClient {
     }
 
     public AppealRepresentation addAppealItem(String addAppealItemUri, String request) throws UniformInterfaceException {
+        System.out.println("\nAbout to send the request to the server...");
         AppealRepresentation appealRepresentation;
         try {
             appealRepresentation = client.resource(addAppealItemUri).accept(APPEALS_MEDIA_TYPE).type(APPEALS_MEDIA_TYPE).put(AppealRepresentation.class, request);
@@ -61,7 +84,7 @@ public class AppealsClient {
                 System.out.println("Response Code - 409 Conflict\n");
             } else if (e.toString().contains("400 Bad Request")) {
                 System.out.println("Response Code - 400 Bad Request\n");
-            } else if (e.toString().contains("500 Internal")) {
+            } else {
                 System.out.println("Response Code - 500 Internal Server Error\n");
             }
             return null;
@@ -70,6 +93,7 @@ public class AppealsClient {
     }
 
     public AppealRepresentation followUp(String followUpUri, String request) throws UniformInterfaceException {
+        System.out.println("\nAbout to send the request to the server...");
         AppealRepresentation appealRepresentation;
         try {
             appealRepresentation = client.resource(followUpUri).accept(APPEALS_MEDIA_TYPE).type(APPEALS_MEDIA_TYPE).put(AppealRepresentation.class, request);
@@ -80,7 +104,7 @@ public class AppealsClient {
                 System.out.println("Response Code - 409 Conflict\n");
             } else if (e.toString().contains("400 Bad Request")) {
                 System.out.println("Response Code - 400 Bad Request\n");
-            } else if (e.toString().contains("500 Internal")) {
+            } else {
                 System.out.println("Response Code - 500 Internal Server Error\n");
             }
             return null;
@@ -89,6 +113,7 @@ public class AppealsClient {
     }
 
     public AppealRepresentation addImage(String addImageUri, String request) throws UniformInterfaceException {
+        System.out.println("\nAbout to send the request to the server...");
         AppealRepresentation appealRepresentation;
         try {
             appealRepresentation = client.resource(addImageUri).accept(APPEALS_MEDIA_TYPE).type(APPEALS_MEDIA_TYPE).put(AppealRepresentation.class, request);
@@ -99,7 +124,7 @@ public class AppealsClient {
                 System.out.println("Response Code - 409 Conflict\n");
             } else if (e.toString().contains("400 Bad Request")) {
                 System.out.println("Response Code - 400 Bad Request\n");
-            } else if (e.toString().contains("500 Internal")) {
+            } else {
                 System.out.println("Response Code - 500 Internal Server Error\n");
             }
             return null;
@@ -108,6 +133,7 @@ public class AppealsClient {
     }
 
     public AppealRepresentation reviewAppeal(String reviewAppealUri) throws UniformInterfaceException {
+        System.out.println("\nAbout to send the request to the server...");
         AppealRepresentation appealRepresentation;
         try {
             appealRepresentation = client.resource(reviewAppealUri).accept(APPEALS_MEDIA_TYPE).type(APPEALS_MEDIA_TYPE).put(AppealRepresentation.class);
@@ -118,7 +144,7 @@ public class AppealsClient {
                 System.out.println("Response Code - 409 Conflict\n");
             } else if (e.toString().contains("400 Bad Request")) {
                 System.out.println("Response Code - 400 Bad Request\n");
-            } else if (e.toString().contains("500 Internal")) {
+            } else {
                 System.out.println("Response Code - 500 Internal Server Error\n");
             }
             return null;
@@ -127,6 +153,7 @@ public class AppealsClient {
     }
 
     public AppealRepresentation finishAppealProcessing(String finishAppealProcessingUri) {
+        System.out.println("\nAbout to send the request to the server...");
         AppealRepresentation appealRepresentation;
         try {
             appealRepresentation = client.resource(finishAppealProcessingUri).accept(APPEALS_MEDIA_TYPE).type(APPEALS_MEDIA_TYPE).put(AppealRepresentation.class);
@@ -137,7 +164,7 @@ public class AppealsClient {
                 System.out.println("Response Code - 409 Conflict\n");
             } else if (e.toString().contains("400 Bad Request")) {
                 System.out.println("Response Code - 400 Bad Request\n");
-            } else if (e.toString().contains("500 Internal")) {
+            } else {
                 System.out.println("Response Code - 500 Internal Server Error\n");
             }
             return null;
@@ -146,6 +173,7 @@ public class AppealsClient {
     }
 
     public AppealRepresentation abandonAppeal(String abandonAppealUri) {
+        System.out.println("\nAbout to send the request to the server...");
         AppealRepresentation appealRepresentation;
         try {
             appealRepresentation = client.resource(abandonAppealUri).accept(APPEALS_MEDIA_TYPE).type(APPEALS_MEDIA_TYPE).put(AppealRepresentation.class);
@@ -156,7 +184,7 @@ public class AppealsClient {
                 System.out.println("Response Code - 409 Conflict\n");
             } else if (e.toString().contains("400 Bad Request")) {
                 System.out.println("Response Code - 400 Bad Request\n");
-            } else if (e.toString().contains("500 Internal")) {
+            } else {
                 System.out.println("Response Code - 500 Internal Server Error\n");
             }
             return null;

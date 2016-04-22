@@ -21,11 +21,11 @@ public class Main {
     public static void main(String[] args) {
         appealsClient = new AppealsClient();
         appealsClientWithBadEntryUri = new AppealsClient("bad");
-        //happyCaseSimulator();
+        happyCaseSimulator();
         //abandonedCaseSimulator();
         //forgottenCaseSimulator();
         //badIDSimulator();
-        badStartSimulator();
+        //badStartSimulator();
     }
 
     public static void happyCaseSimulator() {
@@ -94,8 +94,68 @@ public class Main {
         System.out.println("\n\nYou can access the readAppealUri while I'm waiting! Press <Enter> to proceed");
         scanner.nextLine();
 
-        //Step - 3 - Start Appeal Review
-        System.out.println("*** Step - 3 - Start Appeal Review ***\n");
+        //Step - 3 - Add Appeal Item (Update)
+        System.out.println("*** Step - 3 - Add Appeal Item (Update) ***\n");
+        xmlRequest = "<appeal>\n"
+                + "<appealItem>AI</appealItem>\n"
+                + "<appealItem>AI2</appealItem>\n"
+                + "</appeal>";
+        appealRepresentation = appealsClient.addAppealItem(addAppealItemUri, xmlRequest);
+        if (appealRepresentation == null) {
+            System.out.println("Client Terminating...\n\n");
+            return;
+        }
+        map = appealRepresentation.getNextStateUris();
+        System.out.println("appealID " + appealID);
+        addAppealItemUri = map.get("addAppealItemUri");
+        System.out.println("addAppealItemUri " + addAppealItemUri);
+        rewordAppealUri = map.get("rewordAppealUri");
+        System.out.println("rewordAppealUri " + rewordAppealUri);
+        addImageUri = map.get("addImageUri");
+        System.out.println("addImageUri " + addImageUri);
+        followUpUri = map.get("followUpUri");
+        System.out.println("followUpUri " + followUpUri);
+        reviewAppealUri = map.get("reviewAppealUri");
+        System.out.println("reviewAppealUri " + reviewAppealUri);
+        abandonAppealUri = map.get("abandonAppealUri");
+        System.out.println("abandonAppealUri " + abandonAppealUri);
+        readAppealUri = map.get("readAppealUri");
+        System.out.println("readAppealUri " + readAppealUri);
+        System.out.println("\n\nYou can access the readAppealUri while I'm waiting! Press <Enter> to proceed");
+        scanner.nextLine();
+
+        //Step - 4 - Add Image (Update)
+        System.out.println("*** Step - 4 - Add Image (Update) ***\n");
+        xmlRequest = "<appeal>\n"
+                + "<image>Image</image>\n"
+                + "<image>Image2</image>\n"
+                + "</appeal>";
+        appealRepresentation = appealsClient.addImage(addImageUri, xmlRequest);
+        if (appealRepresentation == null) {
+            System.out.println("Client Terminating...\n\n");
+            return;
+        }
+        map = appealRepresentation.getNextStateUris();
+        System.out.println("appealID " + appealID);
+        addAppealItemUri = map.get("addAppealItemUri");
+        System.out.println("addAppealItemUri " + addAppealItemUri);
+        rewordAppealUri = map.get("rewordAppealUri");
+        System.out.println("rewordAppealUri " + rewordAppealUri);
+        addImageUri = map.get("addImageUri");
+        System.out.println("addImageUri " + addImageUri);
+        followUpUri = map.get("followUpUri");
+        System.out.println("followUpUri " + followUpUri);
+        reviewAppealUri = map.get("reviewAppealUri");
+        System.out.println("reviewAppealUri " + reviewAppealUri);
+        abandonAppealUri = map.get("abandonAppealUri");
+        System.out.println("abandonAppealUri " + abandonAppealUri);
+        readAppealUri = map.get("readAppealUri");
+        System.out.println("readAppealUri " + readAppealUri);
+        System.out.println("\n\nYou can access the readAppealUri while I'm waiting! Press <Enter> to proceed");
+        scanner.nextLine();
+
+        //Step - 5 - Start Appeal Review
+        System.out.println("*** Step - 5 - Start Appeal Review ***\n");
         appealRepresentation = appealsClient.reviewAppeal(reviewAppealUri);
         if (appealRepresentation == null) {
             System.out.println("Client Terminating...\n\n");
@@ -110,8 +170,8 @@ public class Main {
         System.out.println("\n\nYou can access the readAppealUri while I'm waiting! Press <Enter> to proceed");
         scanner.nextLine();
 
-        //Step - 4 - Finish Appeal Review
-        System.out.println("*** Step - 4 - Finish Appeal Review ***\n");
+        //Step - 6 - Finish Appeal Review
+        System.out.println("*** Step - 6 - Finish Appeal Review ***\n");
         appealRepresentation = appealsClient.finishAppealProcessing(finishAppealProcessingUri);
         if (appealRepresentation == null) {
             System.out.println("Client Terminating...\n\n");

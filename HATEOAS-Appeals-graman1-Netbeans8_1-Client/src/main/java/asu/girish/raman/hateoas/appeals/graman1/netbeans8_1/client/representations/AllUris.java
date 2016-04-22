@@ -9,5 +9,6 @@ public class AllUris {
     public static String REVIEW_URI = ENTRY_POINT + "/review";
     public static String ABANDON_URI = ENTRY_POINT + "/abandonAppeal";
     public static String FINISH_PROCESSING_URI = ENTRY_POINT + "/finishAppealProcessing";
-    public static String DELETE_FINISHED_APPEALS = ENTRY_POINT;
+    public static String FOLLOW_UP_URI = ENTRY_POINT + "/followUp";
+    public static String READ_APPEAL_URI = ENTRY_POINT;
 }
